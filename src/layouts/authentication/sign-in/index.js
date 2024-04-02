@@ -1,26 +1,22 @@
 import { useState } from "react";
-
 import { Link } from "react-router-dom";
 
 import Card from "@mui/material/Card";
-import Switch from "@mui/material/Switch";
 import Grid from "@mui/material/Grid";
-import MuiLink from "@mui/material/Link";
-
-import FacebookIcon from "@mui/icons-material/Facebook";
-import GitHubIcon from "@mui/icons-material/GitHub";
-import GoogleIcon from "@mui/icons-material/Google";
 
 import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
 import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
+import MDTypography from "components/MDTypography";
 
 import BasicLayout from "layouts/authentication/components/BasicLayout";
 
-import bgImage from "assets/images/bg-sign-in-basic.jpeg";
+import bgImage from "assets/images/login-bg.jpg";
+import tmLogo from "assets/images/toMarket-logo.png";
+import { Box, Button } from "@mui/material";
+import Switch from "@mui/material/Switch";
 
-function Basic() {
+const SignIn = () => {
   const [rememberMe, setRememberMe] = useState(false);
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
@@ -30,34 +26,32 @@ function Basic() {
       <Card>
         <MDBox
           variant="gradient"
-          bgColor="info"
+          bgColor="success"
           borderRadius="lg"
-          coloredShadow="info"
+          coloredShadow="success"
           mx={2}
           mt={-3}
           p={2}
           mb={1}
           textAlign="center"
         >
-          <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-            Sign in
-          </MDTypography>
-          <Grid container spacing={3} justifyContent="center" sx={{ mt: 1, mb: 2 }}>
-            <Grid item xs={2}>
-              <MDTypography component={MuiLink} href="#" variant="body1" color="white">
-                <FacebookIcon color="inherit" />
-              </MDTypography>
-            </Grid>
-            <Grid item xs={2}>
-              <MDTypography component={MuiLink} href="#" variant="body1" color="white">
-                <GitHubIcon color="inherit" />
-              </MDTypography>
-            </Grid>
-            <Grid item xs={2}>
-              <MDTypography component={MuiLink} href="#" variant="body1" color="white">
-                <GoogleIcon color="inherit" />
-              </MDTypography>
-            </Grid>
+          <Grid item xs={12}>
+            <Box
+              component="img"
+              sx={{
+                zIndex: 100,
+                width: "80%",
+                maxWidth: "400px",
+                height: "100px",
+                objectFit: "contain",
+                mt: "10px",
+                mb: "auto",
+                ml: "auto",
+                mr: "auto",
+              }}
+              src={tmLogo}
+              alt="Logo"
+            />
           </Grid>
         </MDBox>
         <MDBox pt={4} pb={3} px={3}>
@@ -81,10 +75,11 @@ function Basic() {
               </MDTypography>
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" color="info" fullWidth>
+              <MDButton variant="gradient" color="success" fullWidth>
                 sign in
               </MDButton>
             </MDBox>
+
             <MDBox mt={3} mb={1} textAlign="center">
               <MDTypography variant="button" color="text">
                 Don&apos;t have an account?{" "}
@@ -92,7 +87,7 @@ function Basic() {
                   component={Link}
                   to="/authentication/sign-up"
                   variant="button"
-                  color="info"
+                  color="success"
                   fontWeight="medium"
                   textGradient
                 >
@@ -105,6 +100,6 @@ function Basic() {
       </Card>
     </BasicLayout>
   );
-}
+};
 
-export default Basic;
+export default SignIn;

@@ -12,13 +12,13 @@ import CoverLayout from "layouts/authentication/components/CoverLayout";
 
 import bgImage from "assets/images/bg-sign-up-cover.jpeg";
 
-function Cover() {
+const SignUp = () => {
   return (
     <CoverLayout image={bgImage}>
       <Card>
         <MDBox
           variant="gradient"
-          bgColor="info"
+          bgColor="success"
           borderRadius="lg"
           coloredShadow="success"
           mx={2}
@@ -91,6 +91,6 @@ function Cover() {
       </Card>
     </CoverLayout>
   );
-}
+};
 
-export default Cover;
+export default SignUp;
