@@ -1,29 +1,11 @@
-import PropTypes from "prop-types";
-
-// @mui material components
 import Grid from "@mui/material/Grid";
-
-// Material Dashboard 2 React components
 import MDBox from "components/MDBox";
-
-// Material Dashboard 2 React example components
-import DefaultNavbar from "muiComponents/Navbars/DefaultNavbar";
+import Footer from "layouts/authentication/components/Footer";
 import PageLayout from "muiComponents/LayoutContainers/PageLayout";
 
-// Authentication pages components
-import Footer from "layouts/authentication/components/Footer";
-
-function BasicLayout({ image, children }) {
+const BasicLayout = ({ image, children }) => {
   return (
     <PageLayout>
-      {/* <DefaultNavbar
-        action={{
-          type: "external",
-          route: "https://creative-tim.com/product/material-dashboard-react",
-          label: "free download",
-          color: "dark",
-        }}
-      /> */}
       <MDBox
         position="absolute"
         width="100%"
@@ -40,22 +22,22 @@ function BasicLayout({ image, children }) {
           backgroundRepeat: "no-repeat",
         }}
       />
-      <MDBox px={1} width="100%" height="100vh" mx="auto">
-        <Grid container spacing={1} justifyContent="center" alignItems="center" height="100%">
+      <MDBox px={1} width="100%" sx={{ minHeight: "100vh" }}>
+        <Grid
+          container
+          spacing={1}
+          justifyContent="center"
+          alignItems="center"
+          sx={{ minHeight: "inherit" }}
+        >
           <Grid item xs={11} sm={9} md={5} lg={4} xl={3}>
             {children}
           </Grid>
         </Grid>
       </MDBox>
-      <Footer light />
+      {/* <Footer light /> */}
     </PageLayout>
   );
-}
-
-// Typechecking props for the BasicLayout
-BasicLayout.propTypes = {
-  image: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired,
 };
 
 export default BasicLayout;
