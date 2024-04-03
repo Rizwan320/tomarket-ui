@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
@@ -13,13 +13,18 @@ import BasicLayout from "layouts/authentication/components/BasicLayout";
 
 import bgImage from "assets/images/login-bg.jpg";
 import tmLogo from "assets/images/toMarket-logo.png";
-import { Box } from "@mui/material";
+import { Box, Link } from "@mui/material";
 import Switch from "@mui/material/Switch";
+import GoogleIcon from "@mui/icons-material/Google";
 
 const SignIn = () => {
   const [rememberMe, setRememberMe] = useState(false);
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
+
+  const handleSignInWithGoogle = () => {};
+
+  const handleForgotPassword = (e) => e.preventDefault();
 
   return (
     <BasicLayout image={bgImage}>
@@ -62,16 +67,35 @@ const SignIn = () => {
             <MDBox mb={2}>
               <MDInput type="password" label="Password" fullWidth />
             </MDBox>
-            <MDBox display="flex" alignItems="center" ml={-1}>
+            <MDBox display="flex" justifyContent="space-between" alignItems="center" ml={-1}>
               <Switch checked={rememberMe} onChange={handleSetRememberMe} />
               <MDTypography
                 variant="button"
                 fontWeight="regular"
                 color="text"
                 onClick={handleSetRememberMe}
-                sx={{ cursor: "pointer", userSelect: "none", ml: -1 }}
+                sx={{ cursor: "pointer", userSelect: "none", ml: -6 }}
               >
                 &nbsp;&nbsp;Remember me
+              </MDTypography>
+              <MDTypography
+                variant="button"
+                fontWeight="regular"
+                color="success"
+                sx={{ cursor: "pointer", userSelect: "none" }}
+              >
+                <Link
+                  to="/forgot-password"
+                  component="button"
+                  underline="always"
+                  onClick={handleForgotPassword}
+                  sx={{
+                    textDecoration: "underline",
+                    cursor: "pointer",
+                  }}
+                >
+                  Forgot Password?
+                </Link>
               </MDTypography>
             </MDBox>
             <MDBox mt={4} mb={1}>
@@ -79,12 +103,23 @@ const SignIn = () => {
                 sign in
               </MDButton>
             </MDBox>
+            <MDBox mt={2} mb={1}>
+              <MDButton
+                startIcon={<GoogleIcon />}
+                onClick={handleSignInWithGoogle}
+                variant="contained"
+                fullWidth
+                color="info"
+              >
+                Sign in with Google
+              </MDButton>
+            </MDBox>
 
             <MDBox mt={3} mb={1} textAlign="center">
               <MDTypography variant="button" color="text">
                 Don&apos;t have an account?{" "}
                 <MDTypography
-                  component={Link}
+                  component={RouterLink}
                   to="/authentication/sign-up"
                   variant="button"
                   color="success"
