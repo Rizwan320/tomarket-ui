@@ -12,7 +12,7 @@ import MDTypography from "components/MDTypography";
 import BasicLayout from "layouts/authentication/components/BasicLayout";
 
 import bgImage from "assets/images/login-bg.jpg";
-import tmLogo from "assets/images/toMarket-logo.png";
+import tmLogo from "assets/images/whatChefWants.png";
 import { Box, Link } from "@mui/material";
 import Switch from "@mui/material/Switch";
 import GoogleIcon from "@mui/icons-material/Google";

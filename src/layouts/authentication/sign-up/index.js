@@ -9,7 +9,7 @@ import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
 
 import bgImage from "assets/images/login-bg.jpg";
-import tmLogo from "assets/images/toMarket-logo.png";
+import tmLogo from "assets/images/whatChefWants.png";
 import BasicLayout from "../components/BasicLayout";
 
 const SignUp = () => {
@@ -65,6 +65,9 @@ const SignUp = () => {
             </MDBox>
             <MDBox mb={2}>
               <MDInput type="password" label="Password" fullWidth />
+            </MDBox>
+            <MDBox mb={2}>
+              <MDInput type="password" label="Confirm Password" fullWidth />
             </MDBox>
             <MDBox mt={4} mb={1}>
               <MDButton variant="gradient" color="success" fullWidth>
