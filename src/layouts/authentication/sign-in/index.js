@@ -13,7 +13,7 @@ import BasicLayout from "layouts/authentication/components/BasicLayout";
 
 import bgImage from "assets/images/login-bg.jpg";
 import tmLogo from "assets/images/toMarket-logo.png";
-import { Box, Button } from "@mui/material";
+import { Box } from "@mui/material";
 import Switch from "@mui/material/Switch";
 
 const SignIn = () => {

@@ -1,25 +1,7 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.2.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-// @mui material components
 import Grid from "@mui/material/Grid";
 
-// Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 
-// Material Dashboard 2 React example components
 import DashboardLayout from "muiComponents/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "muiComponents/Navbars/DashboardNavbar";
 import Footer from "muiComponents/Footer";
@@ -27,11 +9,9 @@ import ReportsBarChart from "muiComponents/Charts/BarCharts/ReportsBarChart";
 import ReportsLineChart from "muiComponents/Charts/LineCharts/ReportsLineChart";
 import ComplexStatisticsCard from "muiComponents/Cards/StatisticsCards/ComplexStatisticsCard";
 
-// Data
 import reportsBarChartData from "layouts/dashboard/data/reportsBarChartData";
 import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
 
-// Dashboard components
 import Projects from "layouts/dashboard/components/Projects";
 import OrdersOverview from "layouts/dashboard/components/OrdersOverview";
 
@@ -41,7 +21,8 @@ function Dashboard() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <MDBox py={3}>
+      <MDBox> To Market Dashboard ... </MDBox>
+      {/* <MDBox py={3}>
         <Grid container spacing={3}>
           <Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
@@ -154,8 +135,8 @@ function Dashboard() {
             </Grid>
           </Grid>
         </MDBox>
-      </MDBox>
-      <Footer />
+      </MDBox> */}
+      {/* <Footer /> */}
     </DashboardLayout>
   );
 }

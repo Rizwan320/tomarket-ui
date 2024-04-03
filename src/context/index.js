@@ -48,10 +48,10 @@ function MaterialUIControllerProvider({ children }) {
   const initialState = {
     miniSidenav: false,
     transparentSidenav: false,
-    whiteSidenav: false,
-    sidenavColor: "info",
-    transparentNavbar: true,
-    fixedNavbar: true,
+    whiteSidenav: true,
+    sidenavColor: "success",
+    transparentNavbar: false,
+    fixedNavbar: false,
     openConfigurator: false,
     direction: "ltr",
     layout: "dashboard",
@@ -82,7 +82,7 @@ MaterialUIControllerProvider.propTypes = {
 };
 
 const setMiniSidenav = (dispatch, value) => dispatch({ type: "MINI_SIDENAV", value });
-const setTransparentSidenav = (dispatch, value) => dispatch({ type: "TRANSPARENT_SIDENAV", value });
+// const setTransparentSidenav = (dispatch, value) => dispatch({ type: "TRANSPARENT_SIDENAV", value });
 const setWhiteSidenav = (dispatch, value) => dispatch({ type: "WHITE_SIDENAV", value });
 const setSidenavColor = (dispatch, value) => dispatch({ type: "SIDENAV_COLOR", value });
 const setTransparentNavbar = (dispatch, value) => dispatch({ type: "TRANSPARENT_NAVBAR", value });
@@ -96,7 +96,7 @@ export {
   MaterialUIControllerProvider,
   useMaterialUIController,
   setMiniSidenav,
-  setTransparentSidenav,
+  // setTransparentSidenav,
   setWhiteSidenav,
   setSidenavColor,
   setTransparentNavbar,

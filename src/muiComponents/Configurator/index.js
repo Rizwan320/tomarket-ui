@@ -1,47 +1,25 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.2.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 import { useState, useEffect } from "react";
 
-// react-github-btn
 import GitHubButton from "react-github-btn";
 
-// @mui material components
 import Divider from "@mui/material/Divider";
 import Switch from "@mui/material/Switch";
 import IconButton from "@mui/material/IconButton";
 import Link from "@mui/material/Link";
 import Icon from "@mui/material/Icon";
 
-// @mui icons
 import TwitterIcon from "@mui/icons-material/Twitter";
 import FacebookIcon from "@mui/icons-material/Facebook";
 
-// Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
 
-// Custom styles for the Configurator
 import ConfiguratorRoot from "muiComponents/Configurator/ConfiguratorRoot";
 
-// Material Dashboard 2 React context
 import {
   useMaterialUIController,
   setOpenConfigurator,
-  setTransparentSidenav,
   setWhiteSidenav,
   setFixedNavbar,
   setSidenavColor,
@@ -61,40 +39,28 @@ function Configurator() {
   const [disabled, setDisabled] = useState(false);
   const sidenavColors = ["primary", "dark", "info", "success", "warning", "error"];
 
-  // Use the useEffect hook to change the button state for the sidenav type based on window size.
   useEffect(() => {
-    // A function that sets the disabled state of the buttons for the sidenav type.
     function handleDisabled() {
       return window.innerWidth > 1200 ? setDisabled(false) : setDisabled(true);
     }
-
-    // The event listener that's calling the handleDisabled function when resizing the window.
     window.addEventListener("resize", handleDisabled);
-
-    // Call the handleDisabled function to set the state with the initial value.
     handleDisabled();
-
-    // Remove event listener on cleanup
     return () => window.removeEventListener("resize", handleDisabled);
   }, []);
 
   const handleCloseConfigurator = () => setOpenConfigurator(dispatch, false);
   const handleTransparentSidenav = () => {
-    setTransparentSidenav(dispatch, true);
-    setWhiteSidenav(dispatch, false);
+    setWhiteSidenav(dispatch, true);
   };
   const handleWhiteSidenav = () => {
     setWhiteSidenav(dispatch, true);
-    setTransparentSidenav(dispatch, false);
   };
   const handleDarkSidenav = () => {
-    setWhiteSidenav(dispatch, false);
-    setTransparentSidenav(dispatch, false);
+    setWhiteSidenav(dispatch, true);
   };
   const handleFixedNavbar = () => setFixedNavbar(dispatch, !fixedNavbar);
   const handleDarkMode = () => setDarkMode(dispatch, !darkMode);
 
-  // sidenav type buttons styles
   const sidenavTypeButtonsStyles = ({
     functions: { pxToRem },
     palette: { white, dark, background },
@@ -112,7 +78,6 @@ function Configurator() {
     },
   });
 
-  // sidenav type active button styles
   const sidenavTypeActiveButtonStyles = ({
     functions: { pxToRem, linearGradient },
     palette: { white, gradients, background },
