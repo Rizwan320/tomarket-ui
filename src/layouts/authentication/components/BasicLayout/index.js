@@ -1,5 +1,6 @@
 import Grid from "@mui/material/Grid";
 import MDBox from "components/MDBox";
+import MDTypography from "components/MDTypography";
 import Footer from "layouts/authentication/components/Footer";
 import PageLayout from "muiComponents/LayoutContainers/PageLayout";
 
@@ -36,6 +37,24 @@ const BasicLayout = ({ image, children }) => {
         </Grid>
       </MDBox>
       {/* <Footer light /> */}
+      <MDBox
+        position="absolute"
+        bottom={16}
+        right={16}
+        sx={{
+          backgroundColor: "rgba(0, 0, 0, 0.5)",
+          padding: "8px 12px",
+          borderRadius: "4px",
+          boxShadow: "0 25px 50px -12px rgb(0 0 0 / 0.25)",
+        }}
+      >
+        <MDTypography component="span" variant="caption" color="white">
+          Powered By&nbsp;
+        </MDTypography>
+        <MDTypography component="span" variant="caption" fontWeight="medium" color="success">
+          ToMarket
+        </MDTypography>
+      </MDBox>
     </PageLayout>
   );
 };
