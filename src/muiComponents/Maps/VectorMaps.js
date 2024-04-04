@@ -34,7 +34,7 @@ const series = {
         "US-MN": "70",
         "US-TX": "130",
       },
-      scale: ["#C8EEFF", "#0071A4"],
+      scale: ["#50a952"],
       normalizeFunction: "polynomial",
     },
   ],
@@ -63,9 +63,9 @@ const Vectormap = (props) => {
         regionStyle={{
           initial: {
             fill: props.color,
-            stroke: "none",
-            "stroke-width": 0,
-            "stroke-opacity": 0,
+            stroke: "#fffff",
+            "stroke-width": 2,
+            "stroke-opacity": 2,
           },
           hover: {
             "fill-opacity": 0.8,

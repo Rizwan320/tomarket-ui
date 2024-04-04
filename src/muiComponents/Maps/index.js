@@ -8,9 +8,6 @@ const MapsVector = () => {
   return (
     <React.Fragment>
       <div className="page-content">
-        <MetaTags>
-          <title>Vector Maps</title>
-        </MetaTags>
         <Grid spacing={3}>
           <Grid item lg={12} sm={12}>
             <Card>
@@ -19,7 +16,7 @@ const MapsVector = () => {
                   USA Map
                 </Typography>
                 <Box id="usa" className="vector-map-height">
-                  <Vector value="us_aea" width="500" color="rgb(98, 110, 212)" />
+                  <Vector value="us_aea" width="500" color="rgb(221, 221, 221)" />
                 </Box>
               </CardContent>
             </Card>
