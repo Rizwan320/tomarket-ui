@@ -26,7 +26,7 @@ function Notifications() {
             </MDBox>
             <MDBox pt={2} px={2} style={{ maxHeight: "1027px", overflow: "auto" }}>
               <MDAlert color="success" dismissible>
-                {alertContent("notification for to market")}
+                {alertContent("first notification")}
               </MDAlert>
               <MDAlert color="success" dismissible>
                 {alertContent("second notification")}

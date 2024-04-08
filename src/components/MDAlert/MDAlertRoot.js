@@ -39,10 +39,11 @@ export default styled(Box)(({ theme, ownerState }) => {
     backgroundImage: backgroundImageValue,
     color: white.main,
     position: "relative",
-    padding: pxToRem(16),
-    marginBottom: pxToRem(16),
+    padding: pxToRem(10),
+    marginBottom: pxToRem(5),
     borderRadius: borderRadius.md,
     fontSize: fontSizeRegular,
     fontWeight: fontWeightMedium,
+    cursor: "pointer",
   };
 });
