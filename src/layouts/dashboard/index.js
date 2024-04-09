@@ -6,16 +6,30 @@ import DashboardLayout from "muiComponents/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "muiComponents/Navbars/DashboardNavbar";
 import SalesChart from "muiComponents/Charts/ApexChart";
 import MapsVector from "muiComponents/Maps";
-import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
 import Notifications from "layouts/notifications";
+import DashBoardInfoCard from "muiComponents/Cards/InfoCards/DashboardInfoCard";
 
-function Dashboard() {
-  const { sales, tasks } = reportsLineChartData;
+const cardData = [
+  { title: "Total Weekly Sales", value: "$10,000", trend: "up" },
+  { title: "Total Monthly Sales", value: "$40,000", trend: "down" },
+  { title: "Top Selling Sales rep", value: "Matthew Thompson" },
+  { title: "Top Buyer", name: "La Cornucopia", value: "$3149" },
+  { title: "No of New Buyers", value: "112", trend: "up" },
+  { title: "Top Selling Product", name: "Organic Tomatos" },
+];
 
+const Dashboard = () => {
   return (
     <DashboardLayout>
       <DashboardNavbar />
       <MDBox py={3}>
+        <Grid container spacing={3}>
+          {cardData?.map((data, index) => (
+            <Grid item xs={12} sm={12} md={4} lg={4} key={index}>
+              <DashBoardInfoCard {...data} />
+            </Grid>
+          ))}
+        </Grid>
         <MDBox mt={4.5}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={6} lg={8}>
@@ -44,6 +58,6 @@ function Dashboard() {
       </MDBox>
     </DashboardLayout>
   );
-}
+};
 
 export default Dashboard;
