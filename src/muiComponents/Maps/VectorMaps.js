@@ -1,65 +1,171 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { VectorMap } from "react-jvectormap";
 import "./jquery-jvectormap.css";
 
-const map = React.createRef(null);
-
-const markers = [
-  { latLng: [34.05, -118.25], name: "Los Angeles", style: { fill: "red", r: 5 } },
-  { latLng: [40.7128, -78.006], name: "New York", style: { fill: "yellow", r: 5 } },
-  { latLng: [40.7128, -74.006], name: "New York", style: { fill: "yellow", r: 5 } },
-  { latLng: [40.7128, -75.006], name: "New York", style: { fill: "yellow", r: 5 } },
-  { latLng: [41.8781, -89.6298], name: "Chicago", style: { fill: "green", r: 5 } },
-  { latLng: [29.7604, -95.3698], name: "Houston", style: { fill: "yellow", r: 5 } },
-  { latLng: [33.4484, -112.074], name: "Phoenix", style: { fill: "purple", r: 5 } },
-  { latLng: [39.7392, -104.9903], name: "Denver", style: { fill: "orange", r: 5 } },
-  { latLng: [25.7617, -80.1918], name: "Miami", style: { fill: "cyan", r: 5 } },
-  { latLng: [47.6062, -122.3321], name: "Seattle", style: { fill: "magenta", r: 5 } },
-  { latLng: [44.9778, -93.265], name: "Minneapolis", style: { fill: "lime", r: 5 } },
-  { latLng: [32.7767, -96.797], name: "Dallas", style: { fill: "maroon", r: 5 } },
-];
-
-const series = {
-  regions: [
-    {
-      values: {
-        "US-CA": "120",
-        "US-NY": "100",
-        "US-IL": "80",
-        "US-TX": "140",
-        "US-AZ": "60",
-        "US-CO": "50",
-        "US-FL": "110",
-        "US-WA": "90",
-        "US-MN": "70",
-        "US-TX": "130",
-      },
-      scale: ["#50a952"],
-      normalizeFunction: "polynomial",
-    },
-  ],
-  markers: [
-    {
-      attribute: "r",
-      scale: [5, 15],
-      values: [10, 20, 15, 12, 18, 9, 14, 16, 11, 13],
-    },
-  ],
+const salesData = {
+  "US-CA": 2180,
+  "US-NY": 150,
+  "US-IL": 1700,
+  "US-TX": 1670,
+  "US-CO": 25,
+  "US-MN": 120,
+  "US-DC": 70,
+  "US-WA": 80,
+  "US-FL": 95,
+  "US-AZ": 65,
 };
 
+const restaurantStyles = {
+  fast_food: { fill: "#f00", r: 5 },
+  casual_dining: { fill: "#0f0", r: 7 },
+  fine_dining: { fill: "#00f", r: 9 },
+  cafe: { fill: "#ff0", r: 4 },
+};
+
+const initialMarkers = [
+  {
+    code: "US-CA",
+    latLng: [34.0522, -118.2437],
+    name: "Los Angeles",
+    salesVolume: 2000,
+    restaurantType: "fast_food",
+  },
+  {
+    code: "US-NY",
+    latLng: [40.7128, -74.006],
+    name: "New York City",
+    salesVolume: 200,
+    restaurantType: "casual_dining",
+  },
+  {
+    code: "US-IL",
+    latLng: [41.8781, -87.6298],
+    name: "Chicago",
+    salesVolume: 1700,
+    restaurantType: "fine_dining",
+  },
+  {
+    code: "US-TX",
+    latLng: [29.7604, -95.3698],
+    name: "Houston",
+    salesVolume: 1000,
+    restaurantType: "casual_dining",
+  },
+  {
+    code: "US-CO",
+    latLng: [39.7392, -104.9903],
+    name: "Denver",
+    salesVolume: 30,
+    restaurantType: "fast_food",
+  },
+  {
+    code: "US-MN",
+    latLng: [44.9778, -93.265],
+    name: "Minneapolis",
+    salesVolume: 120,
+    restaurantType: "fast_food",
+  },
+  {
+    code: "US-CA",
+    latLng: [37.7749, -122.4194],
+    name: "San Francisco",
+    salesVolume: 180,
+    restaurantType: "fine_dining",
+  },
+  {
+    code: "US-TX",
+    latLng: [32.7767, -96.797],
+    name: "Dallas",
+    salesVolume: 670,
+    restaurantType: "casual_dining",
+  },
+  {
+    code: "US-WA",
+    latLng: [47.6062, -122.3321],
+    name: "Seattle",
+    salesVolume: 90,
+    restaurantType: "cafe",
+  },
+  {
+    code: "US-FL",
+    latLng: [25.7617, -80.1918],
+    name: "Miami",
+    salesVolume: 95,
+    restaurantType: "fast_food",
+  },
+  {
+    code: "US-AZ",
+    latLng: [33.4484, -112.074],
+    name: "Phoenix",
+    salesVolume: 65,
+    restaurantType: "fast_food",
+  },
+];
+
+const getMarkerSize = (salesVolume) => {
+  return 5 + (salesVolume / 100) * 1;
+};
+
+const getMarkerColor = (salesVolume) => {
+  if (salesVolume > 100) return "green";
+  if (salesVolume > 50) return "blue";
+  return "red";
+};
+
+const markers = initialMarkers.map((marker) => ({
+  ...marker,
+  ...restaurantStyles[marker.restaurantType],
+  style: { fill: getMarkerColor(marker.salesVolume), r: getMarkerSize(marker.salesVolume) },
+}));
+
 const Vectormap = (props) => {
+  const [updatedMarkers, setUpdatedMarkers] = useState(markers);
+
+  useEffect(() => {
+    setUpdatedMarkers(markers);
+  }, [markers]);
+
+  const statesWithSalesOrMarkers = new Set([
+    ...Object.keys(salesData),
+    ...initialMarkers.map((marker) => marker.code),
+  ]);
+
+  const specificRegionStyle = Array.from(statesWithSalesOrMarkers).reduce((acc, code) => {
+    acc[code] = { scale: "red" };
+    return acc;
+  }, {});
+
+  const handleRegionTipShow = (e, el, code) => {
+    if (!el) {
+      console.error("Tooltip element is not defined.");
+      return;
+    }
+    if (!salesData[code]) {
+      e.preventDefault();
+      return;
+    }
+    const tooltipContent = `
+      <div>
+        <p>Name: ${el.text()}</p>
+        <p>Sales: ${salesData[code]}</p>
+        <p>Type: ${initialMarkers.find((marker) => marker.code === code)?.restaurantType}</p>
+      </div>
+    `;
+    el.html(tooltipContent);
+    el.css({ marginLeft: "75px" });
+  };
+
   return (
-    <div style={{ width: props.width, height: 500 }}>
+    <div style={{ width: props.width, height: "500px", zIndex: 2 }}>
       <VectorMap
-        map={props.value}
+        map="us_aea"
         backgroundColor="transparent"
-        ref={map}
         containerStyle={{
           width: "100%",
-          height: "80%",
+          height: "100%",
         }}
-        markers={markers}
-        series={series}
+        markers={updatedMarkers}
+        onRegionTipShow={handleRegionTipShow}
         regionStyle={{
           initial: {
             fill: props.color,
@@ -72,11 +178,22 @@ const Vectormap = (props) => {
             cursor: "pointer",
           },
           selected: {
-            fill: "#2938bc", // Colour of clicked country
+            fill: "#2938bc",
           },
           selectedHover: {},
         }}
+        regionsSelectable={false}
+        series={{
+          regions: [
+            {
+              values: salesData,
+              scale: ["#50a952"],
+              normalizeFunction: "polynomial",
+            },
+          ],
+        }}
         containerClassName="map"
+        panOnDrag={true}
       />
     </div>
   );
