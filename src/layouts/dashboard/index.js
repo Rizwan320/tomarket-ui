@@ -13,7 +13,7 @@ const cardData = [
   { title: "Total Weekly Sales", value: "$10,000", trend: "up" },
   { title: "Total Monthly Sales", value: "$40,000", trend: "down" },
   { title: "Top Selling Sales rep", value: "Matthew Thompson" },
-  { title: "Top Buyer", name: "La Cornucopia", value: "$3149" },
+  { title: "Top Buyer", name: "Red Wagon Farm", value: "$3149" },
   { title: "No of New Buyers", value: "112", trend: "up" },
   { title: "Top Selling Product", name: "Organic Tomatos" },
 ];

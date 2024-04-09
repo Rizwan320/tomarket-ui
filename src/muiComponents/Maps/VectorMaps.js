@@ -27,14 +27,14 @@ const initialMarkers = [
     code: "US-CA",
     latLng: [34.0522, -118.2437],
     name: "Los Angeles",
-    salesVolume: 2000,
+    salesVolume: 3000,
     restaurantType: "fast_food",
   },
   {
     code: "US-NY",
     latLng: [40.7128, -74.006],
     name: "New York City",
-    salesVolume: 200,
+    salesVolume: 2000,
     restaurantType: "casual_dining",
   },
   {
@@ -62,14 +62,14 @@ const initialMarkers = [
     code: "US-MN",
     latLng: [44.9778, -93.265],
     name: "Minneapolis",
-    salesVolume: 120,
+    salesVolume: 900,
     restaurantType: "fast_food",
   },
   {
     code: "US-CA",
     latLng: [37.7749, -122.4194],
     name: "San Francisco",
-    salesVolume: 180,
+    salesVolume: 900,
     restaurantType: "fine_dining",
   },
   {
@@ -83,21 +83,21 @@ const initialMarkers = [
     code: "US-WA",
     latLng: [47.6062, -122.3321],
     name: "Seattle",
-    salesVolume: 90,
+    salesVolume: 450,
     restaurantType: "cafe",
   },
   {
     code: "US-FL",
     latLng: [25.7617, -80.1918],
     name: "Miami",
-    salesVolume: 95,
+    salesVolume: 999,
     restaurantType: "fast_food",
   },
   {
     code: "US-AZ",
     latLng: [33.4484, -112.074],
     name: "Phoenix",
-    salesVolume: 65,
+    salesVolume: 499,
     restaurantType: "fast_food",
   },
 ];
@@ -107,8 +107,8 @@ const getMarkerSize = (salesVolume) => {
 };
 
 const getMarkerColor = (salesVolume) => {
-  if (salesVolume > 100) return "green";
-  if (salesVolume > 50) return "blue";
+  if (salesVolume > 1000) return "rgba(0, 255, 0, 0.5)";
+  if (salesVolume > 500) return "rgba(0, 0, 255, 0.5)";
   return "red";
 };
 
