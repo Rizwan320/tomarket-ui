@@ -19,11 +19,7 @@ const DashBoardInfoCard = ({ title, value, trend: arrow, name }) => {
     <Card sx={{ height: "130px" }}>
       <CardContent>
         <MDBox display="flex" justifyContent="space-between" alignItems="center">
-          {title && (
-            <MDTypography color="textSecondary" gutterBottom>
-              {title}
-            </MDTypography>
-          )}
+          {title && <MDTypography gutterBottom>{title}</MDTypography>}
           {arrow && (
             <MDBox>
               <IconButton onClick={handleTrendUp}>

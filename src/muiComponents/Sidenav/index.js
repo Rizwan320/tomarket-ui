@@ -19,7 +19,7 @@ import { useMaterialUIController, setMiniSidenav, setWhiteSidenav } from "contex
 
 const EXCLUDE_SIDE_BAR_KEYS = ["sign-in", "sign-up"];
 
-function Sidenav({ color, brand, brandName, routes, ...rest }) {
+const Sidenav = ({ color, brand, brandName, routes, ...rest }) => {
   const [controller, dispatch] = useMaterialUIController();
   const { miniSidenav, transparentSidenav, whiteSidenav, darkMode, sidenavColor } = controller;
   const location = useLocation();
@@ -50,7 +50,6 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
     if (EXCLUDE_SIDE_BAR_KEYS.includes(key)) return null;
 
     let returnValue;
-    console.log(name, "Type");
     if (type === "collapse") {
       returnValue = href ? (
         <Link
@@ -103,8 +102,6 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
     return returnValue;
   });
 
-  console.log(renderRoutes, "renderRountes");
-
   return (
     <SidenavRoot
       {...rest}
@@ -141,6 +138,6 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
       <List>{renderRoutes}</List>
     </SidenavRoot>
   );
-}
+};
 
 export default Sidenav;

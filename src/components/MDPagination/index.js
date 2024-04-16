@@ -1,18 +1,3 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.2.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 import { forwardRef, createContext, useContext, useMemo } from "react";
 
 // prop-types is a library for typechecking of props
@@ -41,7 +26,7 @@ const MDPagination = forwardRef(
             {...rest}
             ref={ref}
             variant={active ? context.variant : "outlined"}
-            color={active ? context.color : "secondary"}
+            color={active ? context.color : "success"}
             iconOnly
             circular
             ownerState={{ variant, active, paginationSize }}
@@ -67,7 +52,7 @@ const MDPagination = forwardRef(
 MDPagination.defaultProps = {
   item: false,
   variant: "gradient",
-  color: "info",
+  color: "success",
   size: "medium",
   active: false,
 };

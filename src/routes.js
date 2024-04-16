@@ -1,10 +1,13 @@
+import Icon from "@mui/material/Icon";
+
+import Wcw from "layouts/wcw";
+import Profile from "layouts/profile";
+import TablePage from "layouts/table";
 import Dashboard from "layouts/dashboard";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
-import Profile from "layouts/profile";
-import Wcw from "layouts/wcw";
-
-import Icon from "@mui/material/Icon";
+import ContentOrganization from "layouts/contentOrganization";
+import BrandDetail from "layouts/brandDetail";
 
 const routes = [
   {
@@ -46,6 +49,28 @@ const routes = [
     icon: <Icon fontSize="small">assignment</Icon>,
     route: "/authentication/sign-up",
     component: <SignUp />,
+  },
+  {
+    type: "collapse",
+    name: "Content Organization",
+    key: "content-organization",
+    icon: <Icon fontSize="small">assignment</Icon>,
+    route: "/content-organization",
+    component: <ContentOrganization />,
+  },
+  {
+    type: "collapse",
+    name: "Brands Table",
+    key: "Brands-Table",
+    icon: <Icon fontSize="small">table</Icon>,
+    route: "/brands-table",
+    component: <TablePage />,
+  },
+  {
+    name: "Brands Details",
+    key: "Brands-Details",
+    route: "/brand-detail/:id",
+    component: <BrandDetail />,
   },
 ];
 

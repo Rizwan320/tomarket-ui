@@ -5,7 +5,7 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDAlert from "components/MDAlert";
 
-function Notifications() {
+const Notifications = () => {
   const alertContent = (name) => (
     <MDTypography variant="body2" color="white">
       A simple {name} alert with{" "}
@@ -24,7 +24,7 @@ function Notifications() {
             <MDBox p={2}>
               <MDTypography variant="h5">Notifications</MDTypography>
             </MDBox>
-            <MDBox pt={2} px={2} style={{ maxHeight: "1027px", overflow: "auto" }}>
+            <MDBox mb={2} pt={2} px={2} style={{ maxHeight: "1027px", overflow: "auto" }}>
               <MDAlert color="success" dismissible>
                 {alertContent("first notification")}
               </MDAlert>
@@ -58,6 +58,6 @@ function Notifications() {
       </Grid>
     </MDBox>
   );
-}
+};
 
 export default Notifications;
