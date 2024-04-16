@@ -6,9 +6,14 @@ import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import Link from "@mui/material/Link";
 import Icon from "@mui/material/Icon";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
+import { useUser } from "context/userContext";
 
 import SidenavCollapse from "muiComponents/Sidenav/SidenavCollapse";
 
@@ -23,6 +28,7 @@ const Sidenav = ({ color, brand, brandName, routes, ...rest }) => {
   const [controller, dispatch] = useMaterialUIController();
   const { miniSidenav, transparentSidenav, whiteSidenav, darkMode, sidenavColor } = controller;
   const location = useLocation();
+  const { logout } = useUser();
   const collapseName = location.pathname.replace("/", "");
 
   let textColor = "dark";
@@ -45,6 +51,10 @@ const Sidenav = ({ color, brand, brandName, routes, ...rest }) => {
 
     return () => window.removeEventListener("resize", handleMiniSidenav);
   }, [dispatch, location]);
+
+  const handleLogout = () => {
+    logout();
+  };
 
   const renderRoutes = routes.map(({ type, name, icon, title, noCollapse, key, href, route }) => {
     if (EXCLUDE_SIDE_BAR_KEYS.includes(key)) return null;
@@ -135,7 +145,17 @@ const Sidenav = ({ color, brand, brandName, routes, ...rest }) => {
         </MDBox>
       </MDBox>
       <Divider light={false} />
-      <List>{renderRoutes}</List>
+      <List>
+        {renderRoutes}
+        <ListItem onClick={handleLogout} sx={{ mt: "190%" }} disablePadding>
+          <ListItemButton onClick={() => {}}>
+            <ListItemIcon>
+              <LogoutIcon />
+            </ListItemIcon>
+            <MDTypography sx={{ color: textColor, fontSize: "18px" }}>Logout</MDTypography>
+          </ListItemButton>
+        </ListItem>
+      </List>
     </SidenavRoot>
   );
 };
