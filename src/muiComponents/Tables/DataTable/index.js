@@ -19,7 +19,7 @@ import MDPagination from "components/MDPagination";
 import DataTableHeadCell from "muiComponents/Tables/DataTable/DataTableHeadCell";
 import DataTableBodyCell from "muiComponents/Tables/DataTable/DataTableBodyCell";
 
-function DataTable({
+const DataTable = ({
   entriesPerPage,
   canSearch,
   showTotalEntries,
@@ -27,11 +27,13 @@ function DataTable({
   pagination,
   isSorted,
   noEndBorder,
-}) {
+  onRowClick,
+}) => {
   const defaultValue = entriesPerPage.defaultValue ? entriesPerPage.defaultValue : 10;
   const entries = entriesPerPage.entries
     ? entriesPerPage.entries.map((el) => el.toString())
     : ["5", "10", "15", "20", "25"];
+
   const columns = useMemo(() => table.columns, [table]);
   const data = useMemo(() => table.rows, [table]);
 
@@ -65,6 +67,29 @@ function DataTable({
 
   // Set the entries per page value based on the select value
   const setEntriesPerPage = (value) => setPageSize(value);
+
+  const extractDataFromElement = (element) => {
+    if (
+      element &&
+      typeof element === "object" &&
+      element.$$typeof === Symbol.for("react.element")
+    ) {
+      if ("children" in element.props) return element.props.children;
+      if ("id" in element.props) return element.props.id;
+      const keys = Object.keys(element.props);
+      if (keys.length > 0) return element.props[keys[0]];
+    }
+    return null;
+  };
+  const handleRowClick = (row) => {
+    const rowData = {};
+
+    row.cells.forEach((cell) => {
+      rowData[cell.column.id] = extractDataFromElement(cell.value);
+    });
+    rowData["id"] = Number(row.original.id);
+    if (onRowClick) onRowClick(rowData);
+  };
 
   // Render the paginations
   const renderPagination = pageOptions.map((option) => (
@@ -185,7 +210,17 @@ function DataTable({
           {page.map((row, key) => {
             prepareRow(row);
             return (
-              <TableRow key={key} {...row.getRowProps()}>
+              <TableRow
+                key={key}
+                {...row.getRowProps()}
+                sx={{
+                  ":hover": {
+                    bgcolor: "#F1F1F1",
+                    cursor: "pointer",
+                  },
+                }}
+                onClick={() => handleRowClick(row)}
+              >
                 {row.cells.map((cell, idx) => (
                   <DataTableBodyCell
                     key={idx}
@@ -247,14 +282,14 @@ function DataTable({
       </MDBox>
     </TableContainer>
   );
-}
+};
 
 // Setting default values for the props of DataTable
 DataTable.defaultProps = {
   entriesPerPage: { defaultValue: 10, entries: [5, 10, 15, 20, 25] },
   canSearch: false,
   showTotalEntries: true,
-  pagination: { variant: "gradient", color: "info" },
+  pagination: { variant: "gradient", color: "success" },
   isSorted: true,
   noEndBorder: false,
 };
