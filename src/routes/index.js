@@ -8,6 +8,7 @@ import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
 import ContentOrganization from "layouts/contentOrganization";
 import BrandDetail from "layouts/brandDetail";
+import Products from "layouts/products";
 
 export const brandRoutes = [
   {
@@ -26,6 +27,15 @@ export const brandRoutes = [
     icon: <Icon fontSize="small">assignment</Icon>,
     route: "/wcw",
     component: <Wcw />,
+    isPrivate: true,
+  },
+  {
+    type: "collapse",
+    name: "Products",
+    key: "products",
+    icon: <Icon fontSize="small">table</Icon>,
+    route: "/products",
+    component: <Products />,
     isPrivate: true,
   },
   {
