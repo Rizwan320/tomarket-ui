@@ -1,27 +1,9 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.2.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 import { useMemo, useEffect, useState } from "react";
 
-// prop-types is a library for typechecking of props
 import PropTypes from "prop-types";
 
-// react-table components
 import { useTable, usePagination, useGlobalFilter, useAsyncDebounce, useSortBy } from "react-table";
 
-// @mui material components
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
@@ -29,17 +11,15 @@ import TableRow from "@mui/material/TableRow";
 import Icon from "@mui/material/Icon";
 import Autocomplete from "@mui/material/Autocomplete";
 
-// Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDInput from "components/MDInput";
 import MDPagination from "components/MDPagination";
 
-// Material Dashboard 2 React example components
 import DataTableHeadCell from "muiComponents/Tables/DataTable/DataTableHeadCell";
 import DataTableBodyCell from "muiComponents/Tables/DataTable/DataTableBodyCell";
 
-function DataTable({
+const DataTable = ({
   entriesPerPage,
   canSearch,
   showTotalEntries,
@@ -47,11 +27,13 @@ function DataTable({
   pagination,
   isSorted,
   noEndBorder,
-}) {
+  onRowClick,
+}) => {
   const defaultValue = entriesPerPage.defaultValue ? entriesPerPage.defaultValue : 10;
   const entries = entriesPerPage.entries
     ? entriesPerPage.entries.map((el) => el.toString())
     : ["5", "10", "15", "20", "25"];
+
   const columns = useMemo(() => table.columns, [table]);
   const data = useMemo(() => table.rows, [table]);
 
@@ -85,6 +67,29 @@ function DataTable({
 
   // Set the entries per page value based on the select value
   const setEntriesPerPage = (value) => setPageSize(value);
+
+  const extractDataFromElement = (element) => {
+    if (
+      element &&
+      typeof element === "object" &&
+      element.$$typeof === Symbol.for("react.element")
+    ) {
+      if ("children" in element.props) return element.props.children;
+      if ("id" in element.props) return element.props.id;
+      const keys = Object.keys(element.props);
+      if (keys.length > 0) return element.props[keys[0]];
+    }
+    return null;
+  };
+  const handleRowClick = (row) => {
+    const rowData = {};
+
+    row.cells.forEach((cell) => {
+      rowData[cell.column.id] = extractDataFromElement(cell.value);
+    });
+    rowData["id"] = Number(row.original.id);
+    if (onRowClick) onRowClick(rowData);
+  };
 
   // Render the paginations
   const renderPagination = pageOptions.map((option) => (
@@ -205,7 +210,17 @@ function DataTable({
           {page.map((row, key) => {
             prepareRow(row);
             return (
-              <TableRow key={key} {...row.getRowProps()}>
+              <TableRow
+                key={key}
+                {...row.getRowProps()}
+                sx={{
+                  ":hover": {
+                    bgcolor: "#F1F1F1",
+                    cursor: "pointer",
+                  },
+                }}
+                onClick={() => handleRowClick(row)}
+              >
                 {row.cells.map((cell, idx) => (
                   <DataTableBodyCell
                     key={idx}
@@ -267,14 +282,14 @@ function DataTable({
       </MDBox>
     </TableContainer>
   );
-}
+};
 
 // Setting default values for the props of DataTable
 DataTable.defaultProps = {
   entriesPerPage: { defaultValue: 10, entries: [5, 10, 15, 20, 25] },
   canSearch: false,
   showTotalEntries: true,
-  pagination: { variant: "gradient", color: "info" },
+  pagination: { variant: "gradient", color: "success" },
   isSorted: true,
   noEndBorder: false,
 };

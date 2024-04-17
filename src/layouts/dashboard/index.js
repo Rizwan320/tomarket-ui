@@ -1,163 +1,63 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.2.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-// @mui material components
 import Grid from "@mui/material/Grid";
 
-// Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 
-// Material Dashboard 2 React example components
 import DashboardLayout from "muiComponents/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "muiComponents/Navbars/DashboardNavbar";
-import Footer from "muiComponents/Footer";
-import ReportsBarChart from "muiComponents/Charts/BarCharts/ReportsBarChart";
-import ReportsLineChart from "muiComponents/Charts/LineCharts/ReportsLineChart";
-import ComplexStatisticsCard from "muiComponents/Cards/StatisticsCards/ComplexStatisticsCard";
+import SalesChart from "muiComponents/Charts/ApexChart";
+import MapsVector from "muiComponents/Maps";
+import Notifications from "layouts/notifications";
+import DashBoardInfoCard from "muiComponents/Cards/InfoCards/DashboardInfoCard";
 
-// Data
-import reportsBarChartData from "layouts/dashboard/data/reportsBarChartData";
-import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
+const cardData = [
+  { title: "Total Weekly Sales", value: "$10,000", trend: "up" },
+  { title: "Total Monthly Sales", value: "$40,000", trend: "down" },
+  { title: "Top Selling Sales rep", value: "Matthew Thompson" },
+  { title: "Top Buyer", name: "Red Wagon Farm", value: "$3149" },
+  { title: "No of New Buyers", value: "112", trend: "up" },
+  { title: "Top Selling Product", name: "Organic Tomatos" },
+];
 
-// Dashboard components
-import Projects from "layouts/dashboard/components/Projects";
-import OrdersOverview from "layouts/dashboard/components/OrdersOverview";
-
-function Dashboard() {
-  const { sales, tasks } = reportsLineChartData;
-
+const Dashboard = () => {
   return (
     <DashboardLayout>
       <DashboardNavbar />
       <MDBox py={3}>
         <Grid container spacing={3}>
-          <Grid item xs={12} md={6} lg={3}>
-            <MDBox mb={1.5}>
-              <ComplexStatisticsCard
-                color="dark"
-                icon="weekend"
-                title="Bookings"
-                count={281}
-                percentage={{
-                  color: "success",
-                  amount: "+55%",
-                  label: "than lask week",
-                }}
-              />
-            </MDBox>
-          </Grid>
-          <Grid item xs={12} md={6} lg={3}>
-            <MDBox mb={1.5}>
-              <ComplexStatisticsCard
-                icon="leaderboard"
-                title="Today's Users"
-                count="2,300"
-                percentage={{
-                  color: "success",
-                  amount: "+3%",
-                  label: "than last month",
-                }}
-              />
-            </MDBox>
-          </Grid>
-          <Grid item xs={12} md={6} lg={3}>
-            <MDBox mb={1.5}>
-              <ComplexStatisticsCard
-                color="success"
-                icon="store"
-                title="Revenue"
-                count="34k"
-                percentage={{
-                  color: "success",
-                  amount: "+1%",
-                  label: "than yesterday",
-                }}
-              />
-            </MDBox>
-          </Grid>
-          <Grid item xs={12} md={6} lg={3}>
-            <MDBox mb={1.5}>
-              <ComplexStatisticsCard
-                color="primary"
-                icon="person_add"
-                title="Followers"
-                count="+91"
-                percentage={{
-                  color: "success",
-                  amount: "",
-                  label: "Just updated",
-                }}
-              />
-            </MDBox>
-          </Grid>
+          {cardData?.map((data, index) => (
+            <Grid item xs={12} sm={12} md={4} lg={4} key={index}>
+              <DashBoardInfoCard {...data} />
+            </Grid>
+          ))}
         </Grid>
         <MDBox mt={4.5}>
           <Grid container spacing={3}>
-            <Grid item xs={12} md={6} lg={4}>
-              <MDBox mb={3}>
-                <ReportsBarChart
-                  color="info"
-                  title="website views"
-                  description="Last Campaign Performance"
-                  date="campaign sent 2 days ago"
-                  chart={reportsBarChartData}
-                />
-              </MDBox>
-            </Grid>
-            <Grid item xs={12} md={6} lg={4}>
-              <MDBox mb={3}>
-                <ReportsLineChart
-                  color="success"
-                  title="daily sales"
-                  description={
-                    <>
-                      (<strong>+15%</strong>) increase in today sales.
-                    </>
-                  }
-                  date="updated 4 min ago"
-                  chart={sales}
-                />
-              </MDBox>
-            </Grid>
-            <Grid item xs={12} md={6} lg={4}>
-              <MDBox mb={3}>
-                <ReportsLineChart
-                  color="dark"
-                  title="completed tasks"
-                  description="Last Campaign Performance"
-                  date="just updated"
-                  chart={tasks}
-                />
-              </MDBox>
-            </Grid>
-          </Grid>
-        </MDBox>
-        <MDBox>
-          <Grid container spacing={3}>
             <Grid item xs={12} md={6} lg={8}>
-              <Projects />
+              <MapsVector />
+              <MDBox mt={3} mb={3}>
+                <SalesChart
+                  chartSeries={[
+                    {
+                      name: "This year",
+                      data: [18, 16, 5, 8, 3, 14, 14, 16, 17, 19, 18, 20],
+                    },
+                    {
+                      name: "Last year",
+                      data: [12, 11, 4, 6, 2, 9, 9, 10, 11, 12, 13, 13],
+                    },
+                  ]}
+                  sx={{ height: "100%" }}
+                />
+              </MDBox>
             </Grid>
-            <Grid item xs={12} md={6} lg={4}>
-              <OrdersOverview />
+            <Grid alignItems={"left"} item xs={12} md={6} lg={4}>
+              <Notifications />
             </Grid>
           </Grid>
         </MDBox>
       </MDBox>
-      <Footer />
     </DashboardLayout>
   );
-}
+};
 
 export default Dashboard;

@@ -1,18 +1,3 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.2.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 // @mui material components
 import { styled } from "@mui/material/styles";
 
@@ -26,7 +11,7 @@ export default styled(MDButton)(({ theme, ownerState }) => {
   const { borderColor } = borders;
   const { pxToRem } = functions;
   const { fontWeightRegular, size: fontSize } = typography;
-  const { light } = palette;
+  const { success } = palette;
 
   // width, height, minWidth and minHeight values
   let sizeValue = pxToRem(36);
@@ -55,7 +40,7 @@ export default styled(MDButton)(({ theme, ownerState }) => {
     },
 
     "&:hover": {
-      backgroundColor: light.main,
+      backgroundColor: success.main,
       borderColor,
     },
   };

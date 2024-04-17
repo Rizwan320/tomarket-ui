@@ -3,6 +3,7 @@ import { BrowserRouter } from "react-router-dom";
 
 import App from "App";
 import { MaterialUIControllerProvider } from "context";
+import { UserProvider } from "context/userContext";
 
 const container = document.getElementById("root");
 const root = createRoot(container);
@@ -10,7 +11,9 @@ const root = createRoot(container);
 root.render(
   <BrowserRouter>
     <MaterialUIControllerProvider>
-      <App />
+      <UserProvider>
+        <App />
+      </UserProvider>
     </MaterialUIControllerProvider>
   </BrowserRouter>
 );
