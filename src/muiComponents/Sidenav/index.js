@@ -10,6 +10,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import LogoutIcon from "@mui/icons-material/Logout";
+import Box from "@mui/material/Box";
 
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
@@ -145,17 +146,17 @@ const Sidenav = ({ color, brand, brandName, routes, ...rest }) => {
         </MDBox>
       </MDBox>
       <Divider light={false} />
-      <List>
-        {renderRoutes}
-        <ListItem onClick={handleLogout} sx={{ mt: "190%" }} disablePadding>
-          <ListItemButton onClick={() => {}}>
+      <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
+        <List sx={{ flexGrow: 1, overflow: "auto" }}>{renderRoutes}</List>
+        <ListItem onClick={handleLogout} disablePadding sx={{ mt: "auto" }}>
+          <ListItemButton>
             <ListItemIcon>
               <LogoutIcon />
             </ListItemIcon>
-            <MDTypography sx={{ color: textColor, fontSize: "18px" }}>Logout</MDTypography>
+            <MDTypography sx={{ color: "textColor", fontSize: "18px" }}>Logout</MDTypography>
           </ListItemButton>
         </ListItem>
-      </List>
+      </Box>
     </SidenavRoot>
   );
 };

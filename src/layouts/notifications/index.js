@@ -8,11 +8,7 @@ import MDAlert from "components/MDAlert";
 const Notifications = () => {
   const alertContent = (name) => (
     <MDTypography variant="body2" color="white">
-      A simple {name} alert with{" "}
-      <MDTypography component="a" href="#" variant="body2" fontWeight="medium" color="white">
-        an example link
-      </MDTypography>
-      . Give it a click if you like.
+      {name}
     </MDTypography>
   );
 
@@ -26,31 +22,26 @@ const Notifications = () => {
             </MDBox>
             <MDBox mb={2} pt={2} px={2} style={{ maxHeight: "1027px", overflow: "auto" }}>
               <MDAlert color="success" dismissible>
-                {alertContent("first notification")}
+                {alertContent(
+                  "Matthew Thompson has sold an extra case of Slabbed cut Bacon to Bacon Social House Centennial"
+                )}
               </MDAlert>
               <MDAlert color="success" dismissible>
-                {alertContent("second notification")}
+                {alertContent("Snooze Broomfield did NOT reorder Slabbed cut Bacon this week")}
               </MDAlert>
               <MDAlert color="success" dismissible>
-                {alertContent("third notification")}
+                {alertContent("Snooze Arvada order is up 200% this week")}
               </MDAlert>
               <MDAlert color="success" dismissible>
-                {alertContent("fourth notification")}
+                {alertContent(
+                  "_____ At WhatChefsWant has pushed through payment for your delivery"
+                )}
               </MDAlert>
               <MDAlert color="success" dismissible>
-                {alertContent("fifth notification")}
+                {alertContent("Paul Dominguez has a question about: Bacon Ends")}
               </MDAlert>
               <MDAlert color="success" dismissible>
-                {alertContent("sixth notification")}
-              </MDAlert>
-              <MDAlert color="success" dismissible>
-                {alertContent("seventh notification")}
-              </MDAlert>
-              <MDAlert color="success" dismissible>
-                {alertContent("eighth notification")}
-              </MDAlert>
-              <MDAlert color="success" dismissible>
-                {alertContent("eighth notification")}
+                {alertContent("Sean Beattie is requesting Samples of Maple Smoked Bacon")}
               </MDAlert>
             </MDBox>
           </Card>
