@@ -15,9 +15,11 @@ import theme from "assets/theme";
 
 import themeDark from "assets/theme-dark";
 
-import routes from "routes";
+import { brandRoutes, distributorRoutes } from "routes";
 
 import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "context";
+import { useUser } from "context/userContext";
+import PrivateRoute from "routes/privateRoutes";
 
 import brandWhite from "assets/images/logo-ct.png";
 import brandDark from "assets/images/logo-ct-dark.png";
@@ -36,6 +38,7 @@ export default function App() {
   } = controller;
   const [onMouseEnter, setOnMouseEnter] = useState(false);
   const { pathname } = useLocation();
+  const { user } = useUser();
 
   const handleOnMouseEnter = () => {
     if (miniSidenav && !onMouseEnter) {
@@ -69,7 +72,17 @@ export default function App() {
       }
 
       if (route.route) {
-        return <Route exact path={route.route} element={route.component} key={route.key} />;
+        const RouteComponent = (
+          <Route
+            exact
+            path={route.route}
+            element={
+              route.isPrivate ? <PrivateRoute>{route.component}</PrivateRoute> : route.component
+            }
+            key={route.key}
+          />
+        );
+        return RouteComponent;
       }
 
       return null;
@@ -102,13 +115,13 @@ export default function App() {
   return (
     <ThemeProvider theme={darkMode ? themeDark : theme}>
       <CssBaseline />
-      {layout === "dashboard" && (
+      {layout === "dashboard" && user?.email && (
         <>
           <Sidenav
             color={sidenavColor}
             brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
             brandName="To Market"
-            routes={routes}
+            routes={user?.type === "brands" ? brandRoutes : distributorRoutes}
             onMouseEnter={handleOnMouseEnter}
             onMouseLeave={handleOnMouseLeave}
           />
@@ -118,7 +131,7 @@ export default function App() {
       )}
       {layout === "vr" && <Configurator />}
       <Routes>
-        {getRoutes(routes)}
+        {getRoutes(user?.type === "brands" ? brandRoutes : distributorRoutes)}
         <Route path="*" element={<Navigate to="/authentication/sign-in" />} />
       </Routes>
     </ThemeProvider>
