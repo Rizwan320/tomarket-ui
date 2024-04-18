@@ -36,7 +36,6 @@ const BasicLayout = ({ image, children }) => {
           </Grid>
         </Grid>
       </MDBox>
-      {/* <Footer light /> */}
       <MDBox
         position="absolute"
         bottom={16}

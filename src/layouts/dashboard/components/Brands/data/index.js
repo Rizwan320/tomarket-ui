@@ -5,9 +5,6 @@ import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
 import MDBadge from "components/MDBadge";
 
-import BatteryFullIcon from "@mui/icons-material/BatteryFull";
-import BatteryAlertIcon from "@mui/icons-material/BatteryAlert";
-
 import Switch from "@mui/material/Switch";
 import { BADGE_COLOR, BRAND_DATA } from "./BrandsData";
 import { LinearProgress } from "@mui/material";

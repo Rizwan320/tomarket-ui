@@ -13,7 +13,7 @@ import MDPaginationItemRoot from "components/MDPagination/MDPaginationItemRoot";
 const Context = createContext();
 
 const MDPagination = forwardRef(
-  ({ item, variant, color, size, active, children, ...rest }, ref) => {
+  ({ item, variant, color = "success", size, active, children, ...rest }, ref) => {
     const context = useContext(Context);
     const paginationSize = context ? context.size : null;
 

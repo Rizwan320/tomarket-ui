@@ -9,11 +9,8 @@ import Icon from "@mui/material/Icon";
 import MDBox from "components/MDBox";
 
 import Sidenav from "muiComponents/Sidenav";
-import Configurator from "muiComponents/Configurator";
 
 import theme from "assets/theme";
-
-import themeDark from "assets/theme-dark";
 
 import { brandRoutes, distributorRoutes } from "routes";
 
@@ -113,7 +110,7 @@ export default function App() {
   );
 
   return (
-    <ThemeProvider theme={darkMode ? themeDark : theme}>
+    <ThemeProvider theme={theme}>
       <CssBaseline />
       {layout === "dashboard" && user?.email && (
         <>
@@ -127,7 +124,6 @@ export default function App() {
           />
         </>
       )}
-      {layout === "vr" && <Configurator />}
       <Routes>
         {getRoutes(user?.type === "brands" ? brandRoutes : distributorRoutes)}
         <Route path="*" element={<Navigate to="/authentication/sign-in" />} />
