@@ -25,16 +25,12 @@ function DragDropFile() {
   const [selectedFolder, setSelectedFolder] = useState("");
 
   const onDrop = useCallback((acceptedFiles) => {
-    // Perform some operation with the accepted files
     setUploadedFiles(acceptedFiles);
-
-    // Open the folder selection dialog
     setOpenDialog(true);
   }, []);
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
-  // Dummy folder list items
   const folderListItems = ["Product pictures", "Logos", "Sales sheets", "Descriptions"];
 
   const handleCloseDialog = () => {
@@ -42,7 +38,6 @@ function DragDropFile() {
   };
 
   const handleFolderSelection = (folder) => {
-    // Handle file saving logic here using the selected folder and uploadedFiles state
     console.log("Selected folder:", folder);
     console.log("Uploaded files:", uploadedFiles);
 
@@ -65,7 +60,7 @@ function DragDropFile() {
               p: 6,
               mb: 3,
               textAlign: "center",
-              bgcolor: "background.paper", // Add background color to the dropzone
+              bgcolor: "background.paper",
             }}
           >
             <MDInput {...getInputProps()} />
@@ -80,7 +75,6 @@ function DragDropFile() {
         </Grid>
       </Grid>
 
-      {/* Modal Dialog for Folder Selection */}
       <Dialog
         open={openDialog}
         onClose={handleCloseDialog}

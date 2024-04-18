@@ -1,7 +1,5 @@
-// @mui material components
 import { styled } from "@mui/material/styles";
 
-// Material Dashboard 2 React components
 import MDButton from "components/MDButton";
 
 export default styled(MDButton)(({ theme, ownerState }) => {
@@ -13,7 +11,6 @@ export default styled(MDButton)(({ theme, ownerState }) => {
   const { fontWeightRegular, size: fontSize } = typography;
   const { success } = palette;
 
-  // width, height, minWidth and minHeight values
   let sizeValue = pxToRem(36);
 
   if (paginationSize === "small") {
