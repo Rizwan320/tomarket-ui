@@ -1,12 +1,9 @@
-// @mui material components
 import Link from "@mui/material/Link";
 import Icon from "@mui/material/Icon";
 
-// Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 
-// Material Dashboard 2 React base styles
 import typography from "assets/theme/base/typography";
 
 function Footer({ company, links }) {
@@ -78,16 +75,5 @@ function Footer({ company, links }) {
     </MDBox>
   );
 }
-
-// Setting default values for the props of Footer
-Footer.defaultProps = {
-  company: { href: "https://www.creative-tim.com/", name: "To Market" },
-  links: [
-    { href: "https://www.creative-tim.com/", name: "To Market" },
-    { href: "https://www.creative-tim.com/presentation", name: "About Us" },
-    { href: "https://www.creative-tim.com/blog", name: "Blog" },
-    { href: "https://www.creative-tim.com/license", name: "License" },
-  ],
-};
 
 export default Footer;

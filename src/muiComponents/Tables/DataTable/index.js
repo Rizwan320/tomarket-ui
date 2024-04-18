@@ -62,10 +62,8 @@ const DataTable = ({
     state: { pageIndex, pageSize, globalFilter },
   } = tableInstance;
 
-  // Set the default value for the entries per page when component mounts
   useEffect(() => setPageSize(defaultValue || 10), [defaultValue]);
 
-  // Set the entries per page value based on the select value
   const setEntriesPerPage = (value) => setPageSize(value);
 
   const extractDataFromElement = (element) => {
@@ -91,7 +89,6 @@ const DataTable = ({
     if (onRowClick) onRowClick(rowData);
   };
 
-  // Render the paginations
   const renderPagination = pageOptions.map((option) => (
     <MDPagination
       item
@@ -103,25 +100,19 @@ const DataTable = ({
     </MDPagination>
   ));
 
-  // Handler for the input to set the pagination index
   const handleInputPagination = ({ target: { value } }) =>
     value > pageOptions.length || value < 0 ? gotoPage(0) : gotoPage(Number(value));
 
-  // Customized page options starting from 1
   const customizedPageOptions = pageOptions.map((option) => option + 1);
 
-  // Setting value for the pagination input
   const handleInputPaginationValue = ({ target: value }) => gotoPage(Number(value.value - 1));
 
-  // Search input value state
   const [search, setSearch] = useState(globalFilter);
 
-  // Search input state handle
   const onSearchChange = useAsyncDebounce((value) => {
     setGlobalFilter(value || undefined);
   }, 100);
 
-  // A function that sets the sorted value for the table
   const setSortedValue = (column) => {
     let sortedValue;
 
@@ -136,10 +127,8 @@ const DataTable = ({
     return sortedValue;
   };
 
-  // Setting the entries starting point
   const entriesStart = pageIndex === 0 ? pageIndex + 1 : pageIndex * pageSize + 1;
 
-  // Setting the entries ending point
   let entriesEnd;
 
   if (pageIndex === 0) {
@@ -284,7 +273,6 @@ const DataTable = ({
   );
 };
 
-// Setting default values for the props of DataTable
 DataTable.defaultProps = {
   entriesPerPage: { defaultValue: 10, entries: [5, 10, 15, 20, 25] },
   canSearch: false,
@@ -294,7 +282,6 @@ DataTable.defaultProps = {
   noEndBorder: false,
 };
 
-// Typechecking props for the DataTable
 DataTable.propTypes = {
   entriesPerPage: PropTypes.oneOfType([
     PropTypes.shape({
