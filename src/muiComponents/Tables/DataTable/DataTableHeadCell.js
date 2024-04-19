@@ -3,17 +3,15 @@ import PropTypes from "prop-types";
 import Icon from "@mui/material/Icon";
 
 import MDBox from "components/MDBox";
-
 import { useMaterialUIController } from "context";
 
-function DataTableHeadCell({ width, children, sorted, align, ...rest }) {
+const DataTableHeadCell = ({ width, children, sorted, align, ...rest }) => {
   const [controller] = useMaterialUIController();
   const { darkMode } = controller;
 
   return (
     <MDBox
       component="th"
-      width={width}
       py={1.5}
       px={3}
       sx={({ palette: { light }, borders: { borderWidth } }) => ({
@@ -39,7 +37,7 @@ function DataTableHeadCell({ width, children, sorted, align, ...rest }) {
           <MDBox
             position="absolute"
             top={0}
-            right={align !== "right" ? "16px" : 0}
+            right={align !== "right" ? "2px" : 0}
             left={align === "right" ? "-5px" : "unset"}
             sx={({ typography: { size } }) => ({
               fontSize: size.lg,
@@ -66,14 +64,16 @@ function DataTableHeadCell({ width, children, sorted, align, ...rest }) {
       </MDBox>
     </MDBox>
   );
-}
+};
 
+// Setting default values for the props of DataTableHeadCell
 DataTableHeadCell.defaultProps = {
   width: "auto",
   sorted: "none",
   align: "left",
 };
 
+// Typechecking props for the DataTableHeadCell
 DataTableHeadCell.propTypes = {
   width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   children: PropTypes.node.isRequired,

@@ -92,7 +92,7 @@ export default function App() {
         <Sidenav
           color={sidenavColor}
           brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
-          brandName="To Market"
+          CompanyName="WCW"
           routes={user?.type === "brands" ? brandRoutes : distributorRoutes}
           onMouseEnter={handleOnMouseEnter}
           onMouseLeave={handleOnMouseLeave}
