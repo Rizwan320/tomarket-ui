@@ -1,8 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import DashboardLayout from "muiComponents/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "muiComponents/Navbars/DashboardNavbar";
 import MDBox from "components/MDBox";
 import BrandsFolder from "layouts/contentOrganization/BrandsFolder";
 import { BRAND_DATA } from "layouts/dashboard/components/Brands/data/BrandsData";
@@ -17,12 +15,9 @@ const BrandDetail = () => {
   }, [id]);
 
   return (
-    <DashboardLayout>
-      <DashboardNavbar />
-      <MDBox varient="gradient" py={3}>
-        <BrandsFolder name={filteredData?.brandName} />
-      </MDBox>
-    </DashboardLayout>
+    <MDBox varient="gradient" py={3}>
+      <BrandsFolder name={filteredData?.brandName} />
+    </MDBox>
   );
 };
 

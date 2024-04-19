@@ -29,7 +29,7 @@ import {
   setOpenConfigurator,
 } from "context";
 
-function DashboardNavbar({ absolute, light, isMini }) {
+const DashboardNavbar = ({ absolute, light, isMini }) => {
   const [navbarType, setNavbarType] = useState();
   const [controller, dispatch] = useMaterialUIController();
   const { miniSidenav, transparentNavbar, fixedNavbar, openConfigurator, darkMode } = controller;
@@ -45,10 +45,9 @@ function DashboardNavbar({ absolute, light, isMini }) {
     function handleTransparentNavbar() {
       setTransparentNavbar(dispatch, (fixedNavbar && window.scrollY === 0) || !fixedNavbar);
     }
-    window.addEventListener("scroll", handleTransparentNavbar);
+
     handleTransparentNavbar();
-    return () => window.removeEventListener("scroll", handleTransparentNavbar);
-  }, [dispatch, fixedNavbar]);
+  }, [dispatch]);
 
   const handleMiniSidenav = () => setMiniSidenav(dispatch, !miniSidenav);
   const handleConfiguratorOpen = () => setOpenConfigurator(dispatch, !openConfigurator);
@@ -136,6 +135,6 @@ function DashboardNavbar({ absolute, light, isMini }) {
       </Toolbar>
     </AppBar>
   );
-}
+};
 
 export default DashboardNavbar;
