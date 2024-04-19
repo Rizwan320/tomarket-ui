@@ -17,13 +17,13 @@ const DashBoardInfoCard = ({ title, value, trend: arrow, name, previousSale }) =
   return (
     <Card
       sx={{
-        height: "120px",
+        minHeight: "120px",
         display: "flex",
         flexDirection: "column",
-        justifyContent: "space-between",
+        minWidth: "100%",
       }}
     >
-      <CardContent>
+      <CardContent style={{ flex: 1, display: "flex", flexDirection: "column" }}>
         <MDBox display="flex" justifyContent="space-between" alignItems="center">
           {title && <MDTypography gutterBottom>{title}</MDTypography>}
           {arrow && (

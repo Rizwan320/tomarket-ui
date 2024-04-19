@@ -22,7 +22,7 @@ const Dashboard = () => {
       <MDBox py={3}>
         <Grid container spacing={3}>
           {cardData?.map((data, index) => (
-            <Grid item xs={12} sm={12} md={4} lg={4} key={index}>
+            <Grid item xs={12} sm={6} md={6} lg={4} key={index} style={{ display: "flex" }}>
               <DashBoardInfoCard {...data} />
             </Grid>
           ))}
