@@ -2,8 +2,6 @@ import Grid from "@mui/material/Grid";
 
 import MDBox from "components/MDBox";
 
-import DashboardLayout from "muiComponents/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "muiComponents/Navbars/DashboardNavbar";
 import SalesChart from "muiComponents/Charts/ApexChart";
 import MapsVector from "muiComponents/Maps";
 import Notifications from "layouts/notifications";
@@ -20,8 +18,7 @@ const cardData = [
 
 const Dashboard = () => {
   return (
-    <DashboardLayout>
-      <DashboardNavbar />
+    <>
       <MDBox py={3}>
         <Grid container spacing={3}>
           {cardData?.map((data, index) => (
@@ -56,7 +53,7 @@ const Dashboard = () => {
           </Grid>
         </MDBox>
       </MDBox>
-    </DashboardLayout>
+    </>
   );
 };
 
