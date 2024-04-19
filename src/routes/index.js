@@ -19,6 +19,7 @@ export const brandRoutes = [
     route: "/dashboard",
     component: <Dashboard />,
     isPrivate: true,
+    isNavbar: true,
   },
   {
     type: "collapse",
@@ -28,6 +29,7 @@ export const brandRoutes = [
     route: "/wcw",
     component: <Wcw />,
     isPrivate: true,
+    isNavbar: true,
   },
   {
     type: "collapse",
@@ -37,6 +39,7 @@ export const brandRoutes = [
     route: "/products",
     component: <Products />,
     isPrivate: true,
+    isNavbar: true,
   },
   {
     type: "collapse",
@@ -46,6 +49,7 @@ export const brandRoutes = [
     route: "/profile",
     component: <Profile />,
     isPrivate: true,
+    isNavbar: true,
   },
   {
     type: "collapse",
@@ -55,6 +59,7 @@ export const brandRoutes = [
     route: "/authentication/sign-in",
     component: <SignIn />,
     isPrivate: false,
+    isNavbar: false,
   },
   {
     type: "collapse",
@@ -64,6 +69,7 @@ export const brandRoutes = [
     route: "/authentication/sign-up",
     component: <SignUp />,
     isPrivate: false,
+    isNavbar: false,
   },
 ];
 
@@ -76,6 +82,7 @@ export const distributorRoutes = [
     route: "/dashboard",
     component: <TablePage />,
     isPrivate: true,
+    isNavbar: true,
   },
   {
     type: "collapse",
@@ -85,6 +92,7 @@ export const distributorRoutes = [
     route: "/content-organization",
     component: <ContentOrganization />,
     isPrivate: true,
+    isNavbar: true,
   },
   {
     name: "Brands Details",
@@ -92,6 +100,7 @@ export const distributorRoutes = [
     route: "/brand-detail/:id",
     component: <BrandDetail />,
     isPrivate: true,
+    isNavbar: true,
   },
   {
     type: "collapse",
@@ -101,6 +110,7 @@ export const distributorRoutes = [
     route: "/profile",
     component: <Profile />,
     isPrivate: true,
+    isNavbar: true,
   },
   {
     type: "collapse",
@@ -110,6 +120,7 @@ export const distributorRoutes = [
     route: "/authentication/sign-in",
     component: <SignIn />,
     isPrivate: false,
+    isNavbar: false,
   },
   {
     type: "collapse",
@@ -119,5 +130,6 @@ export const distributorRoutes = [
     route: "/authentication/sign-up",
     component: <SignUp />,
     isPrivate: false,
+    isNavbar: false,
   },
 ];
