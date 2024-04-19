@@ -1,13 +1,13 @@
 import { useState } from "react";
+import Switch from "@mui/material/Switch";
 
 import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
-import MDAvatar from "components/MDAvatar";
 import MDBadge from "components/MDBadge";
+import MDAvatar from "components/MDAvatar";
+import MDButton from "components/MDButton";
+import MDTypography from "components/MDTypography";
 
-import Switch from "@mui/material/Switch";
 import { BADGE_COLOR, BRAND_DATA } from "./BrandsData";
-import { LinearProgress } from "@mui/material";
 
 const data = () => {
   const Logo = ({ name }) => (
@@ -35,22 +35,34 @@ const data = () => {
     );
   };
 
-  const Package = ({ name = "red" }) => (
+  // const Payment = ({ name }) => (
+  //   <MDBox ml={-1}>
+  //     <MDBadge badgeContent={name} color={BADGE_COLOR[name]} variant="gradient" size="sm" />
+  //   </MDBox>
+  // );
+
+  const Payment = (row) => (
     <MDBox ml={-1}>
-      <MDBadge badgeContent={name} color={BADGE_COLOR[name]} variant="gradient" size="sm" />
+      <MDButton
+        type="button"
+        onClick={(e) => {
+          e.stopPropagation();
+          console.log(row);
+        }}
+        variant="contained"
+        color="success"
+        size="small"
+      >
+        pay
+      </MDButton>
     </MDBox>
   );
 
   const Health = ({ health }) => {
-    const name = health === "weak" ? "red" : "green";
+    const name = health === "healthy" ? "green" : "red";
     return (
       <MDBox ml={-1}>
-        <MDBadge
-          badgeContent={health === "healthy" ? health : "not Healthy"}
-          color={BADGE_COLOR[name]}
-          variant="gradient"
-          size="sm"
-        />
+        <MDBadge badgeContent={health} color={BADGE_COLOR[name]} variant="gradient" size="sm" />
       </MDBox>
     );
   };
@@ -60,7 +72,7 @@ const data = () => {
       { Header: "Brand Name", accessor: "brand", align: "center" },
       { Header: "Contact Name", accessor: "name", align: "center" },
       { Header: "Contact Email", accessor: "email", align: "center" },
-      { Header: "Brand Package", accessor: "package", align: "center" },
+      { Header: "Send Payment", accessor: "payment", align: "center" },
       { Header: "Access Toggle", accessor: "toggle", align: "center" },
       { Header: "Health", accessor: "health", align: "center" },
     ],
@@ -70,7 +82,7 @@ const data = () => {
       brand: <Brand name={row.brandName} />,
       name: <Brand name={row.contactName} />,
       email: <Brand name={row.contactEmail} />,
-      package: <Package name={row.brandPackage} />,
+      payment: <Payment data={row} />,
       toggle: <Toggle name={row.access} />,
       health: <Health health={row.health} />,
     })),

@@ -28,7 +28,7 @@ const ProductTable = () => {
         <DataTable
           table={{ columns, rows }}
           showTotalEntries={true}
-          isSorted={false}
+          isSorted={true}
           noEndBorder
           entriesPerPage={false}
           onRowClick={handleRowClick}

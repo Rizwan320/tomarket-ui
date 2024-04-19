@@ -23,9 +23,11 @@ import sidenavLogoLabel from "muiComponents/Sidenav/styles/sidenav";
 
 import { useMaterialUIController, setMiniSidenav, setWhiteSidenav } from "context";
 
+import whatChefWants from "../../assets/images/whatChefWants.png";
+
 const EXCLUDE_SIDE_BAR_KEYS = ["sign-in", "sign-up"];
 
-const Sidenav = ({ color, brand, brandName, routes, ...rest }) => {
+const Sidenav = ({ color, brand, CompanyName, routes, ...rest }) => {
   const [controller, dispatch] = useMaterialUIController();
   const { miniSidenav, transparentSidenav, whiteSidenav, darkMode, sidenavColor } = controller;
   const location = useLocation();
@@ -134,13 +136,13 @@ const Sidenav = ({ color, brand, brandName, routes, ...rest }) => {
           </MDTypography>
         </MDBox>
         <MDBox component={NavLink} to="/" display="flex" alignItems="center">
-          {brand && <MDBox component="img" src={brand} alt="Brand" width="2rem" />}
+          {brand && <MDBox component="img" src={whatChefWants} alt="Brand" width="2.5rem" />}
           <MDBox
-            width={!brandName && "100%"}
+            width={!CompanyName && "100%"}
             sx={(theme) => sidenavLogoLabel(theme, { miniSidenav })}
           >
             <MDTypography component="h6" variant="button" fontWeight="medium" color={textColor}>
-              {brandName}
+              {CompanyName}
             </MDTypography>
           </MDBox>
         </MDBox>
