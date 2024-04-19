@@ -9,6 +9,7 @@ import SignUp from "layouts/authentication/sign-up";
 import ContentOrganization from "layouts/contentOrganization";
 import BrandDetail from "layouts/brandDetail";
 import Products from "layouts/products";
+import EditProduct from "layouts/products/editProduct";
 
 export const brandRoutes = [
   {
@@ -70,6 +71,14 @@ export const brandRoutes = [
     component: <SignUp />,
     isPrivate: false,
     isNavbar: false,
+  },
+  {
+    name: "product/:id",
+    key: "product/:id",
+    route: "/product/:id",
+    component: <EditProduct />,
+    isPrivate: true,
+    isNavbar: true,
   },
 ];
 

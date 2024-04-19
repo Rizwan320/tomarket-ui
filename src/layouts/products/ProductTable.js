@@ -10,11 +10,11 @@ import productData from "./productData";
 
 const ProductTable = () => {
   const { columns, rows } = productData();
-  // let navigate = useNavigate();
+  let navigate = useNavigate();
 
   const handleRowClick = (row) => {
     console.log(row);
-    // navigate(`/brand-detail/${row?.id}`);
+    navigate(`/product/${row?.id}`);
   };
 
   return (
@@ -27,7 +27,7 @@ const ProductTable = () => {
       <MDBox>
         <DataTable
           table={{ columns, rows }}
-          showTotalEntries={false}
+          showTotalEntries={true}
           isSorted={false}
           noEndBorder
           entriesPerPage={false}
