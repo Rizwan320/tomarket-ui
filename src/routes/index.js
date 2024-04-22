@@ -11,6 +11,7 @@ import BrandDetail from "layouts/brandDetail";
 import PaymentDetails from "layouts/payments/components/paymentDetails";
 import Products from "layouts/products";
 import EditProduct from "layouts/products/editProduct";
+import StripeForm from "stripe";
 import Payments from "layouts/payments";
 
 export const brandRoutes = [
@@ -160,5 +161,13 @@ export const distributorRoutes = [
     component: <SignUp />,
     isPrivate: false,
     isNavbar: false,
+  },
+  {
+    name: "Payment",
+    key: "payment",
+    route: "/payment/:id",
+    isPrivate: false,
+    isNavbar: true,
+    component: <StripeForm />,
   },
 ];
