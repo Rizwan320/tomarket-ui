@@ -2,9 +2,17 @@ import { useMemo, useEffect, useState } from "react";
 
 import PropTypes from "prop-types";
 
-import { useTable, usePagination, useGlobalFilter, useAsyncDebounce, useSortBy } from "react-table";
+import {
+  useTable,
+  usePagination,
+  useGlobalFilter,
+  useAsyncDebounce,
+  useSortBy,
+  useRowSelect,
+} from "react-table";
 
 import Table from "@mui/material/Table";
+import Checkbox from "@mui/material/Checkbox";
 import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
@@ -41,7 +49,28 @@ const DataTable = ({
     { columns, data, initialState: { pageIndex: 0 } },
     useGlobalFilter,
     useSortBy,
-    usePagination
+    usePagination,
+    useRowSelect,
+    (hooks) => {
+      hooks.visibleColumns.push((columns) => [
+        {
+          id: "selection",
+          Header: ({ getToggleAllRowsSelectedProps }) => (
+            <Checkbox {...getToggleAllRowsSelectedProps()} />
+          ),
+          Cell: ({ row }) => (
+            <Checkbox
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+              {...row.getToggleRowSelectedProps()}
+            />
+          ),
+          disableSortBy: true,
+        },
+        ...columns,
+      ]);
+    }
   );
 
   const {
@@ -188,6 +217,7 @@ const DataTable = ({
                   width={column.width ? column.width : "auto"}
                   align={column.align ? column.align : "left"}
                   sorted={setSortedValue(column)}
+                  disableSortBy={column.canSort}
                 >
                   {column.render("Header")}
                 </DataTableHeadCell>
