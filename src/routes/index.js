@@ -8,9 +8,11 @@ import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
 import ContentOrganization from "layouts/contentOrganization";
 import BrandDetail from "layouts/brandDetail";
+import PaymentDetails from "layouts/payments/components/paymentDetails";
 import Products from "layouts/products";
 import EditProduct from "layouts/products/editProduct";
 import StripeForm from "stripe";
+import Payments from "layouts/payments";
 
 export const brandRoutes = [
   {
@@ -109,6 +111,24 @@ export const distributorRoutes = [
     key: "Brands-Details",
     route: "/brand-detail/:id",
     component: <BrandDetail />,
+    isPrivate: true,
+    isNavbar: true,
+  },
+  {
+    type: "collapse",
+    name: "Payments",
+    key: "payments",
+    icon: <Icon fontSize="small">payments</Icon>,
+    route: "/payments",
+    component: <Payments />,
+    isPrivate: true,
+    isNavbar: true,
+  },
+  {
+    name: "Payment Details",
+    key: "Payment-Details",
+    route: "/payment-detail/:id",
+    component: <PaymentDetails />,
     isPrivate: true,
     isNavbar: true,
   },
