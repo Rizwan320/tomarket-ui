@@ -5,7 +5,7 @@ import Icon from "@mui/material/Icon";
 import MDBox from "components/MDBox";
 import { useMaterialUIController } from "context";
 
-const DataTableHeadCell = ({ width, children, sorted, align, ...rest }) => {
+const DataTableHeadCell = ({ width, children, sorted, align, disableSortBy, ...rest }) => {
   const [controller] = useMaterialUIController();
   const { darkMode } = controller;
 
@@ -33,7 +33,7 @@ const DataTableHeadCell = ({ width, children, sorted, align, ...rest }) => {
         })}
       >
         {children}
-        {sorted && (
+        {disableSortBy && sorted && (
           <MDBox
             position="absolute"
             top={0}
