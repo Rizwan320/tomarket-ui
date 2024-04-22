@@ -8,6 +8,7 @@ import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
 
 import { BADGE_COLOR, BRAND_DATA } from "./BrandsData";
+import { useNavigate } from "react-router-dom";
 
 const data = () => {
   const Logo = ({ name }) => (
@@ -41,22 +42,26 @@ const data = () => {
   //   </MDBox>
   // );
 
-  const Payment = (row) => (
-    <MDBox ml={-1}>
-      <MDButton
-        type="button"
-        onClick={(e) => {
-          e.stopPropagation();
-          console.log(row);
-        }}
-        variant="contained"
-        color="success"
-        size="small"
-      >
-        pay
-      </MDButton>
-    </MDBox>
-  );
+  const Payment = (row) => {
+    const navigate = useNavigate();
+
+    return (
+      <MDBox ml={-1}>
+        <MDButton
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            navigate(`/payment/${row.data.id}`);
+          }}
+          variant="contained"
+          color="success"
+          size="small"
+        >
+          pay
+        </MDButton>
+      </MDBox>
+    );
+  };
 
   const Health = ({ health }) => {
     const name = health === "healthy" ? "green" : "red";
