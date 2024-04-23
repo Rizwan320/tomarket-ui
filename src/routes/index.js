@@ -14,6 +14,7 @@ import EditProduct from "layouts/products/editProduct";
 import StripeForm from "stripe";
 import Payments from "layouts/payments";
 import Buyers from "layouts/Buyers";
+import SalesRep from "layouts/sales-rep";
 
 export const brandRoutes = [
   {
@@ -140,6 +141,16 @@ export const distributorRoutes = [
     key: "Payment-Details",
     route: "/payment-detail/:id",
     component: <PaymentDetails />,
+    isPrivate: true,
+    isNavbar: true,
+  },
+  {
+    type: "collapse",
+    name: "Sales Rep",
+    key: "sales-rep",
+    icon: <Icon fontSize="small">attach_money</Icon>,
+    route: "/sales-rep",
+    component: <SalesRep />,
     isPrivate: true,
     isNavbar: true,
   },
