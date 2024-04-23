@@ -11,6 +11,7 @@ const PaymentForm = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [name, setName] = useState("");
+
   const stripe = useStripe();
   const elements = useElements();
   const navigate = useNavigate();
@@ -66,23 +67,31 @@ const PaymentForm = () => {
             margin="normal"
             sx={{ my: 2 }}
           />
-
-          <CardElement
-            options={{
-              style: {
-                base: {
-                  fontSize: "16px",
-                  color: "#424770",
-                  "::placeholder": {
-                    color: "#aab7c4",
+          <MDBox
+            mt={2}
+            mb={2}
+            sx={{ border: "1px solid #ced4da", borderRadius: "6px", padding: "10px" }}
+          >
+            <CardElement
+              options={{
+                style: {
+                  base: {
+                    color: "#32325d",
+                    fontFamily: "Arial, sans-serif",
+                    fontSmoothing: "antialiased",
+                    fontSize: "16px",
+                    "::placeholder": {
+                      color: "#aab7c4",
+                    },
+                  },
+                  invalid: {
+                    color: "#fa755a",
+                    iconColor: "#fa755a",
                   },
                 },
-                invalid: {
-                  color: "#9e2146",
-                },
-              },
-            }}
-          />
+              }}
+            />
+          </MDBox>
           <MDButton
             type="submit"
             variant="contained"
