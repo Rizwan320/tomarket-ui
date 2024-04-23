@@ -13,6 +13,7 @@ import Products from "layouts/products";
 import EditProduct from "layouts/products/editProduct";
 import StripeForm from "stripe";
 import Payments from "layouts/payments";
+import Buyers from "layouts/Buyers";
 
 export const brandRoutes = [
   {
@@ -47,9 +48,19 @@ export const brandRoutes = [
   },
   {
     type: "collapse",
+    name: "Buyers",
+    key: "buyers",
+    icon: <Icon fontSize="small">person</Icon>,
+    route: "/buyers",
+    component: <Buyers />,
+    isPrivate: true,
+    isNavbar: true,
+  },
+  {
+    type: "collapse",
     name: "Settings",
     key: "profile",
-    icon: <Icon fontSize="small">person</Icon>,
+    icon: <Icon fontSize="small">settings</Icon>,
     route: "/profile",
     component: <Profile />,
     isPrivate: true,
@@ -136,7 +147,7 @@ export const distributorRoutes = [
     type: "collapse",
     name: "Settings",
     key: "profile",
-    icon: <Icon fontSize="small">person</Icon>,
+    icon: <Icon fontSize="small">settings</Icon>,
     route: "/profile",
     component: <Profile />,
     isPrivate: true,
