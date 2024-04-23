@@ -35,6 +35,7 @@ const DataTable = ({
   pagination,
   isSorted,
   noEndBorder,
+  showCheckbox,
   onRowClick,
 }) => {
   const defaultValue = entriesPerPage.defaultValue ? entriesPerPage.defaultValue : 10;
@@ -52,24 +53,26 @@ const DataTable = ({
     usePagination,
     useRowSelect,
     (hooks) => {
-      hooks.visibleColumns.push((columns) => [
-        {
-          id: "selection",
-          Header: ({ getToggleAllRowsSelectedProps }) => (
-            <Checkbox {...getToggleAllRowsSelectedProps()} />
-          ),
-          Cell: ({ row }) => (
-            <Checkbox
-              onClick={(e) => {
-                e.stopPropagation();
-              }}
-              {...row.getToggleRowSelectedProps()}
-            />
-          ),
-          disableSortBy: true,
-        },
-        ...columns,
-      ]);
+      if (showCheckbox) {
+        hooks.visibleColumns.push((columns) => [
+          {
+            id: "selection",
+            Header: ({ getToggleAllRowsSelectedProps }) => (
+              <Checkbox {...getToggleAllRowsSelectedProps()} />
+            ),
+            Cell: ({ row }) => (
+              <Checkbox
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+                {...row.getToggleRowSelectedProps()}
+              />
+            ),
+            disableSortBy: true,
+          },
+          ...columns,
+        ]);
+      }
     }
   );
 
