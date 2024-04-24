@@ -20,6 +20,7 @@ import SidenavCollapse from "muiComponents/Sidenav/SidenavCollapse";
 
 import SidenavRoot from "muiComponents/Sidenav/SidenavRoot";
 import sidenavLogoLabel from "muiComponents/Sidenav/styles/sidenav";
+import HrefLink from "./HrefLink";
 
 import { useMaterialUIController, setMiniSidenav, setWhiteSidenav } from "context";
 
@@ -59,61 +60,52 @@ const Sidenav = ({ color, brand, CompanyName, routes, ...rest }) => {
     logout();
   };
 
-  const renderRoutes = routes.map(({ type, name, icon, title, noCollapse, key, href, route }) => {
-    if (EXCLUDE_SIDE_BAR_KEYS.includes(key)) return null;
+  const treeRoute = routes.find((route) => route.key === "profile");
 
-    let returnValue;
-    if (type === "collapse") {
-      returnValue = href ? (
-        <Link
-          href={href}
-          key={key}
-          target="_blank"
-          rel="noreferrer"
-          sx={{ textDecoration: "none" }}
-        >
-          <SidenavCollapse
-            name={name}
-            icon={icon}
-            active={key === collapseName}
-            noCollapse={noCollapse}
+  const renderRoutes = routes.map(
+    ({ type, name, icon, title, noCollapse, key, href, route, children }) => {
+      if (EXCLUDE_SIDE_BAR_KEYS.includes(key)) return null;
+
+      let returnValue;
+      if (type === "collapse") {
+        returnValue = href ? (
+          <HrefLink name={name} icon={icon} childRoutes={children} />
+        ) : (
+          <NavLink key={key} to={route}>
+            <SidenavCollapse name={name} icon={icon} active={key === collapseName} />
+          </NavLink>
+        );
+      } else if (type === "title") {
+        returnValue = (
+          <MDTypography
+            key={key}
+            color={textColor}
+            display="block"
+            variant="caption"
+            fontWeight="bold"
+            textTransform="uppercase"
+            pl={3}
+            mt={2}
+            mb={1}
+            ml={1}
+          >
+            {title}
+          </MDTypography>
+        );
+      } else if (type === "divider") {
+        returnValue = (
+          <Divider
+            key={key}
+            light={
+              (!darkMode && !whiteSidenav && !transparentSidenav) ||
+              (darkMode && !transparentSidenav && whiteSidenav)
+            }
           />
-        </Link>
-      ) : (
-        <NavLink key={key} to={route}>
-          <SidenavCollapse name={name} icon={icon} active={key === collapseName} />
-        </NavLink>
-      );
-    } else if (type === "title") {
-      returnValue = (
-        <MDTypography
-          key={key}
-          color={textColor}
-          display="block"
-          variant="caption"
-          fontWeight="bold"
-          textTransform="uppercase"
-          pl={3}
-          mt={2}
-          mb={1}
-          ml={1}
-        >
-          {title}
-        </MDTypography>
-      );
-    } else if (type === "divider") {
-      returnValue = (
-        <Divider
-          key={key}
-          light={
-            (!darkMode && !whiteSidenav && !transparentSidenav) ||
-            (darkMode && !transparentSidenav && whiteSidenav)
-          }
-        />
-      );
+        );
+      }
+      return returnValue;
     }
-    return returnValue;
-  });
+  );
 
   return (
     <SidenavRoot
@@ -152,10 +144,12 @@ const Sidenav = ({ color, brand, CompanyName, routes, ...rest }) => {
         <List sx={{ flexGrow: 1, overflow: "auto" }}>{renderRoutes}</List>
         <ListItem onClick={handleLogout} disablePadding sx={{ mt: "auto" }}>
           <ListItemButton>
-            <ListItemIcon>
+            <ListItemIcon sx={{ ml: "12px" }}>
               <LogoutIcon />
             </ListItemIcon>
-            <MDTypography sx={{ color: "textColor", fontSize: "18px" }}>Logout</MDTypography>
+            <MDTypography sx={{ color: "textColor", fontSize: "18px", ml: -3 }}>
+              Logout
+            </MDTypography>
           </ListItemButton>
         </ListItem>
       </Box>
