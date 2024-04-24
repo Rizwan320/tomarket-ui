@@ -15,6 +15,7 @@ import StripeForm from "stripe";
 import Payments from "layouts/payments";
 import Buyers from "layouts/Buyers";
 import SalesRep from "layouts/sales-rep";
+import Users from "layouts/dashboard/users";
 
 export const brandRoutes = [
   {
@@ -60,12 +61,25 @@ export const brandRoutes = [
   {
     type: "collapse",
     name: "Settings",
+    href: true,
     key: "profile",
     icon: <Icon fontSize="small">settings</Icon>,
     route: "/profile",
     component: <Profile />,
     isPrivate: true,
     isNavbar: true,
+    children: [
+      {
+        type: "collapse",
+        name: "Users",
+        key: "users",
+        icon: <Icon fontSize="small">person</Icon>,
+        route: "/users",
+        component: <Users />,
+        isPrivate: true,
+        isNavbar: true,
+      },
+    ],
   },
   {
     type: "collapse",
@@ -146,23 +160,36 @@ export const distributorRoutes = [
   },
   {
     type: "collapse",
-    name: "Sales Rep",
-    key: "sales-rep",
-    icon: <Icon fontSize="small">attach_money</Icon>,
-    route: "/sales-rep",
-    component: <SalesRep />,
-    isPrivate: true,
-    isNavbar: true,
-  },
-  {
-    type: "collapse",
     name: "Settings",
+    href: true,
     key: "profile",
     icon: <Icon fontSize="small">settings</Icon>,
     route: "/profile",
     component: <Profile />,
     isPrivate: true,
     isNavbar: true,
+    children: [
+      {
+        type: "collapse",
+        name: "Users",
+        key: "users",
+        icon: <Icon fontSize="small">person</Icon>,
+        route: "/users",
+        component: <Users />,
+        isPrivate: true,
+        isNavbar: true,
+      },
+      {
+        type: "collapse",
+        name: "Sales Rep",
+        key: "sales-rep",
+        icon: <Icon fontSize="small">attach_money</Icon>,
+        route: "/sales-rep",
+        component: <SalesRep />,
+        isPrivate: true,
+        isNavbar: true,
+      },
+    ],
   },
   {
     type: "collapse",

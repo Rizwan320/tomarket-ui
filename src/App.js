@@ -55,17 +55,18 @@ export default function App() {
 
   const getRoutes = (allRoutes) =>
     allRoutes.map((route) => {
-      if (route.collapse) {
-        return getRoutes(route.collapse);
+      if (route.children) {
+        return getRoutes(route.children);
       }
       if (!route.route) return null;
 
-      const RouteElement = route.isPrivate ? (
-        <PrivateRoute>{route.component}</PrivateRoute>
-      ) : (
-        route.component
-      );
+      let RouteElement;
 
+      if (route.isPrivate) {
+        RouteElement = <PrivateRoute>{route.component}</PrivateRoute>;
+      } else {
+        RouteElement = route.component;
+      }
       if (route.isNavbar) {
         return (
           <Route

@@ -12,7 +12,7 @@ const productData = () => {
 
   const Name = ({ name }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
-      <MDTypography variant="button" fontWeight="medium" lineHeight={1}>
+      <MDTypography variant="caption" fontWeight="medium" lineHeight={1}>
         {name}
       </MDTypography>
     </MDBox>
