@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Table,
   TableBody,
@@ -21,29 +21,6 @@ const BrandsFolder = ({ name = "Product Organization In Brand" }) => {
     { id: 4, name: "Descriptions" },
   ]);
 
-  const [orderDirection, setOrderDirection] = useState("asc");
-  const [valueToOrderBy, setValueToOrderBy] = useState("name");
-
-  const handleRequestSort = (property) => {
-    const isAscending = valueToOrderBy === property && orderDirection === "asc";
-    setValueToOrderBy(property);
-    setOrderDirection(isAscending ? "desc" : "asc");
-    const sortedRows = [...rows].sort(compareFunction(property, isAscending ? "desc" : "asc"));
-    setRows(sortedRows);
-  };
-
-  const compareFunction = (property, direction) => {
-    return (a, b) => {
-      if (a[property] < b[property]) {
-        return direction === "desc" ? 1 : -1;
-      }
-      if (a[property] > b[property]) {
-        return direction === "desc" ? -1 : 1;
-      }
-      return 0;
-    };
-  };
-
   return (
     <>
       {name && (
@@ -52,7 +29,7 @@ const BrandsFolder = ({ name = "Product Organization In Brand" }) => {
         </MDBox>
       )}
 
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} sx={{ marginTop: 2 }}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>

@@ -1,8 +1,9 @@
 import { Grid } from "@mui/material";
+
 import MDBox from "components/MDBox";
 import Brands from "layouts/dashboard/components/Brands";
 
-const TablePage = () => (
+const DistributorDashboard = () => (
   <MDBox py={3}>
     <Grid container spacing={3}>
       <Grid item xs={12} md={12} lg={12}>
@@ -12,4 +13,4 @@ const TablePage = () => (
   </MDBox>
 );
 
-export default TablePage;
+export default DistributorDashboard;
