@@ -118,9 +118,6 @@ const BrandDetailsData = () => {
             <Link href={data.socialMediaLinks.linkedin}>{data?.socialMediaLinks?.linkedin}</Link>
           </MDTypography>
           <MDBox sx={{ display: "flex", justifyContent: "flex-end", alignItems: "center" }}>
-            {/* <MDButton type="submit" color="success" variant="gradient" sx={{ mt: 3, mb: 2 }}>
-              Save Product
-            </MDButton> */}
             <MDButton
               onClick={() => {
                 setIsEditable(true);
@@ -131,7 +128,7 @@ const BrandDetailsData = () => {
               variant="gradient"
               sx={{ mt: 3, mb: 2, mx: 2 }}
             >
-              Edit Product
+              Edit Contact
             </MDButton>
           </MDBox>
         </CardContent>

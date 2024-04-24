@@ -275,7 +275,7 @@ const BrandDetailModal = ({ data: brandData, sendData }) => {
 
             <MDBox sx={{ display: "flex", justifyContent: "flex-end", alignItems: "center" }}>
               <MDButton type="submit" color="success" variant="gradient" sx={{ mt: 3, mb: 2 }}>
-                Save Product
+                Save Contact
               </MDButton>
               <MDButton
                 onClick={handleClose}
