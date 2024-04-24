@@ -17,7 +17,7 @@ const data = () => {
 
   const Brand = ({ name }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
-      <MDTypography variant="button" fontWeight="medium">
+      <MDTypography variant="caption" fontWeight="medium">
         {name}
       </MDTypography>
     </MDBox>
@@ -31,11 +31,11 @@ const data = () => {
       <MDBox display="flex" alignItems="center">
         <MDTypography
           variant="h6"
-          component="h3"
-          fontWeight="medium"
+          component="h4"
+          fontWeight="small"
           color={arrow === "Down" ? "error" : "success"}
         >
-          {arrow === "Down" ? previousSale : "+" + previousSale}
+          {arrow === "Down" ? "-" + previousSale : "+" + previousSale}
         </MDTypography>
         {arrow === "Down" ? (
           <IconButton sx={{ padding: 0 }}>
