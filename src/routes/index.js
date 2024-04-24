@@ -2,7 +2,6 @@ import Icon from "@mui/material/Icon";
 
 import Wcw from "layouts/wcw";
 import Profile from "layouts/profile";
-import TablePage from "layouts/table";
 import Dashboard from "layouts/dashboard";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
@@ -16,6 +15,7 @@ import Payments from "layouts/payments";
 import Buyers from "layouts/Buyers";
 import SalesRep from "layouts/sales-rep";
 import Users from "layouts/dashboard/users";
+import DistributorDashboard from "layouts/distributor-dashboard";
 
 export const brandRoutes = [
   {
@@ -118,20 +118,20 @@ export const distributorRoutes = [
     key: "dashboard",
     icon: <Icon fontSize="small">table</Icon>,
     route: "/dashboard",
-    component: <TablePage />,
+    component: <DistributorDashboard />,
     isPrivate: true,
     isNavbar: true,
   },
-  {
-    type: "collapse",
-    name: "Content Organization",
-    key: "content-organization",
-    icon: <Icon fontSize="small">assignment</Icon>,
-    route: "/content-organization",
-    component: <ContentOrganization />,
-    isPrivate: true,
-    isNavbar: true,
-  },
+  // {
+  //   type: "collapse",
+  //   name: "Content Organization",
+  //   key: "content-organization",
+  //   icon: <Icon fontSize="small">assignment</Icon>,
+  //   route: "/content-organization",
+  //   component: <ContentOrganization />,
+  //   isPrivate: true,
+  //   isNavbar: true,
+  // },
   {
     name: "Brands Details",
     key: "Brands-Details",
