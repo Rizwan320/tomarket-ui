@@ -15,6 +15,16 @@ const cardData = [
   { title: "Top Buyer", name: "Red Wagon Farm", value: "$3149" },
   { title: "No of New Buyers", value: "112", trend: "up", previousSale: "7" },
   { title: "Top Selling Product", name: "Organic Tomatos" },
+  { title: "Total Weekly Sales Units", value: "$10,000", trend: "up", previousSale: "6" },
+  { title: "Monthly Sales Units", value: "$40,000", trend: "down", previousSale: "10" },
+  { title: "Product Mix", name: "Red Wagon Farm", value: "$3149" },
+  { title: "Largest Buyer", value: "112", trend: "up", previousSale: "7" },
+  { title: "Best Sales Rep", name: "Organic Tomatos" },
+  { title: "Best Market", value: "$10,000", trend: "up", previousSale: "6" },
+  { title: "Highest Sales Day", value: "$40,000", trend: "down", previousSale: "10" },
+  { title: "Highest Sales Month", value: "Matthew Thompson" },
+  { title: "Growth", name: "Red Wagon Farm", value: "$3149" },
+  { title: "Groups", name: "Red Wagon Farm", value: "$3149" },
 ];
 
 const Dashboard = () => {
