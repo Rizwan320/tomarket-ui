@@ -8,7 +8,7 @@ import MDAvatar from "components/MDAvatar";
 import MDTypography from "components/MDTypography";
 import { BUYER_DATA } from "./BuyerData";
 
-const data = () => {
+const data = (tableColumns) => {
   const Logo = ({ name }) => (
     <MDBox display="flex" alignItems="left" lineHeight={1}>
       <MDAvatar src={name} size="sm" />
@@ -50,32 +50,90 @@ const data = () => {
     );
   };
 
+  const allColumns = {
+    logo: { Header: "Logo", accessor: "logo", align: "left" },
+    businessName: {
+      Header: "Business Name",
+      accessor: "businessName",
+      align: "center",
+    },
+    distributor: { Header: "Distributor", accessor: "distributor", align: "center" },
+    salesRep: { Header: "Sales Rep", accessor: "salesRep", align: "center" },
+    restaurantType: {
+      Header: "Restaurant Type",
+      accessor: "restaurantType",
+      align: "center",
+    },
+    skuPurchased: {
+      Header: "SKU Purchased",
+      accessor: "skuPurchased",
+      align: "center",
+    },
+    averageQuantity: {
+      Header: "Average Quantity",
+      accessor: "averageQuantity",
+      align: "center",
+    },
+    averageWeeklySales: {
+      Header: "Average Weekly Sales",
+      accessor: "averageWeeklySales",
+      align: "center",
+    },
+    weeklyTrend: {
+      Header: "Weekly Trend",
+      accessor: "weeklyTrend",
+      align: "center",
+    },
+    monthlyTrend: {
+      Header: "Monthly Trend",
+      accessor: "monthlyTrend",
+      align: "center",
+    },
+    unitsSoldLastWeek: {
+      Header: "Units Sold Last Week",
+      accessor: "unitsSoldLastWeek",
+      align: "center",
+    },
+  };
+
+  const filteredColumns = Object.values(allColumns).filter((column) =>
+    tableColumns.includes(column.accessor)
+  );
+
   return {
-    columns: [
-      { Header: "Logo", accessor: "logo", align: "left" },
-      { Header: "Business Name", accessor: "businessName", align: "center" },
-      { Header: "Distributor", accessor: "distributor", align: "center" },
-      { Header: "Sales Rep", accessor: "salesRep", align: "center" },
-      { Header: "Restaurant Type", accessor: "restaurantType", align: "center" },
-      { Header: "SKU Purchased", accessor: "skuPurchased", align: "center" },
-      { Header: "Average Quantity", accessor: "averageQuantity", align: "center" },
-      { Header: "Average Weekly Sales", accessor: "averageWeeklySales", align: "center" },
-      { Header: "Weekly Trend", accessor: "weeklyTrend", align: "center" },
-      { Header: "Monthly Trend", accessor: "monthlyTrend", align: "center" },
-      { Header: "Units Sold Last Week", accessor: "unitsSoldLastWeek", align: "center" },
-    ],
+    columns: filteredColumns,
     rows: BUYER_DATA.map((row) => ({
-      logo: <Logo name={row.logo} />,
-      businessName: <Brand name={row.businessName} />,
-      distributor: <Brand name={row.distributor} />,
-      salesRep: <Brand name={row.salesRep} />,
-      restaurantType: <Brand name={row.restaurantType} />,
-      skuPurchased: <Brand name={row.skusPurchased[0]} />,
-      averageQuantity: <Brand name={row.averageQuantity} />,
-      averageWeeklySales: <Brand name={row.averageWeeklySales} />,
-      weeklyTrend: <TrendBadge trend={row.weeklyTrend} />,
-      monthlyTrend: <TrendBadge trend={row.monthlyTrend} />,
-      unitsSoldLastWeek: <TrendBadge trend={row.unitsSoldLastWeek} />,
+      ...(tableColumns.includes("logo") && { logo: <Logo name={row.logo} /> }),
+      ...(tableColumns.includes("businessName") && {
+        businessName: <Brand name={row.businessName} />,
+      }),
+      ...(tableColumns.includes("distributor") && {
+        distributor: <Brand name={row.distributor} />,
+      }),
+      ...(tableColumns.includes("salesRep") && {
+        salesRep: <Brand name={row.salesRep} />,
+      }),
+      ...(tableColumns.includes("restaurantType") && {
+        restaurantType: <Brand name={row.restaurantType} />,
+      }),
+      ...(tableColumns.includes("skuPurchased") && {
+        skuPurchased: <Brand name={row.skusPurchased[0]} />,
+      }),
+      ...(tableColumns.includes("averageQuantity") && {
+        averageQuantity: <Brand name={row.averageQuantity} />,
+      }),
+      ...(tableColumns.includes("averageWeeklySales") && {
+        averageWeeklySales: <Brand name={row.averageWeeklySales} />,
+      }),
+      ...(tableColumns.includes("weeklyTrend") && {
+        weeklyTrend: <TrendBadge trend={row.weeklyTrend} />,
+      }),
+      ...(tableColumns.includes("monthlyTrend") && {
+        monthlyTrend: <TrendBadge trend={row.monthlyTrend} />,
+      }),
+      ...(tableColumns.includes("unitsSoldLastWeek") && {
+        unitsSoldLastWeek: <TrendBadge trend={row.unitsSoldLastWeek} />,
+      }),
     })),
   };
 };

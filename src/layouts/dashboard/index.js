@@ -1,11 +1,12 @@
+import { useState } from "react";
 import Grid from "@mui/material/Grid";
 
 import MDBox from "components/MDBox";
-
 import SalesChart from "muiComponents/Charts/ApexChart";
 import MapsVector from "muiComponents/Maps";
 import Notifications from "layouts/notifications";
 import DashBoardInfoCard from "muiComponents/Cards/InfoCards/DashboardInfoCard";
+import DropdownMenu from "muiComponents/MultiSelectDropdown";
 
 const cardData = [
   { title: "Total Weekly Sales", value: "$10,000", trend: "up", previousSale: "6" },
@@ -17,15 +18,41 @@ const cardData = [
 ];
 
 const Dashboard = () => {
+  const [tableColumns, setTableColumns] = useState([
+    "Total Weekly Sales",
+    "Total Monthly Sales",
+    "Top Selling Sales rep",
+    "Top Buyer",
+    "No of New Buyers",
+    "Top Selling Product",
+  ]);
+
   return (
     <>
       <MDBox py={3}>
+        <MDBox
+          sx={{
+            display: "flex",
+            justifyContent: "flex-end",
+            marginRight: "16px",
+            marginBottom: "16px",
+          }}
+        >
+          <DropdownMenu
+            tableColumns={tableColumns}
+            columns={cardData}
+            setTableColumns={setTableColumns}
+          />
+        </MDBox>
         <Grid container spacing={3}>
-          {cardData?.map((data, index) => (
-            <Grid item xs={12} sm={6} md={6} lg={4} key={index} style={{ display: "flex" }}>
-              <DashBoardInfoCard {...data} />
-            </Grid>
-          ))}
+          {cardData?.map(
+            (data, index) =>
+              tableColumns.includes(data.title) && (
+                <Grid item xs={12} sm={6} md={6} lg={4} key={index} style={{ display: "flex" }}>
+                  <DashBoardInfoCard {...data} />
+                </Grid>
+              )
+          )}
         </Grid>
         <MDBox mt={4.5}>
           <Grid container spacing={3}>

@@ -50,6 +50,16 @@ export const brandRoutes = [
   },
   {
     type: "collapse",
+    name: "Content Organization",
+    key: "content-organization",
+    icon: <Icon fontSize="small">assignment</Icon>,
+    route: "/content-organization",
+    component: <ContentOrganization />,
+    isPrivate: true,
+    isNavbar: true,
+  },
+  {
+    type: "collapse",
     name: "Buyers",
     key: "buyers",
     icon: <Icon fontSize="small">person</Icon>,
