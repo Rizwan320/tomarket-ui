@@ -38,7 +38,6 @@ function DropdownMenu({ setTableColumns, tableColumns, columns = [] }) {
       <Menu id="simple-menu" anchorEl={anchorEl} keepMounted open={open} onClose={handleClose}>
         <Select
           multiple
-          sx={{ minHeight: "100px", height: "100px" }}
           value={selected}
           onChange={handleSelect}
           renderValue={() => null}
@@ -54,6 +53,12 @@ function DropdownMenu({ setTableColumns, tableColumns, columns = [] }) {
             transformOrigin: {
               vertical: "top",
               horizontal: "left",
+            },
+            PaperProps: {
+              style: {
+                maxHeight: "400px",
+                overflow: "auto",
+              },
             },
           }}
           style={{ padding: "10px 0" }}
