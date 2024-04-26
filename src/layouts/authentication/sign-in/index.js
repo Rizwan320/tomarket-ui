@@ -31,8 +31,9 @@ const SignIn = () => {
 
   const handleForgotPassword = (e) => e.preventDefault();
 
-  const handleSignIn = () => {
-    if (userEmail.includes("distributor")) {
+  const handleSignIn = (e) => {
+    e.preventDefault();
+    if (userEmail && userEmail?.includes("distributor")) {
       localStorage.setItem(
         "user",
         JSON.stringify({ email: userEmail, password: password, type: "distributor" })
@@ -92,10 +93,16 @@ const SignIn = () => {
         <MDBox pt={4} pb={3} px={3}>
           <MDBox component="form" role="form">
             <MDBox mb={2}>
-              <MDInput onChange={handleEmailChange} type="email" label="Email" fullWidth />
+              <MDInput onChange={handleEmailChange} type="email" label="Email" fullWidth required />
             </MDBox>
             <MDBox mb={2}>
-              <MDInput onChange={handlePasswordChange} type="password" label="Password" fullWidth />
+              <MDInput
+                onChange={handlePasswordChange}
+                type="password"
+                label="Password"
+                fullWidth
+                required
+              />
             </MDBox>
             <MDBox display="flex" justifyContent="space-between" alignItems="center" ml={-1}>
               <Switch checked={rememberMe} onChange={handleSetRememberMe} />
