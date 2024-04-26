@@ -6,7 +6,7 @@ import MDTypography from "components/MDTypography";
 
 import DataTable from "muiComponents/Tables/DataTable";
 import DropdownMenu from "muiComponents/MultiSelectDropdown";
-import data from "layouts/Buyers/components/data";
+import buyersdata from "layouts/Buyers/components/data";
 
 const COLUMNS = [
   { Header: "Logo", accessor: "logo", align: "left" },
@@ -29,7 +29,7 @@ const Buyers = () => {
     "distributor",
     "salesRep",
   ]);
-  const { columns, rows } = data(tableColumns);
+  const { columns, rows } = buyersdata(tableColumns);
 
   return (
     <Card>
