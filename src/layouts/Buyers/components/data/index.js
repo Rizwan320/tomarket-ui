@@ -1,14 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import { IconButton } from "@mui/material";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 import MDBox from "components/MDBox";
 import MDAvatar from "components/MDAvatar";
 import MDTypography from "components/MDTypography";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
 import { BUYER_DATA } from "./BuyerData";
 
-const data = (tableColumns) => {
+const buyersdata = (tableColumns) => {
+  const [tableData, setTableData] = useState(
+    BUYER_DATA?.map((row) => ({
+      ...row,
+      selectedSku: row.skusPurchased[0],
+      selectedAverageQuantity: row.averageQuantity[0] || 0,
+    }))
+  );
   const Logo = ({ name }) => (
     <MDBox display="flex" alignItems="left" lineHeight={1}>
       <MDAvatar src={name} size="sm" />
@@ -48,6 +58,63 @@ const data = (tableColumns) => {
         )}
       </MDBox>
     );
+  };
+
+  const SkuDropdown = ({ row, onChange }) => {
+    const [open, setOpen] = useState(false);
+
+    const handleToggle = () => {
+      setOpen(!open);
+    };
+    const handleSelect = (event) => {
+      const selectedIndex = event.target.value;
+      const selectedSku = row.skusPurchased[selectedIndex];
+      const selectedAverageQuantity = row.averageQuantity[selectedIndex] || 0;
+      onChange(row.id, selectedSku, selectedAverageQuantity);
+    };
+
+    return (
+      <div onClick={handleToggle} style={{ display: "inline-block", position: "relative" }}>
+        <ArrowDropDownIcon
+          style={{
+            position: "absolute",
+            top: "50%",
+            transform: "translateY(-50%)",
+            right: 0,
+            cursor: "pointer",
+          }}
+        />
+        <Select
+          open={open}
+          onClose={() => setOpen(false)}
+          onOpen={() => setOpen(true)}
+          value={row.skusPurchased.indexOf(row.selectedSku) || 0}
+          onChange={handleSelect}
+          fullWidth
+        >
+          {row.skusPurchased.map((sku, index) => (
+            <MenuItem key={sku} value={index}>
+              {sku}
+            </MenuItem>
+          ))}
+        </Select>
+      </div>
+    );
+  };
+
+  const updateSkuAndQuantity = (rowId, newSku, newAverageQuantity = 0) => {
+    const newData = tableData?.map((row) => {
+      if (row.id === rowId) {
+        return {
+          ...row,
+          selectedSku: newSku,
+          selectedAverageQuantity: newAverageQuantity,
+        };
+      }
+      return row;
+    });
+
+    setTableData(newData);
   };
 
   const allColumns = {
@@ -100,42 +167,33 @@ const data = (tableColumns) => {
     tableColumns.includes(column.accessor)
   );
 
+  const renderBuyersComponent = (column, row) => {
+    const componentsMap = {
+      logo: () => <Logo name={row?.logo} />,
+      businessName: () => <Brand name={row?.businessName} />,
+      distributor: () => <Brand name={row?.distributor} />,
+      salesRep: () => <Brand name={row?.salesRep} />,
+      restaurantType: () => <Brand name={row?.restaurantType} />,
+      skuPurchased: () => <SkuDropdown row={row} onChange={updateSkuAndQuantity} />,
+      averageQuantity: () => <Brand name={row?.selectedAverageQuantity || 0} />,
+      averageWeeklySales: () => <Brand name={row?.averageWeeklySales} />,
+      weeklyTrend: () => <TrendBadge trend={row?.weeklyTrend} />,
+      monthlyTrend: () => <TrendBadge trend={row?.monthlyTrend} />,
+      unitsSoldLastWeek: () => <TrendBadge trend={row?.unitsSoldLastWeek} />,
+    };
+
+    return componentsMap[column] ? componentsMap[column]() : null;
+  };
+
   return {
     columns: filteredColumns,
-    rows: BUYER_DATA.map((row) => ({
-      ...(tableColumns.includes("logo") && { logo: <Logo name={row.logo} /> }),
-      ...(tableColumns.includes("businessName") && {
-        businessName: <Brand name={row.businessName} />,
-      }),
-      ...(tableColumns.includes("distributor") && {
-        distributor: <Brand name={row.distributor} />,
-      }),
-      ...(tableColumns.includes("salesRep") && {
-        salesRep: <Brand name={row.salesRep} />,
-      }),
-      ...(tableColumns.includes("restaurantType") && {
-        restaurantType: <Brand name={row.restaurantType} />,
-      }),
-      ...(tableColumns.includes("skuPurchased") && {
-        skuPurchased: <Brand name={row.skusPurchased[0]} />,
-      }),
-      ...(tableColumns.includes("averageQuantity") && {
-        averageQuantity: <Brand name={row.averageQuantity} />,
-      }),
-      ...(tableColumns.includes("averageWeeklySales") && {
-        averageWeeklySales: <Brand name={row.averageWeeklySales} />,
-      }),
-      ...(tableColumns.includes("weeklyTrend") && {
-        weeklyTrend: <TrendBadge trend={row.weeklyTrend} />,
-      }),
-      ...(tableColumns.includes("monthlyTrend") && {
-        monthlyTrend: <TrendBadge trend={row.monthlyTrend} />,
-      }),
-      ...(tableColumns.includes("unitsSoldLastWeek") && {
-        unitsSoldLastWeek: <TrendBadge trend={row.unitsSoldLastWeek} />,
-      }),
-    })),
+    rows: tableData.map((row) => {
+      return tableColumns.reduce((acc, column) => {
+        acc[column] = renderBuyersComponent(column, row);
+        return acc;
+      }, {});
+    }),
   };
 };
 
-export default data;
+export default buyersdata;
