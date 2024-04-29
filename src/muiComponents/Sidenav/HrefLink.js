@@ -66,7 +66,6 @@ function Sidebar({ name, icon, childRoutes }) {
       </MDBox>
       <Collapse sx={{ pl: "24px" }} in={open} timeout="auto" unmountOnExit>
         {childRoutes.map((childRoute) => {
-          console.log(childRoute, "LL");
           return (
             <NavLink key={childRoute.key} to={childRoute.route}>
               <SidenavCollapse
