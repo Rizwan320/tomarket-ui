@@ -14,19 +14,27 @@ const PaymentForm = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phoneNo, setPhoneNo] = useState("");
-  const [amountToPay, setAmountToPay] = useState();
+  const [amountToPay, setAmountToPay] = useState(0);
 
   const handleAmountChange = (event) => {
     const enteredAmount = event.target.value;
     // Check if the entered value is less than 0
-    if (enteredAmount < 0 && /^\d*$/.test(enteredAmount)) {
+    if (enteredAmount < 0 && /^\d*$/.test(enteredAmount) && enteredAmount == NaN) {
       // If less than 0, set the amount to 0
       setAmountToPay(0);
     } else {
-      const parsedAmount = parseInt(enteredAmount);
-      setAmountToPay(parsedAmount);
+      // const parsedAmount = parseInt(enteredAmount);
+      // console.log(parsedAmount);
+      setAmountToPay(enteredAmount);
     }
   };
+  // const handleAmountChange = (event) => {
+  //   const value = event.target.value;
+  //   // Prevents input of negative values and non-numeric characters
+  //   if (value !== "" && (Number(value) <= 0 || isNaN(value))) {
+  //     setAmountToPay(value.slice(0, -1));
+  //   }
+  // };
 
   // const stripe = useStripe();
   // const elements = useElements();
@@ -120,15 +128,15 @@ const PaymentForm = () => {
           sx={{ my: 2 }}
           type="number"
           required
-          inputProps={{ min: 0 }}
           onChange={handleAmountChange}
+          inputProps={{ min: 0 }}
         />
-        {name && email && phoneNo && amountToPay && (
+        {name && email && phoneNo && amountToPay ? (
           <StripeCheckout
             token={handleToken}
             stripeKey="pk_test_51P8MQPP28UXraLM3qpisAFy05yKaI3FpWoiY1YgnPBOSa1KQWdPejdWsu9Bg2xN53qlqG5UZ9rXTr5hQL6RSPLPj00DMObxzWF"
             name="What Chef Wants"
-            amount={parseInt(amountToPay * 100)} // Amount in cents
+            amount={amountToPay !== NaN ? parseInt(amountToPay * 100) : 0} // Amount in cents
             currency="USD"
             description="Purchase Description"
             image="https://www.whatchefswant.com/wp-content/uploads/2023/09/cropped-favicon-1.jpg"
@@ -140,6 +148,8 @@ const PaymentForm = () => {
               pay
             </MDButton>
           </StripeCheckout>
+        ) : (
+          ""
         )}
       </MDBox>
       {/* <form onSubmit={handleSubmit}>
