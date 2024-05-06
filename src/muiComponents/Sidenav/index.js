@@ -69,7 +69,7 @@ const Sidenav = ({ color, brand, CompanyName, routes, ...rest }) => {
       let returnValue;
       if (type === "collapse") {
         returnValue = href ? (
-          <HrefLink name={name} icon={icon} childRoutes={children} />
+          <HrefLink key={key} name={name} icon={icon} childRoutes={children} />
         ) : (
           <NavLink key={key} to={route}>
             <SidenavCollapse name={name} icon={icon} active={key === collapseName} />
