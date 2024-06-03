@@ -1,3 +1,14 @@
+import FreshBreeze from "assets/images/fresh_breeze.png";
+import GreenLeaf from "assets/images/green_leaf_snack.png";
+import NutriFit from "assets/images/nutri_fit.png";
+import SparkleFresh from "assets/images/sparkel.png";
+import CozyHome from "assets/images/cozy_home.png";
+import EarthShampoo from "assets/images/shampoo.png";
+import CleanWave from "assets/images/clean_wave.png";
+import Cereal from "assets/images/cereal.png";
+import EnergyDrink from "assets/images/energy_drink.png";
+import PureGlow from "assets/images/glow_skin.png";
+
 export const BADGE_COLOR = {
   red: "error",
   yellow: "warning",
@@ -7,7 +18,7 @@ export const BADGE_COLOR = {
 export const BRAND_DATA = [
   {
     id: 1,
-    logo: "https://via.placeholder.com/40",
+    logo: FreshBreeze,
     brandName: "FreshBreeze Water",
     contactName: "James Anderson",
     contactEmail: "james.anderson@FreshBreeze.com",
@@ -17,7 +28,7 @@ export const BRAND_DATA = [
   },
   {
     id: 2,
-    logo: "https://via.placeholder.com/40",
+    logo: GreenLeaf,
     brandName: "GreenLeaf Snacks",
     contactName: "Emily Thompson",
     contactEmail: "emily.thompson@GreenLeaf.com",
@@ -27,7 +38,7 @@ export const BRAND_DATA = [
   },
   {
     id: 3,
-    logo: "https://via.placeholder.com/40",
+    logo: PureGlow,
     brandName: "PureGlow Skincare",
     contactName: "Michael Brown",
     contactEmail: "michael.brown@PureGlow.com",
@@ -37,7 +48,7 @@ export const BRAND_DATA = [
   },
   {
     id: 4,
-    logo: "https://via.placeholder.com/40",
+    logo: Cereal,
     brandName: "MorningRise Cereal",
     contactName: "Olivia Garcia",
     contactEmail: "olivia.garcia@MorningRise.com",
@@ -47,7 +58,7 @@ export const BRAND_DATA = [
   },
   {
     id: 5,
-    logo: "https://via.placeholder.com/40",
+    logo: NutriFit,
     brandName: "NutriFit Bars",
     contactName: "Daniel Martinez",
     contactEmail: "daniel.martinez@NutriFit.com",
@@ -57,7 +68,7 @@ export const BRAND_DATA = [
   },
   {
     id: 6,
-    logo: "https://via.placeholder.com/40",
+    logo: CleanWave,
     brandName: "CleanWave Detergent",
     contactName: "Ava Hernandez",
     contactEmail: "ava.hernandez@CleanWave.com",
@@ -67,7 +78,7 @@ export const BRAND_DATA = [
   },
   {
     id: 7,
-    logo: "https://via.placeholder.com/40",
+    logo: SparkleFresh,
     brandName: "SparkleFresh Toothpaste",
     contactName: "Christopher Wilson",
     contactEmail: "christopher.wilson@SparkleFresh.com",
@@ -77,7 +88,7 @@ export const BRAND_DATA = [
   },
   {
     id: 8,
-    logo: "https://via.placeholder.com/40",
+    logo: EarthShampoo,
     brandName: "EarthEssence Shampoo",
     contactName: "Sophia Martinez",
     contactEmail: "sophia.martinez@EarthEssence.com",
@@ -87,7 +98,7 @@ export const BRAND_DATA = [
   },
   {
     id: 9,
-    logo: "https://via.placeholder.com/40",
+    logo: EnergyDrink,
     brandName: "QuickBite Energy Drinks",
     contactName: "Matthew Robinson",
     contactEmail: "matthew.robinson@QuickBite.com",
@@ -97,7 +108,7 @@ export const BRAND_DATA = [
   },
   {
     id: 10,
-    logo: "https://via.placeholder.com/40",
+    logo: CozyHome,
     brandName: "CozyHome Paper Towels",
     contactName: "Isabella Clark",
     contactEmail: "isabella.clark@CozyHome.com",
