@@ -16,6 +16,7 @@ import Buyers from "layouts/Buyers";
 import SalesRep from "layouts/sales-rep";
 import Users from "layouts/dashboard/users";
 import DistributorDashboard from "layouts/distributor-dashboard";
+import Plugins from "layouts/plugins";
 
 export const brandRoutes = [
   {
@@ -157,6 +158,16 @@ export const distributorRoutes = [
     icon: <Icon fontSize="small">payments</Icon>,
     route: "/payments",
     component: <Payments />,
+    isPrivate: true,
+    isNavbar: true,
+  },
+  {
+    type: "collapse",
+    name: "Plugins",
+    key: "plugins",
+    icon: <Icon fontSize="small">shopify</Icon>,
+    route: "/plugins",
+    component: <Plugins />,
     isPrivate: true,
     isNavbar: true,
   },
