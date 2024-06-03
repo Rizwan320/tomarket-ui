@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
 
 import { Box, Link } from "@mui/material";
 import Card from "@mui/material/Card";
@@ -20,8 +22,6 @@ import tmLogo from "assets/images/whatChefWants.png";
 
 const SignIn = () => {
   const [rememberMe, setRememberMe] = useState(false);
-  const [userEmail, setUserEmail] = useState();
-  const [password, setPassword] = useState();
   const { login } = useUser();
   const navigate = useNavigate();
 
@@ -31,30 +31,23 @@ const SignIn = () => {
 
   const handleForgotPassword = (e) => e.preventDefault();
 
-  const handleSignIn = (e) => {
-    e.preventDefault();
-    if (userEmail && userEmail?.includes("distributor")) {
+  const handleSignIn = (values, { setSubmitting }) => {
+    console.log(values);
+    if (values.userEmail && values.userEmail?.includes("distributor")) {
       localStorage.setItem(
         "user",
-        JSON.stringify({ email: userEmail, password: password, type: "distributor" })
+        JSON.stringify({ email: values.userEmail, password: values.password, type: "distributor" })
       );
-      login({ email: userEmail, password: password, type: "distributor" });
+      login({ email: values.userEmail, password: values.password, type: "distributor" });
     } else {
       localStorage.setItem(
         "user",
-        JSON.stringify({ email: userEmail, password: password, type: "brands" })
+        JSON.stringify({ email: values.userEmail, password: values.password, type: "brands" })
       );
-      login({ email: userEmail, password: password, type: "brands" });
+      login({ email: values.userEmail, password: values.password, type: "brands" });
     }
     navigate("/dashboard");
-  };
-
-  const handleEmailChange = (event) => {
-    setUserEmail(event.target.value);
-  };
-
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
+    setSubmitting(false);
   };
 
   return (
@@ -91,83 +84,113 @@ const SignIn = () => {
           </Grid>
         </MDBox>
         <MDBox pt={4} pb={3} px={3}>
-          <MDBox component="form" role="form">
-            <MDBox mb={2}>
-              <MDInput onChange={handleEmailChange} type="email" label="Email" fullWidth required />
-            </MDBox>
-            <MDBox mb={2}>
-              <MDInput
-                onChange={handlePasswordChange}
-                type="password"
-                label="Password"
-                fullWidth
-                required
-              />
-            </MDBox>
-            <MDBox display="flex" justifyContent="space-between" alignItems="center" ml={-1}>
-              <Switch checked={rememberMe} onChange={handleSetRememberMe} />
-              <MDTypography
-                variant="button"
-                fontWeight="regular"
-                color="text"
-                onClick={handleSetRememberMe}
-                sx={{ cursor: "pointer", userSelect: "none", ml: -6 }}
-              >
-                &nbsp;&nbsp;Remember me
-              </MDTypography>
-              <MDTypography
-                variant="button"
-                fontWeight="regular"
-                color="success"
-                sx={{ cursor: "pointer", userSelect: "none" }}
-              >
-                <Link
-                  to="/forgot-password"
-                  component="button"
-                  underline="always"
-                  onClick={handleForgotPassword}
-                  sx={{
-                    textDecoration: "underline",
-                    cursor: "pointer",
-                  }}
-                >
-                  Forgot Password?
-                </Link>
-              </MDTypography>
-            </MDBox>
-            <MDBox mt={4} mb={1}>
-              <MDButton onClick={handleSignIn} variant="gradient" color="success" fullWidth>
-                sign in
-              </MDButton>
-            </MDBox>
-            <MDBox mt={2} mb={1}>
-              <MDButton
-                startIcon={<GoogleIcon />}
-                onClick={handleSignInWithGoogle}
-                variant="contained"
-                fullWidth
-                color="info"
-              >
-                Sign in with Google
-              </MDButton>
-            </MDBox>
+          <Formik
+            initialValues={{
+              userEmail: "",
+              password: "",
+            }}
+            validationSchema={Yup.object({
+              userEmail: Yup.string().email("Invalid email format").required("Email is required"),
+              password: Yup.string().required("Password is required"),
+            })}
+            onSubmit={handleSignIn}
+          >
+            {({ isSubmitting, setFieldValue }) => (
+              <Form>
+                <MDBox mb={2}>
+                  <Field
+                    name="userEmail"
+                    as={MDInput}
+                    type="email"
+                    label="Email"
+                    fullWidth
+                    required
+                  />
+                  <ErrorMessage name="userEmail" component="h6" style={{ color: "red" }} />
+                </MDBox>
+                <MDBox mb={2}>
+                  <Field
+                    name="password"
+                    as={MDInput}
+                    type="password"
+                    label="Password"
+                    fullWidth
+                    required
+                  />
+                  <ErrorMessage name="password" component="h6" style={{ color: "red" }} />
+                </MDBox>
+                <MDBox display="flex" justifyContent="space-between" alignItems="center" ml={-1}>
+                  <Switch checked={rememberMe} onChange={handleSetRememberMe} />
+                  <MDTypography
+                    variant="button"
+                    fontWeight="regular"
+                    color="text"
+                    onClick={handleSetRememberMe}
+                    sx={{ cursor: "pointer", userSelect: "none", ml: -6 }}
+                  >
+                    &nbsp;&nbsp;Remember me
+                  </MDTypography>
+                  <MDTypography
+                    variant="button"
+                    fontWeight="regular"
+                    color="success"
+                    sx={{ cursor: "pointer", userSelect: "none" }}
+                  >
+                    <Link
+                      to="/forgot-password"
+                      component="button"
+                      underline="always"
+                      onClick={handleForgotPassword}
+                      sx={{
+                        textDecoration: "underline",
+                        cursor: "pointer",
+                      }}
+                    >
+                      Forgot Password?
+                    </Link>
+                  </MDTypography>
+                </MDBox>
+                <MDBox mt={4} mb={1}>
+                  <MDButton
+                    type="submit"
+                    variant="gradient"
+                    color="success"
+                    fullWidth
+                    disabled={isSubmitting}
+                  >
+                    Sign In
+                  </MDButton>
+                </MDBox>
+                <MDBox mt={2} mb={1}>
+                  <MDButton
+                    startIcon={<GoogleIcon />}
+                    onClick={handleSignInWithGoogle}
+                    variant="contained"
+                    fullWidth
+                    color="info"
+                  >
+                    Sign In with Google
+                  </MDButton>
+                </MDBox>
 
-            <MDBox mt={3} mb={1} textAlign="center">
-              <MDTypography variant="button" color="text">
-                Don&apos;t have an account?{" "}
-                <MDTypography
-                  component={RouterLink}
-                  to="/authentication/sign-up"
-                  variant="button"
-                  color="success"
-                  fontWeight="medium"
-                  textGradient
-                >
-                  Sign up
-                </MDTypography>
-              </MDTypography>
-            </MDBox>
-          </MDBox>
+                <MDBox mt={3} mb={1} textAlign="center">
+                  <MDTypography variant="button" color="text">
+                    Don&apos;t have an account?{" "}
+                    <MDTypography
+                      component={RouterLink}
+                      to="/authentication/sign-up"
+                      variant="button"
+                      color="success"
+                      fontWeight="medium"
+                      textGradient
+                    >
+                      Sign up
+                    </MDTypography>
+                  </MDTypography>
+                </MDBox>
+              </Form>
+            )}
+          </Formik>
         </MDBox>
       </Card>
     </BasicLayout>
