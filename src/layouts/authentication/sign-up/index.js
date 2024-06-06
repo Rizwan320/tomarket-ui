@@ -1,4 +1,4 @@
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import Card from "@mui/material/Card";
@@ -13,14 +13,18 @@ import GooglePlacesAutocomplete from "google/GooglePlacesAutocomplete";
 
 import bgImage from "assets/images/login-bg.jpg";
 import tmLogo from "assets/images/whatChefWants.png";
+import api from "../../../axios";
+import { toast } from "react-toastify";
 
 const SignUp = () => {
+  const navigate = useNavigate();
+
   const initialValues = {
     companyName: "",
     companyEmail: "",
     mailingAddress: "",
     userName: "",
-    userEmail: "",
+    email: "",
     password: "",
     confirmPassword: "",
   };
@@ -30,7 +34,7 @@ const SignUp = () => {
     companyEmail: Yup.string().email("Invalid email format").required("Company Email is required"),
     mailingAddress: Yup.string().required("Mailing Address is required"),
     userName: Yup.string().required("User Name is required"),
-    userEmail: Yup.string().email("Invalid email format").required("User Email is required"),
+    email: Yup.string().email("Invalid email format").required("User Email is required"),
     password: Yup.string()
       .required("Password is required")
       .min(7, "Password must be at least 7 characters"),
@@ -39,8 +43,16 @@ const SignUp = () => {
       .required("Confirm Password is required"),
   });
 
-  const handleSubmit = (values, { setSubmitting }) => {
-    console.log(values);
+  const handleSubmit = async (values, { setSubmitting }) => {
+    const response = await api.post("/auth/register", values);
+    if (response.status === 201) {
+      toast.success("User Register Successfully");
+      setTimeout(() => {
+        navigate("/authentication/sign-in");
+      }, 1000);
+    } else {
+      toast.error("Failed to Register");
+    }
     setSubmitting(false);
   };
 
@@ -126,8 +138,8 @@ const SignUp = () => {
                   <ErrorMessage name="userName" component="h6" style={{ color: "red" }} />
                 </MDBox>
                 <MDBox mb={2}>
-                  <Field name="userEmail" as={MDInput} type="email" label="User Email" fullWidth />
-                  <ErrorMessage name="userEmail" component="h6" style={{ color: "red" }} />
+                  <Field name="email" as={MDInput} type="email" label="User Email" fullWidth />
+                  <ErrorMessage name="email" component="h6" style={{ color: "red" }} />
                 </MDBox>
                 <MDBox mb={2}>
                   <Field name="password" as={MDInput} type="password" label="Password" fullWidth />

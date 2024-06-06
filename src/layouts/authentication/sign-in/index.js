@@ -8,6 +8,7 @@ import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import Switch from "@mui/material/Switch";
 import GoogleIcon from "@mui/icons-material/Google";
+import { toast } from "react-toastify";
 
 import MDBox from "components/MDBox";
 import MDInput from "components/MDInput";
@@ -19,6 +20,7 @@ import BasicLayout from "layouts/authentication/components/BasicLayout";
 
 import bgImage from "assets/images/login-bg.jpg";
 import tmLogo from "assets/images/whatChefWants.png";
+import api from "../../../axios";
 
 const SignIn = () => {
   const [rememberMe, setRememberMe] = useState(false);
@@ -31,22 +33,23 @@ const SignIn = () => {
 
   const handleForgotPassword = (e) => e.preventDefault();
 
-  const handleSignIn = (values, { setSubmitting }) => {
+  const handleSignIn = async (values, { setSubmitting }) => {
     console.log(values);
-    if (values.userEmail && values.userEmail?.includes("distributor")) {
-      localStorage.setItem(
-        "user",
-        JSON.stringify({ email: values.userEmail, password: values.password, type: "distributor" })
-      );
-      login({ email: values.userEmail, password: values.password, type: "distributor" });
-    } else {
-      localStorage.setItem(
-        "user",
-        JSON.stringify({ email: values.userEmail, password: values.password, type: "brands" })
-      );
-      login({ email: values.userEmail, password: values.password, type: "brands" });
+    try {
+      const res = await api.post(`auth/login`, {
+        email: values.userEmail,
+        password: values.password,
+      });
+      console.log(res);
+      if (res.status === 201) {
+        login(res.data);
+        navigate("/dashboard");
+      } else {
+        toast.error("Unauthorized User");
+      }
+    } catch (error) {
+      toast.error(error.response.data.message);
     }
-    navigate("/dashboard");
     setSubmitting(false);
   };
 
