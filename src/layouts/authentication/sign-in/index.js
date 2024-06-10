@@ -54,7 +54,7 @@ const SignIn = () => {
   };
 
   return (
-    <BasicLayout image={bgImage}>
+    <BasicLayout image={bgImage} formType="signin">
       <Card>
         <MDBox
           variant="gradient"
