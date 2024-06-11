@@ -45,7 +45,7 @@ function DropdownMenu({ setTableColumns, tableColumns, columns = [] }) {
             anchorEl: anchorEl,
             open: open,
             onClose: handleClose,
-            getContentAnchorEl: null,
+            getcontentanchorel: null,
             anchorOrigin: {
               vertical: "bottom",
               horizontal: "left",

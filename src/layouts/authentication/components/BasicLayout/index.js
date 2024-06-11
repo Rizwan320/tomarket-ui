@@ -4,7 +4,12 @@ import MDTypography from "components/MDTypography";
 import Footer from "layouts/authentication/components/Footer";
 import PageLayout from "muiComponents/LayoutContainers/PageLayout";
 
-const BasicLayout = ({ image, children }) => {
+const BasicLayout = ({ image, children, formType }) => {
+  const gridSizes =
+    formType === "signup"
+      ? { xs: 11, sm: 9, md: 5, lg: 4, xl: 5 }
+      : { xs: 11, sm: 9, md: 5, lg: 4, xl: 3 };
+
   return (
     <PageLayout background="transparent">
       <MDBox
@@ -31,7 +36,7 @@ const BasicLayout = ({ image, children }) => {
             alignItems="center"
             sx={{ minHeight: "inherit" }}
           >
-            <Grid item xs={11} sm={9} md={5} lg={4} xl={3}>
+            <Grid item {...gridSizes}>
               {children}
             </Grid>
           </Grid>

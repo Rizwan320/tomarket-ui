@@ -89,19 +89,30 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      {layout === "dashboard" && user?.email && (
+      {layout === "dashboard" && user.isAuthenticated && (
         <Sidenav
           color={sidenavColor}
           brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
           CompanyName="WCW"
-          routes={user?.type === "brands" ? brandRoutes : distributorRoutes}
+          // routes={user?.type === "brands" ? brandRoutes : distributorRoutes}
+          routes={brandRoutes}
           onMouseEnter={handleOnMouseEnter}
           onMouseLeave={handleOnMouseLeave}
         />
       )}
       <Routes>
-        {getRoutes(user?.type === "brands" ? brandRoutes : distributorRoutes)}
-        <Route path="*" element={<Navigate to="/authentication/sign-in" />} />
+        {/* {getRoutes(user?.type === "brands" ? brandRoutes : distributorRoutes)} */}
+        {getRoutes(brandRoutes)}
+        <Route
+          path="*"
+          element={
+            user.isAuthenticated ? (
+              <Navigate to="/dashboard" />
+            ) : (
+              <Navigate to="/authentication/sign-in" />
+            )
+          }
+        />
       </Routes>
     </ThemeProvider>
   );
