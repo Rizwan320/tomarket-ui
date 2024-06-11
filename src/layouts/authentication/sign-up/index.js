@@ -149,8 +149,8 @@ const SignUp = () => {
                             id="accountType"
                             variant="standard"
                           >
-                            <MenuItem value="Brand">Brand</MenuItem>
-                            <MenuItem value="Distributor">Distributor</MenuItem>
+                            <MenuItem value="brand">Brand</MenuItem>
+                            <MenuItem value="distributor">Distributor</MenuItem>
                           </Select>
                         </FormControl>
                       )}
