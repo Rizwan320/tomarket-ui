@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { VectorMap } from "react-jvectormap";
+
 import "./jquery-jvectormap.css";
 
 const salesData = {
@@ -15,93 +16,6 @@ const salesData = {
   "US-AZ": 65,
 };
 
-const restaurantStyles = {
-  fast_food: { fill: "#f00", r: 5 },
-  casual_dining: { fill: "#0f0", r: 7 },
-  fine_dining: { fill: "#00f", r: 9 },
-  cafe: { fill: "#ff0", r: 4 },
-};
-
-const initialMarkers = [
-  {
-    code: "US-CA",
-    latLng: [34.0522, -118.2437],
-    name: "Los Angeles",
-    salesVolume: 3000,
-    restaurantType: "fast_food",
-  },
-  {
-    code: "US-NY",
-    latLng: [40.7128, -74.006],
-    name: "New York City",
-    salesVolume: 2000,
-    restaurantType: "casual_dining",
-  },
-  {
-    code: "US-IL",
-    latLng: [41.8781, -87.6298],
-    name: "Chicago",
-    salesVolume: 1700,
-    restaurantType: "fine_dining",
-  },
-  {
-    code: "US-TX",
-    latLng: [29.7604, -95.3698],
-    name: "Houston",
-    salesVolume: 1000,
-    restaurantType: "casual_dining",
-  },
-  {
-    code: "US-CO",
-    latLng: [39.7392, -104.9903],
-    name: "Denver",
-    salesVolume: 30,
-    restaurantType: "fast_food",
-  },
-  {
-    code: "US-MN",
-    latLng: [44.9778, -93.265],
-    name: "Minneapolis",
-    salesVolume: 900,
-    restaurantType: "fast_food",
-  },
-  {
-    code: "US-CA",
-    latLng: [37.7749, -122.4194],
-    name: "San Francisco",
-    salesVolume: 900,
-    restaurantType: "fine_dining",
-  },
-  {
-    code: "US-TX",
-    latLng: [32.7767, -96.797],
-    name: "Dallas",
-    salesVolume: 670,
-    restaurantType: "casual_dining",
-  },
-  {
-    code: "US-WA",
-    latLng: [47.6062, -122.3321],
-    name: "Seattle",
-    salesVolume: 450,
-    restaurantType: "cafe",
-  },
-  {
-    code: "US-FL",
-    latLng: [25.7617, -80.1918],
-    name: "Miami",
-    salesVolume: 999,
-    restaurantType: "fast_food",
-  },
-  {
-    code: "US-AZ",
-    latLng: [33.4484, -112.074],
-    name: "Phoenix",
-    salesVolume: 499,
-    restaurantType: "fast_food",
-  },
-];
-
 const getMarkerSize = (salesVolume) => {
   return 5 + (salesVolume / 100) * 1;
 };
@@ -112,28 +26,51 @@ const getMarkerColor = (salesVolume) => {
   return "red";
 };
 
-const markers = initialMarkers.map((marker) => ({
-  ...marker,
-  ...restaurantStyles[marker.restaurantType],
-  style: { fill: getMarkerColor(marker.salesVolume), r: getMarkerSize(marker.salesVolume) },
-}));
-
-const Vectormap = (props) => {
-  const [updatedMarkers, setUpdatedMarkers] = useState(markers);
+const Vectormap = ({ data, width, color }) => {
+  const [updatedMarkers, setUpdatedMarkers] = useState(data);
 
   useEffect(() => {
-    setUpdatedMarkers(markers);
-  }, [markers]);
+    setUpdatedMarkers(getMarkersFromBuyers());
+  }, [data]);
 
-  const statesWithSalesOrMarkers = new Set([
-    ...Object.keys(salesData),
-    ...initialMarkers.map((marker) => marker.code),
-  ]);
+  // const getMarkersFromCustomers = () => {
+  //   // Filter out customers without valid lat-long and map to required format
+  //   return data
+  //     ?.filter(
+  //       (customer) =>
+  //         customer.BillAddr &&
+  //         customer.BillAddr.Lat !== "INVALID" &&
+  //         customer.BillAddr.Long !== "INVALID"
+  //     )
+  //     .map((customer) => ({
+  //       latLng: [parseFloat(customer.BillAddr.Lat), parseFloat(customer.BillAddr.Long)],
+  //       name: customer?.DisplayName || customer.CompanyName,
+  //       style: {
+  //         fill: getMarkerColor(customer.salesVolume),
+  //         r: getMarkerSize(customer.salesVolume),
+  //       },
+  //     }));
+  // };
 
-  const specificRegionStyle = Array.from(statesWithSalesOrMarkers).reduce((acc, code) => {
-    acc[code] = { scale: "red" };
-    return acc;
-  }, {});
+  const getMarkersFromBuyers = () => {
+    // Filter out customers without valid lat-long and map to required format
+    return data
+      ?.filter(
+        (buyer) =>
+          buyer.showOnMap &&
+          buyer.location &&
+          buyer.location.lat !== "INVALID" &&
+          buyer.location.long !== "INVALID"
+      )
+      .map((buyer) => ({
+        latLng: [parseFloat(buyer.location.lat), parseFloat(buyer.location.long)],
+        name: buyer?.displayName || buyer?.companyName || "",
+        style: {
+          fill: getMarkerColor(buyer.salesVolume),
+          r: getMarkerSize(buyer.salesVolume),
+        },
+      }));
+  };
 
   const handleRegionTipShow = (e, el, code) => {
     if (!el) {
@@ -148,7 +85,6 @@ const Vectormap = (props) => {
       <div>
         <p>Name: ${el.text()}</p>
         <p>Sales: ${salesData[code]}</p>
-        <p>Type: ${initialMarkers.find((marker) => marker.code === code)?.restaurantType}</p>
       </div>
     `;
     el.html(tooltipContent);
@@ -156,7 +92,7 @@ const Vectormap = (props) => {
   };
 
   return (
-    <div style={{ width: props.width, height: "500px", zIndex: 2 }}>
+    <div style={{ width, height: "500px", zIndex: 2 }}>
       <VectorMap
         map="us_aea"
         backgroundColor="transparent"
@@ -168,7 +104,7 @@ const Vectormap = (props) => {
         onRegionTipShow={handleRegionTipShow}
         regionStyle={{
           initial: {
-            fill: props.color,
+            fill: color,
             stroke: "#fffff",
             "stroke-width": 2,
             "stroke-opacity": 2,
