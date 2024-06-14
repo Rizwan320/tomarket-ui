@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { IconButton } from "@mui/material";
+import { IconButton, Switch } from "@mui/material";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
@@ -17,6 +17,7 @@ const buyersdata = (tableColumns) => {
       ...row,
       selectedSku: row.skusPurchased[0],
       selectedAverageQuantity: row.averageQuantity[0] || 0,
+      showOnMap: false,
     }))
   );
   const Logo = ({ name }) => (
@@ -117,6 +118,28 @@ const buyersdata = (tableColumns) => {
     setTableData(newData);
   };
 
+  const ToggleSwitch = ({ row, onChange }) => {
+    const handleChange = (event) => {
+      onChange(row.id, event.target.checked);
+    };
+
+    return <Switch checked={row.showOnMap} onChange={handleChange} color="primary" />;
+  };
+
+  const updateShowOnMap = (rowId, value) => {
+    const newData = tableData?.map((row) => {
+      if (row.id === rowId) {
+        return {
+          ...row,
+          showOnMap: value,
+        };
+      }
+      return row;
+    });
+
+    setTableData(newData);
+  };
+
   const allColumns = {
     logo: { Header: "Logo", accessor: "logo", align: "left" },
     businessName: {
@@ -161,6 +184,11 @@ const buyersdata = (tableColumns) => {
       accessor: "unitsSoldLastWeek",
       align: "center",
     },
+    showOnMap: {
+      Header: "Show on Map",
+      accessor: "showOnMap",
+      align: "center",
+    },
   };
 
   const filteredColumns = Object.values(allColumns).filter((column) =>
@@ -180,11 +208,11 @@ const buyersdata = (tableColumns) => {
       weeklyTrend: () => <TrendBadge trend={row?.weeklyTrend} />,
       monthlyTrend: () => <TrendBadge trend={row?.monthlyTrend} />,
       unitsSoldLastWeek: () => <TrendBadge trend={row?.unitsSoldLastWeek} />,
+      showOnMap: () => <ToggleSwitch row={row} onChange={updateShowOnMap} />, // New component
     };
 
     return componentsMap[column] ? componentsMap[column]() : null;
   };
-
   return {
     columns: filteredColumns,
     rows: tableData.map((row) => {
