@@ -34,13 +34,11 @@ const SignIn = () => {
   const handleForgotPassword = (e) => e.preventDefault();
 
   const handleSignIn = async (values, { setSubmitting }) => {
-    console.log(values);
     try {
       const res = await api.post(`auth/login`, {
         email: values.userEmail,
         password: values.password,
       });
-      console.log(res);
       if (res.status === 201) {
         login(res.data);
         navigate("/dashboard");

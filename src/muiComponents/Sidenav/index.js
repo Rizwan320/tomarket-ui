@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-import { useLocation, NavLink } from "react-router-dom";
+import { useLocation, NavLink, useNavigate } from "react-router-dom";
 
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
@@ -32,6 +32,7 @@ const Sidenav = ({ color, brand, CompanyName, routes, ...rest }) => {
   const [controller, dispatch] = useMaterialUIController();
   const { miniSidenav, transparentSidenav, whiteSidenav, darkMode, sidenavColor } = controller;
   const location = useLocation();
+  const navigate = useNavigate();
   const { logout } = useUser();
   const collapseName = location.pathname.replace("/", "");
 
@@ -58,6 +59,7 @@ const Sidenav = ({ color, brand, CompanyName, routes, ...rest }) => {
 
   const handleLogout = () => {
     logout();
+    navigate("/authentication/sign-in");
   };
 
   const treeRoute = routes.find((route) => route.key === "profile");

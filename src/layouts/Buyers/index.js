@@ -20,6 +20,7 @@ const COLUMNS = [
   { Header: "Weekly Trend", accessor: "weeklyTrend", align: "center" },
   { Header: "Monthly Trend", accessor: "monthlyTrend", align: "center" },
   { Header: "Units Sold Last Week", accessor: "unitsSoldLastWeek", align: "center" },
+  { Header: "Show on Map", accessor: "showOnMap", align: "center" },
 ];
 
 const Buyers = () => {
