@@ -2,6 +2,7 @@ import axios from "axios";
 
 const api = axios.create({
   baseURL: process.env.REACT_APP_BASE_URL,
+  withCredentials: true,
   headers: {
     "Content-Type": "application/json",
   },
@@ -9,7 +10,7 @@ const api = axios.create({
 
 async function refreshToken() {
   const refreshToken = localStorage.getItem("refreshToken");
-  const response = await api.post("auth/refresh", { refreshToken });
+  const response = await api.post("auth/refresh", { refresh: refreshToken });
   return response.data;
 }
 

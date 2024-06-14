@@ -31,7 +31,6 @@ export const UserProvider = ({ children }) => {
     localStorage.setItem("accessToken", null);
     localStorage.setItem("refreshToken", null);
     setUser(initialState);
-
     localStorage.clear();
   };
 

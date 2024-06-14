@@ -34,7 +34,6 @@ const BrandDetailsData = () => {
   const [isEditable, setIsEditable] = useState(false);
 
   const handleUpdatedData = (updatedData) => {
-    console.log(updatedData);
     setOpenModal(false);
     setIsEditable(false);
   };
