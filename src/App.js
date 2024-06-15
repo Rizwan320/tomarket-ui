@@ -94,15 +94,19 @@ export default function App() {
           color={sidenavColor}
           brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
           CompanyName="WCW"
-          // routes={user?.type === "brands" ? brandRoutes : distributorRoutes}
-          routes={brandRoutes}
+          routes={
+            user?.user?.email === "distributordemo@tomarket.farm" ? distributorRoutes : brandRoutes
+          }
+          // routes={brandRoutes}
           onMouseEnter={handleOnMouseEnter}
           onMouseLeave={handleOnMouseLeave}
         />
       )}
       <Routes>
-        {/* {getRoutes(user?.type === "brands" ? brandRoutes : distributorRoutes)} */}
-        {getRoutes(brandRoutes)}
+        {getRoutes(
+          user?.user?.email === "distributordemo@tomarket.farm" ? distributorRoutes : brandRoutes
+        )}
+        {/* {getRoutes(brandRoutes)} */}
         <Route
           path="*"
           element={

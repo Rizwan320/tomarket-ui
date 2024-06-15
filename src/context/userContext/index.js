@@ -20,7 +20,7 @@ export const UserProvider = ({ children }) => {
         accessToken: access_token,
         refreshToken,
         isAuthenticated: true,
-        user: userData.userName,
+        user: userData,
       };
     });
     localStorage.setItem("accessToken", access_token);
