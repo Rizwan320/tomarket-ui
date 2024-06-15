@@ -55,6 +55,7 @@ const Dashboard = () => {
   const sendQuickbooksToken = async (payload) => {
     try {
       await api.patch("quickbooks/save-quickbooks-token", { payload });
+      await api.post("buyers");
       setIsMap(true);
       fetchBuyers();
     } catch (error) {
