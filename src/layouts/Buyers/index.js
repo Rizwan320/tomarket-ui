@@ -10,6 +10,9 @@ import buyersdata from "layouts/Buyers/components/data";
 
 const COLUMNS = [
   { Header: "Logo", accessor: "logo", align: "left" },
+  { Header: "Display Name", accessor: "displayName", align: "center" },
+  { Header: "Email", accessor: "email", align: "center" },
+  { Header: "Show on Map", accessor: "showOnMap", align: "center" },
   { Header: "Business Name", accessor: "businessName", align: "center" },
   { Header: "Distributor", accessor: "distributor", align: "center" },
   { Header: "Sales Rep", accessor: "salesRep", align: "center" },
@@ -20,16 +23,10 @@ const COLUMNS = [
   { Header: "Weekly Trend", accessor: "weeklyTrend", align: "center" },
   { Header: "Monthly Trend", accessor: "monthlyTrend", align: "center" },
   { Header: "Units Sold Last Week", accessor: "unitsSoldLastWeek", align: "center" },
-  { Header: "Show on Map", accessor: "showOnMap", align: "center" },
 ];
 
 const Buyers = () => {
-  const [tableColumns, setTableColumns] = useState([
-    "logo",
-    "businessName",
-    "distributor",
-    "salesRep",
-  ]);
+  const [tableColumns, setTableColumns] = useState(["logo", "displayName", "email", "showOnMap"]);
   const { columns, rows } = buyersdata(tableColumns);
 
   return (

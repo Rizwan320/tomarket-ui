@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IconButton, Switch } from "@mui/material";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
@@ -10,16 +10,29 @@ import MDTypography from "components/MDTypography";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { BUYER_DATA } from "./BuyerData";
+import api from "../../../../axios";
 
 const buyersdata = (tableColumns) => {
-  const [tableData, setTableData] = useState(
-    BUYER_DATA?.map((row) => ({
-      ...row,
-      selectedSku: row.skusPurchased[0],
-      selectedAverageQuantity: row.averageQuantity[0] || 0,
-      showOnMap: false,
-    }))
-  );
+  const [tableData, setTableData] = useState([]);
+  useEffect(() => {
+    const fetchBuyers = async () => {
+      try {
+        const response = await api.get("buyers");
+        if (response.data.data) {
+          const buyer = response?.data?.data?.map((row) => ({
+            ...row,
+            displayName: row.displayName,
+            email: row.email || "",
+            showOnMap: row.showOnMap,
+          }));
+          setTableData(buyer);
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+    fetchBuyers();
+  }, []);
   const Logo = ({ name }) => (
     <MDBox display="flex" alignItems="left" lineHeight={1}>
       <MDAvatar src={name} size="sm" />
@@ -184,6 +197,16 @@ const buyersdata = (tableColumns) => {
       accessor: "unitsSoldLastWeek",
       align: "center",
     },
+    displayName: {
+      Header: "Display Name",
+      accessor: "displayName",
+      align: "center",
+    },
+    email: {
+      Header: "Email",
+      accessor: "email",
+      align: "center",
+    },
     showOnMap: {
       Header: "Show on Map",
       accessor: "showOnMap",
@@ -197,8 +220,10 @@ const buyersdata = (tableColumns) => {
 
   const renderBuyersComponent = (column, row) => {
     const componentsMap = {
-      logo: () => <Logo name={row?.logo} />,
+      logo: () => <Logo name={"https://via.placeholder.com/40"} />,
       businessName: () => <Brand name={row?.businessName} />,
+      displayName: () => <Brand name={row?.displayName} />,
+      email: () => <Brand name={row?.email} />,
       distributor: () => <Brand name={row?.distributor} />,
       salesRep: () => <Brand name={row?.salesRep} />,
       restaurantType: () => <Brand name={row?.restaurantType} />,
