@@ -11,6 +11,7 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { BUYER_DATA } from "./BuyerData";
 import api from "../../../../axios";
+import { toast } from "react-toastify";
 
 const buyersdata = (tableColumns) => {
   const [tableData, setTableData] = useState([]);
@@ -139,18 +140,17 @@ const buyersdata = (tableColumns) => {
     return <Switch checked={row.showOnMap} onChange={handleChange} color="primary" />;
   };
 
-  const updateShowOnMap = (rowId, value) => {
-    const newData = tableData?.map((row) => {
-      if (row.id === rowId) {
-        return {
-          ...row,
-          showOnMap: value,
-        };
+  const updateShowOnMap = async (rowId, value) => {
+    try {
+      const res = await api.patch(`buyers/${rowId}`, { showOnMap: value });
+      if (res.status == 200) {
+        setTableData((prevData) =>
+          prevData.map((row) => (row.id === rowId ? { ...row, showOnMap: value } : row))
+        );
       }
-      return row;
-    });
-
-    setTableData(newData);
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
   const allColumns = {
@@ -233,7 +233,7 @@ const buyersdata = (tableColumns) => {
       weeklyTrend: () => <TrendBadge trend={row?.weeklyTrend} />,
       monthlyTrend: () => <TrendBadge trend={row?.monthlyTrend} />,
       unitsSoldLastWeek: () => <TrendBadge trend={row?.unitsSoldLastWeek} />,
-      showOnMap: () => <ToggleSwitch row={row} onChange={updateShowOnMap} />, // New component
+      showOnMap: () => <ToggleSwitch row={row} onChange={updateShowOnMap} />,
     };
 
     return componentsMap[column] ? componentsMap[column]() : null;
