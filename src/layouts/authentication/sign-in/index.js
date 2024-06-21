@@ -162,7 +162,7 @@ const SignIn = () => {
                     Sign In
                   </MDButton>
                 </MDBox>
-                <MDBox mt={2} mb={1}>
+                {/* <MDBox mt={2} mb={1}>
                   <MDButton
                     startIcon={<GoogleIcon />}
                     onClick={handleSignInWithGoogle}
@@ -172,7 +172,7 @@ const SignIn = () => {
                   >
                     Sign In with Google
                   </MDButton>
-                </MDBox>
+                </MDBox> */}
 
                 <MDBox mt={3} mb={1} textAlign="center">
                   <MDTypography variant="button" color="text">

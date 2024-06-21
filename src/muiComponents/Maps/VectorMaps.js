@@ -33,27 +33,7 @@ const Vectormap = ({ data, width, color }) => {
     setUpdatedMarkers(getMarkersFromBuyers());
   }, [data]);
 
-  // const getMarkersFromCustomers = () => {
-  //   // Filter out customers without valid lat-long and map to required format
-  //   return data
-  //     ?.filter(
-  //       (customer) =>
-  //         customer.BillAddr &&
-  //         customer.BillAddr.Lat !== "INVALID" &&
-  //         customer.BillAddr.Long !== "INVALID"
-  //     )
-  //     .map((customer) => ({
-  //       latLng: [parseFloat(customer.BillAddr.Lat), parseFloat(customer.BillAddr.Long)],
-  //       name: customer?.DisplayName || customer.CompanyName,
-  //       style: {
-  //         fill: getMarkerColor(customer.salesVolume),
-  //         r: getMarkerSize(customer.salesVolume),
-  //       },
-  //     }));
-  // };
-
   const getMarkersFromBuyers = () => {
-    // Filter out customers without valid lat-long and map to required format
     return data
       ?.filter(
         (buyer) =>
