@@ -23,7 +23,7 @@ const SignUp = () => {
     accountName: "",
     mailingAddress: "",
     accountType: "",
-    fullName: "",
+    userName: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -33,7 +33,7 @@ const SignUp = () => {
     accountName: Yup.string().required("Company Name is required"),
     mailingAddress: Yup.string().required("Mailing Address is required"),
     accountType: Yup.string().required("account Type is required"),
-    fullName: Yup.string().required("Full Name is required"),
+    userName: Yup.string().required("Full Name is required"),
     email: Yup.string().email("Invalid email format").required("User Email is required"),
     password: Yup.string()
       .required("Password is required")
@@ -158,7 +158,7 @@ const SignUp = () => {
                 </MDBox>
                 <MDBox mb={2} display="flex" justifyContent="space-between">
                   <MDBox mr={1} flex={1}>
-                    <Field name="fullName" as={MDInput} type="text" label="Full Name" fullWidth />
+                    <Field name="userName" as={MDInput} type="text" label="Full Name" fullWidth />
                     <ErrorMessage name="userName" component="h6" style={{ color: "red" }} />
                   </MDBox>
                   <MDBox ml={1} flex={1}>
