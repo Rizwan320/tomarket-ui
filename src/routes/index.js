@@ -71,6 +71,16 @@ export const brandRoutes = [
   },
   {
     type: "collapse",
+    name: "Plugins",
+    key: "plugins",
+    icon: <Icon fontSize="small">shopify</Icon>,
+    route: "/plugins",
+    component: <Plugins />,
+    isPrivate: true,
+    isNavbar: true,
+  },
+  {
+    type: "collapse",
     name: "Settings",
     href: true,
     key: "profile",
@@ -102,6 +112,7 @@ export const brandRoutes = [
     isPrivate: false,
     isNavbar: false,
   },
+
   {
     type: "collapse",
     name: "Sign Up",
