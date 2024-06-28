@@ -7,18 +7,56 @@ import WordpressIcon from "@mui/icons-material/Keyboard";
 import ShopifyIcon from "@mui/icons-material/ShoppingCart";
 import SquarespaceIcon from "@mui/icons-material/Square";
 import WixIcon from "@mui/icons-material/Web";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import api from "../../axios";
+import { toast } from "react-toastify";
 
 const mapPlugin = ["WIX Store", "Shopify Store", "WordPress Store", "Squarespace Store"];
 const erpPlugins = ["Quickbooks Login", "XERO Login"];
 
 const Plugins = () => {
+  const navigate = useNavigate();
   const handleClicked = (e, name) => {
     e.preventDefault();
     if (name === "Shopify Store") {
       window.open("https://admin.shopify.com/store/quickstart-26de50cb/apps/map-app-6", "_blank");
+    } else if (name === "Quickbooks Login") {
+      handleQuickbooksLogin();
     }
-    alert(`Open ${name}`);
+    // alert(`Open ${name}`);
+  };
+
+  const sendQuickbooksToken = async (payload) => {
+    try {
+      const tokenResponse = await api.patch("quickbooks/save-quickbooks-token", { payload });
+      if (tokenResponse) {
+        toast.success("Quickbooiks Login Successfull");
+        await api.post("buyers");
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const handleQuickbooksLogin = () => {
+    try {
+      window.open(process.env.REACT_APP_BASE_URL + "quickbooks/auth", "_blank");
+      window.addEventListener("message", (event) => {
+        // if (event.origin !== "http://localhost:3001") {
+        //   console.error("Invalid origin:", event.origin);
+        //   return; // Do not process messages from untrusted origins
+        // }
+        console.log(event.data);
+
+        if (event.data.access_token) {
+          sendQuickbooksToken(event.data);
+        } else {
+          console.log("Received unexpected message format:", event.data);
+        }
+      });
+    } catch (error) {
+      console.log("Error fetching auth URI:", error);
+    }
   };
 
   return (

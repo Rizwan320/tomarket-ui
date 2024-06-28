@@ -24,7 +24,7 @@ import HrefLink from "./HrefLink";
 
 import { useMaterialUIController, setMiniSidenav, setWhiteSidenav } from "context";
 
-import whatChefWants from "../../assets/images/whatChefWants.png";
+import toMarketLogo from "../../assets/images/tomarket-green-logo.png";
 
 const EXCLUDE_SIDE_BAR_KEYS = ["sign-in", "sign-up"];
 
@@ -130,15 +130,15 @@ const Sidenav = ({ color, brand, CompanyName, routes, ...rest }) => {
           </MDTypography>
         </MDBox>
         <MDBox component={NavLink} to="/" display="flex" alignItems="center">
-          {brand && <MDBox component="img" src={whatChefWants} alt="Brand" width="2.5rem" />}
-          <MDBox
+          {brand && <MDBox component="img" src={toMarketLogo} alt="Brand" width="10rem" />}
+          {/* <MDBox
             width={!CompanyName && "100%"}
             sx={(theme) => sidenavLogoLabel(theme, { miniSidenav })}
           >
             <MDTypography component="h6" variant="button" fontWeight="medium" color={textColor}>
               {CompanyName}
             </MDTypography>
-          </MDBox>
+          </MDBox> */}
         </MDBox>
       </MDBox>
       <Divider light={false} />
