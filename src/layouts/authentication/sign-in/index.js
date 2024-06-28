@@ -19,7 +19,7 @@ import { useUser } from "context/userContext";
 import BasicLayout from "layouts/authentication/components/BasicLayout";
 
 import bgImage from "assets/images/login-bg.jpg";
-import tmLogo from "assets/images/whatChefWants.png";
+import tmLogo from "assets/images/toMarket-logo.png";
 import api from "../../../axios";
 
 const SignIn = () => {
@@ -41,6 +41,11 @@ const SignIn = () => {
       });
       if (res.status === 201) {
         login(res.data);
+        // const getUpdatedBuyersResponse = await api.post("buyers");
+        // if (getUpdatedBuyersResponse) {
+        //   console.log("login page", getUpdatedBuyersResponse);
+        // }
+
         navigate("/dashboard");
       } else {
         toast.error("Unauthorized User");

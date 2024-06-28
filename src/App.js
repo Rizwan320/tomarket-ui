@@ -93,7 +93,7 @@ export default function App() {
         <Sidenav
           color={sidenavColor}
           brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
-          CompanyName="WCW"
+          CompanyName="ToMarket"
           routes={
             user?.user?.email === "distributordemo@tomarket.farm" ? distributorRoutes : brandRoutes
           }

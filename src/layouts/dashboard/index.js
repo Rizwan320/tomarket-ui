@@ -48,71 +48,52 @@ const Dashboard = () => {
   const [updatedMarker, setUpdatedMarker] = useState([]);
 
   useEffect(() => {
-    //fetchCustomers();
     fetchBuyers();
   }, []);
 
-  const sendQuickbooksToken = async (payload) => {
-    try {
-      await api.patch("quickbooks/save-quickbooks-token", { payload });
-      await api.post("buyers");
-      setIsMap(true);
-      fetchBuyers();
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-
-  const handleQuickbooksLogin = async () => {
-    try {
-      window.open(process.env.REACT_APP_BASE_URL + "quickbooks/auth", "_blank");
-      window.addEventListener("message", (event) => {
-        // if (event.origin !== "http://localhost:3001") {
-        //   console.error("Invalid origin:", event.origin);
-        //   return; // Do not process messages from untrusted origins
-        // }
-        if (event.data.access_token) {
-          sendQuickbooksToken(event.data);
-        } else {
-          console.log("Received unexpected message format:", event.data);
-        }
-      });
-    } catch (error) {
-      console.log("Error fetching auth URI:", error);
-    }
-  };
-
-  // const fetchCustomers = async () => {
+  // const sendQuickbooksToken = async (payload) => {
   //   try {
-  //     const res = await api.get("quickbooks/customers");
-  //     if (res) {
-  //       const filteredData = res?.data?.QueryResponse?.Customer.filter((customer) => {
-  //         return (
-  //           customer.BillAddr &&
-  //           customer.BillAddr.Lat !== "INVALID" &&
-  //           customer.BillAddr.Long !== "INVALID"
-  //         );
-  //       });
-  //       const updatedData = filteredData?.map((element) => ({
-  //         ...element,
-  //         salesVolume: 1001 || salesVolumeData[Math.floor(Math.random() * salesVolumeData.length)],
-  //       }));
-  //       setUpdatedMarker(updatedData);
-  //       setIsMap(true);
-  //       setIsQuickbooksloginButton(false);
+  //     const tokenResponse = await api.patch("quickbooks/save-quickbooks-token", { payload });
+  //     if (tokenResponse.status === 200) {
+  //       const buyersResponse = await api.post("buyers");
+  //       console.log(buyersResponse);
   //     }
+  //     setIsMap(true);
+  //     fetchBuyers();
   //   } catch (error) {
-  //     setIsQuickbooksloginButton(true);
+  //     setIsMap(false);
   //     console.log(error.message);
+  //   }
+  // };
+
+  // const handleQuickbooksLogin = () => {
+  //   try {
+  //     window.open(process.env.REACT_APP_BASE_URL + "quickbooks/auth", "_blank");
+  //     window.addEventListener("message", (event) => {
+  //       // if (event.origin !== "http://localhost:3001") {
+  //       //   console.error("Invalid origin:", event.origin);
+  //       //   return; // Do not process messages from untrusted origins
+  //       // }
+  //       console.log(event.data);
+
+  //       if (event.data.access_token) {
+  //         sendQuickbooksToken(event.data);
+  //       } else {
+  //         console.log("Received unexpected message format:", event.data);
+  //       }
+  //     });
+  //   } catch (error) {
+  //     console.log("Error fetching auth URI:", error);
   //   }
   // };
 
   const fetchBuyers = async () => {
     try {
       const res = await api.get("buyers");
-      if (res?.data?.status === 401) {
+      console.log(res);
+      if (res?.data?.status === 401 || res?.status === 401) {
         setIsMap(false);
-        setIsQuickbooksloginButton(true);
+        // setIsQuickbooksloginButton(true);
       } else if (res.data.data) {
         const filteredData = res?.data?.data?.filter((buyer) => {
           return (
@@ -123,14 +104,14 @@ const Dashboard = () => {
         });
         const updatedData = filteredData?.map((element) => ({
           ...element,
-          salesVolume: 1001 || salesVolumeData[Math.floor(Math.random() * salesVolumeData.length)],
+          salesVolume: salesVolumeData[Math.floor(Math.random() * salesVolumeData.length)],
         }));
         setUpdatedMarker(updatedData);
         setIsMap(true);
-        setIsQuickbooksloginButton(false);
+        // setIsQuickbooksloginButton(false);
       }
     } catch (error) {
-      setIsQuickbooksloginButton(true);
+      // setIsQuickbooksloginButton(true);
       console.log(error.message);
     }
   };
@@ -166,7 +147,7 @@ const Dashboard = () => {
           <Grid container spacing={3}>
             <Grid item xs={12} md={6} lg={8}>
               {isMap && <MapsVector data={updatedMarker} />}
-              {QuickbooksLoginButton && (
+              {/* {!isMap && (
                 <MDBox>
                   <MDTypography>Click to login Quickbooks to get Map Data</MDTypography>
                   <MDButton
@@ -181,7 +162,7 @@ const Dashboard = () => {
                     Quickbooks Login
                   </MDButton>
                 </MDBox>
-              )}
+              )} */}
               <MDBox mt={3} mb={3}>
                 <SalesChart
                   chartSeries={[

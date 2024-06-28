@@ -12,7 +12,7 @@ import MDTypography from "components/MDTypography";
 import BasicLayout from "../components/BasicLayout";
 import GooglePlacesAutocomplete from "google/GooglePlacesAutocomplete";
 import bgImage from "assets/images/login-bg.jpg";
-import tmLogo from "assets/images/whatChefWants.png";
+import tmLogo from "assets/images/toMarket-logo.png";
 import api from "../../../axios";
 import { toast } from "react-toastify";
 
@@ -21,10 +21,9 @@ const SignUp = () => {
 
   const initialValues = {
     accountName: "",
-    companyEmail: "",
     mailingAddress: "",
     accountType: "",
-    userName: "",
+    fullName: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -32,10 +31,9 @@ const SignUp = () => {
 
   const validationSchema = Yup.object({
     accountName: Yup.string().required("Company Name is required"),
-    companyEmail: Yup.string().email("Invalid email format").required("Company Email is required"),
     mailingAddress: Yup.string().required("Mailing Address is required"),
     accountType: Yup.string().required("account Type is required"),
-    userName: Yup.string().required("User Name is required"),
+    fullName: Yup.string().required("Full Name is required"),
     email: Yup.string().email("Invalid email format").required("User Email is required"),
     password: Yup.string()
       .required("Password is required")
@@ -112,7 +110,7 @@ const SignUp = () => {
                     />
                     <ErrorMessage name="accountName" component="h6" style={{ color: "red" }} />
                   </MDBox>
-                  <MDBox ml={1} flex={1}>
+                  {/* <MDBox ml={1} flex={1}>
                     <Field
                       name="companyEmail"
                       as={MDInput}
@@ -121,6 +119,25 @@ const SignUp = () => {
                       fullWidth
                     />
                     <ErrorMessage name="companyEmail" component="h6" style={{ color: "red" }} />
+                  </MDBox> */}
+                  <MDBox ml={1} flex={1}>
+                    <Field name="accountType">
+                      {({ field }) => (
+                        <FormControl fullWidth>
+                          <InputLabel id="accountType-label">Account Type</InputLabel>
+                          <Select
+                            {...field}
+                            labelId="accountType-label"
+                            id="accountType"
+                            variant="standard"
+                          >
+                            <MenuItem value="brand">Brand</MenuItem>
+                            {/* <MenuItem value="distributor">Distributor</MenuItem> */}
+                          </Select>
+                        </FormControl>
+                      )}
+                    </Field>
+                    <ErrorMessage name="accountType" component="h6" style={{ color: "red" }} />
                   </MDBox>
                 </MDBox>
                 <MDBox mb={2} display="flex" justifyContent="space-between" alignItems="flex-end">
@@ -138,29 +155,10 @@ const SignUp = () => {
                     </Field>
                     <ErrorMessage name="mailingAddress" component="h6" style={{ color: "red" }} />
                   </MDBox>
-                  <MDBox ml={1} flex={1}>
-                    <Field name="accountType">
-                      {({ field }) => (
-                        <FormControl fullWidth>
-                          <InputLabel id="accountType-label">Account Type</InputLabel>
-                          <Select
-                            {...field}
-                            labelId="accountType-label"
-                            id="accountType"
-                            variant="standard"
-                          >
-                            <MenuItem value="brand">Brand</MenuItem>
-                            <MenuItem value="distributor">Distributor</MenuItem>
-                          </Select>
-                        </FormControl>
-                      )}
-                    </Field>
-                    <ErrorMessage name="accountType" component="h6" style={{ color: "red" }} />
-                  </MDBox>
                 </MDBox>
                 <MDBox mb={2} display="flex" justifyContent="space-between">
                   <MDBox mr={1} flex={1}>
-                    <Field name="userName" as={MDInput} type="text" label="User Name" fullWidth />
+                    <Field name="fullName" as={MDInput} type="text" label="Full Name" fullWidth />
                     <ErrorMessage name="userName" component="h6" style={{ color: "red" }} />
                   </MDBox>
                   <MDBox ml={1} flex={1}>
