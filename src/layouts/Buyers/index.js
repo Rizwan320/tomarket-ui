@@ -7,6 +7,8 @@ import MDTypography from "components/MDTypography";
 import DataTable from "muiComponents/Tables/DataTable";
 import DropdownMenu from "muiComponents/MultiSelectDropdown";
 import buyersdata from "layouts/Buyers/components/data";
+import MDButton from "components/MDButton";
+import api from "../../axios";
 
 const COLUMNS = [
   { Header: "Logo", accessor: "logo", align: "left" },
@@ -27,7 +29,19 @@ const COLUMNS = [
 
 const Buyers = () => {
   const [tableColumns, setTableColumns] = useState(["logo", "displayName", "email", "showOnMap"]);
-  const { columns, rows } = buyersdata(tableColumns);
+  const [refresh, setRefresh] = useState(false);
+  const { columns, rows } = buyersdata(tableColumns, refresh);
+
+  const refetchBuyers = async () => {
+    try {
+      const res = await api.get("buyers/refetch-buyer");
+      if (res.data) {
+        setRefresh(!refresh);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <Card>
@@ -37,11 +51,30 @@ const Buyers = () => {
             Buyers
           </MDTypography>
         </MDBox>
-        <DropdownMenu
-          tableColumns={tableColumns}
-          columns={COLUMNS}
-          setTableColumns={setTableColumns}
-        />
+        <MDBox
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "space-between",
+          }}
+        >
+          {/* <MDTypography>Click to login Quickbooks to get Map Data</MDTypography> */}
+          <MDButton
+            onClick={() => refetchBuyers()}
+            type="button"
+            color="success"
+            variant="gradient"
+            sx={{ mr: 2 }}
+            name="Refetch Buyers"
+          >
+            Refetch Buyers
+          </MDButton>
+          <DropdownMenu
+            tableColumns={tableColumns}
+            columns={COLUMNS}
+            setTableColumns={setTableColumns}
+          />
+        </MDBox>
       </MDBox>
       <MDBox>
         <DataTable
