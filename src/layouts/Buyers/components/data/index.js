@@ -13,8 +13,9 @@ import { BUYER_DATA } from "./BuyerData";
 import api from "../../../../axios";
 import { toast } from "react-toastify";
 
-const buyersdata = (tableColumns) => {
+const buyersdata = (tableColumns, refresh) => {
   const [tableData, setTableData] = useState([]);
+
   useEffect(() => {
     const fetchBuyers = async () => {
       try {
@@ -33,7 +34,8 @@ const buyersdata = (tableColumns) => {
       }
     };
     fetchBuyers();
-  }, []);
+  }, [refresh]);
+
   const Logo = ({ name }) => (
     <MDBox display="flex" alignItems="left" lineHeight={1}>
       <MDAvatar src={name} size="sm" />
@@ -214,8 +216,8 @@ const buyersdata = (tableColumns) => {
     },
   };
 
-  const filteredColumns = Object.values(allColumns).filter((column) =>
-    tableColumns.includes(column.accessor)
+  const filteredColumns = Object.values(allColumns)?.filter((column) =>
+    tableColumns?.includes(column.accessor)
   );
 
   const renderBuyersComponent = (column, row) => {
@@ -240,8 +242,8 @@ const buyersdata = (tableColumns) => {
   };
   return {
     columns: filteredColumns,
-    rows: tableData.map((row) => {
-      return tableColumns.reduce((acc, column) => {
+    rows: tableData?.map((row) => {
+      return tableColumns?.reduce((acc, column) => {
         acc[column] = renderBuyersComponent(column, row);
         return acc;
       }, {});

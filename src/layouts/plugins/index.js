@@ -46,8 +46,6 @@ const Plugins = () => {
         //   console.error("Invalid origin:", event.origin);
         //   return; // Do not process messages from untrusted origins
         // }
-        console.log(event.data);
-
         if (event.data.access_token) {
           sendQuickbooksToken(event.data);
         } else {
