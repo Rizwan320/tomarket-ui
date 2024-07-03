@@ -9,6 +9,7 @@ import DropdownMenu from "muiComponents/MultiSelectDropdown";
 import buyersdata from "layouts/Buyers/components/data";
 import MDButton from "components/MDButton";
 import api from "../../axios";
+import Loader from "components/Loader";
 
 const COLUMNS = [
   { Header: "Logo", accessor: "logo", align: "left" },
@@ -28,65 +29,72 @@ const COLUMNS = [
 ];
 
 const Buyers = () => {
+  const [loading, setLoading] = useState(false);
   const [tableColumns, setTableColumns] = useState(["logo", "displayName", "email", "showOnMap"]);
   const [refresh, setRefresh] = useState(false);
   const { columns, rows } = buyersdata(tableColumns, refresh);
 
   const refetchBuyers = async () => {
     try {
+      setLoading(true);
       const res = await api.get("buyers/refetch-buyer");
       if (res.data) {
         setRefresh(!refresh);
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <Card>
-      <MDBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
-        <MDBox>
-          <MDTypography variant="h6" gutterBottom>
-            Buyers
-          </MDTypography>
-        </MDBox>
-        <MDBox
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "space-between",
-          }}
-        >
-          {/* <MDTypography>Click to login Quickbooks to get Map Data</MDTypography> */}
-          <MDButton
-            onClick={() => refetchBuyers()}
-            type="button"
-            color="success"
-            variant="gradient"
-            sx={{ mr: 2 }}
-            name="Refetch Buyers"
+    <>
+      {loading && <Loader />}
+      <Card>
+        <MDBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
+          <MDBox>
+            <MDTypography variant="h6" gutterBottom>
+              Buyers
+            </MDTypography>
+          </MDBox>
+          <MDBox
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "space-between",
+            }}
           >
-            Refetch Buyers
-          </MDButton>
-          <DropdownMenu
-            tableColumns={tableColumns}
-            columns={COLUMNS}
-            setTableColumns={setTableColumns}
+            {/* <MDTypography>Click to login Quickbooks to get Map Data</MDTypography> */}
+            <MDButton
+              onClick={() => refetchBuyers()}
+              type="button"
+              color="success"
+              variant="gradient"
+              sx={{ mr: 2 }}
+              name="Refetch Buyers"
+            >
+              Refetch Buyers
+            </MDButton>
+            <DropdownMenu
+              tableColumns={tableColumns}
+              columns={COLUMNS}
+              setTableColumns={setTableColumns}
+            />
+          </MDBox>
+        </MDBox>
+        <MDBox>
+          <DataTable
+            table={{ columns, rows }}
+            showTotalEntries={true}
+            isSorted={true}
+            noEndBorder
+            showCheckbox={false}
+            entriesPerPage={false}
           />
         </MDBox>
-      </MDBox>
-      <MDBox>
-        <DataTable
-          table={{ columns, rows }}
-          showTotalEntries={true}
-          isSorted={true}
-          noEndBorder
-          showCheckbox={false}
-          entriesPerPage={false}
-        />
-      </MDBox>
-    </Card>
+      </Card>
+    </>
   );
 };
 
