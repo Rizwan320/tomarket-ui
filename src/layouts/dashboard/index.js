@@ -12,6 +12,7 @@ import DropdownMenu from "muiComponents/MultiSelectDropdown";
 import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
 import api from "../../axios";
+import Loader from "components/Loader";
 
 const cardData = [
   { title: "Total Weekly Sales", value: "$10,000", trend: "up", previousSale: "6" },
@@ -36,6 +37,7 @@ const salesVolumeData = [3000, 2000, 1700, 1000, 30, 900, 999, 670, 490, 450];
 
 const Dashboard = () => {
   const [isMap, setIsMap] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [QuickbooksLoginButton, setIsQuickbooksloginButton] = useState(false);
   const [tableColumns, setTableColumns] = useState([
     "Total Weekly Sales",
@@ -89,12 +91,11 @@ const Dashboard = () => {
 
   const fetchBuyers = async () => {
     try {
+      setLoading(true);
       const res = await api.get("buyers");
-      console.log(res);
       if (res?.data?.status === 401 || res?.status === 401) {
         setIsMap(false);
-        // setIsQuickbooksloginButton(true);
-      } else if (res.data.data) {
+      } else if (res?.data?.data) {
         const filteredData = res?.data?.data?.filter((buyer) => {
           return (
             buyer?.showOnMap &&
@@ -108,16 +109,17 @@ const Dashboard = () => {
         }));
         setUpdatedMarker(updatedData);
         setIsMap(true);
-        // setIsQuickbooksloginButton(false);
       }
     } catch (error) {
-      // setIsQuickbooksloginButton(true);
       console.log(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <>
+      {loading && <Loader />}
       <MDBox py={3}>
         <MDBox
           sx={{

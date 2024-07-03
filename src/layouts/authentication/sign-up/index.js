@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -15,9 +16,11 @@ import bgImage from "assets/images/login-bg.jpg";
 import tmLogo from "assets/images/toMarket-logo.png";
 import api from "../../../axios";
 import { toast } from "react-toastify";
+import Loader from "components/Loader";
 
 const SignUp = () => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const initialValues = {
     accountName: "",
@@ -44,16 +47,23 @@ const SignUp = () => {
   });
 
   const handleSubmit = async (values, { setSubmitting }) => {
-    const response = await api.post("/auth/register", values);
-    if (response.status === 201) {
-      toast.success("User Register Successfully");
-      setTimeout(() => {
-        navigate("/authentication/sign-in");
-      }, 1000);
-    } else {
-      toast.error("Failed to Register");
+    try {
+      setLoading(true);
+      const response = await api.post("/auth/register", values);
+      if (response.status === 201) {
+        toast.success("User Register Successfully");
+        setTimeout(() => {
+          navigate("/authentication/sign-in");
+        }, 1000);
+      } else {
+        toast.error("Failed to Register");
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+      setSubmitting(false);
     }
-    setSubmitting(false);
   };
 
   const handlePlaceSelected = (place, setFieldValue) => {
@@ -62,6 +72,7 @@ const SignUp = () => {
 
   return (
     <BasicLayout image={bgImage} formType="signup">
+      {loading && <Loader />}
       <Card sx={{ width: "600px" }}>
         <MDBox
           variant="gradient"
