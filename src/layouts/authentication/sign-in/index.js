@@ -21,11 +21,9 @@ import BasicLayout from "layouts/authentication/components/BasicLayout";
 import bgImage from "assets/images/login-bg.jpg";
 import tmLogo from "assets/images/toMarket-logo.png";
 import api from "../../../axios";
-import Loader from "components/Loader";
 
 const SignIn = () => {
   const [rememberMe, setRememberMe] = useState(false);
-  const [loading, setLoading] = useState(false);
   const { login } = useUser();
   const navigate = useNavigate();
 
@@ -36,7 +34,6 @@ const SignIn = () => {
   const handleForgotPassword = (e) => e.preventDefault();
 
   const handleSignIn = async (values, { setSubmitting }) => {
-    setLoading(true);
     try {
       const res = await api.post(`auth/login`, {
         email: values.userEmail,
@@ -51,7 +48,6 @@ const SignIn = () => {
     } catch (error) {
       toast.error(error.response.data.message);
     } finally {
-      setLoading(false);
       setSubmitting(false);
     }
   };
@@ -59,7 +55,6 @@ const SignIn = () => {
   return (
     <BasicLayout image={bgImage} formType="signin">
       <Card>
-        {loading && <Loader />}
         <MDBox
           variant="gradient"
           bgColor="success"
