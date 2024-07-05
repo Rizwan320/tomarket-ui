@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import Grid from "@mui/material/Grid";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 
 import MDBox from "components/MDBox";
 import SalesChart from "muiComponents/Charts/ApexChart";
@@ -9,10 +9,9 @@ import MapsVector from "muiComponents/Maps";
 import Notifications from "layouts/notifications";
 import DashBoardInfoCard from "muiComponents/Cards/InfoCards/DashboardInfoCard";
 import DropdownMenu from "muiComponents/MultiSelectDropdown";
-import MDTypography from "components/MDTypography";
-import MDButton from "components/MDButton";
+// import MDTypography from "components/MDTypography";
+// import MDButton from "components/MDButton";
 import api from "../../axios";
-import Loader from "components/Loader";
 
 const cardData = [
   { title: "Total Weekly Sales", value: "$10,000", trend: "up", previousSale: "6" },
@@ -37,8 +36,7 @@ const salesVolumeData = [3000, 2000, 1700, 1000, 30, 900, 999, 670, 490, 450];
 
 const Dashboard = () => {
   const [isMap, setIsMap] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [QuickbooksLoginButton, setIsQuickbooksloginButton] = useState(false);
+  const [updatedMarker, setUpdatedMarker] = useState([]);
   const [tableColumns, setTableColumns] = useState([
     "Total Weekly Sales",
     "Total Monthly Sales",
@@ -47,7 +45,6 @@ const Dashboard = () => {
     "No of New Buyers",
     "Top Selling Product",
   ]);
-  const [updatedMarker, setUpdatedMarker] = useState([]);
 
   useEffect(() => {
     fetchBuyers();
@@ -91,7 +88,6 @@ const Dashboard = () => {
 
   const fetchBuyers = async () => {
     try {
-      setLoading(true);
       const res = await api.get("buyers");
       if (res?.data?.status === 401 || res?.status === 401) {
         setIsMap(false);
@@ -105,21 +101,18 @@ const Dashboard = () => {
         });
         const updatedData = filteredData?.map((element) => ({
           ...element,
-          salesVolume: salesVolumeData[Math.floor(Math.random() * salesVolumeData.length)],
+          salesVolume: 1001 || salesVolumeData[Math.floor(Math.random() * salesVolumeData.length)],
         }));
         setUpdatedMarker(updatedData);
         setIsMap(true);
       }
     } catch (error) {
       console.log(error.message);
-    } finally {
-      setLoading(false);
     }
   };
 
   return (
     <>
-      {loading && <Loader />}
       <MDBox py={3}>
         <MDBox
           sx={{
