@@ -4,12 +4,12 @@ import { Field } from "formik";
 import MDInput from "components/MDInput";
 
 const libraries = ["places"];
-const MAP_KEY = "AIzaSyAC3encvyG1cRV9N9ieotVz8iypkAVU6OI";
+// const MAP_KEY = "AIzaSyAC3encvyG1cRV9N9ieotVz8iypkAVU6OI";
 
 const GooglePlacesAutocomplete = ({ onPlaceSelected, value, onChange }) => {
   const inputRef = useRef(null);
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: MAP_KEY,
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAP_API_KEY,
     libraries,
     loadScriptUrlOptions: {
       async: true,
