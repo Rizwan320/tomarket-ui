@@ -1,22 +1,29 @@
+import React, { Suspense, lazy } from "react";
 import Icon from "@mui/material/Icon";
 
-import Wcw from "layouts/wcw";
-import Profile from "layouts/profile";
-import Dashboard from "layouts/dashboard";
-import SignIn from "layouts/authentication/sign-in";
-import SignUp from "layouts/authentication/sign-up";
-import ContentOrganization from "layouts/contentOrganization";
-import BrandDetail from "layouts/brandDetail";
-import PaymentDetails from "layouts/payments/components/paymentDetails";
-import Products from "layouts/products";
-import EditProduct from "layouts/products/editProduct";
-import StripeForm from "stripe";
-import Payments from "layouts/payments";
-import Buyers from "layouts/Buyers";
-import SalesRep from "layouts/sales-rep";
-import Users from "layouts/dashboard/users";
-import DistributorDashboard from "layouts/distributor-dashboard";
-import Plugins from "layouts/plugins";
+const Wcw = lazy(() => import("layouts/wcw"));
+const Profile = lazy(() => import("layouts/profile"));
+const Dashboard = lazy(() => import("layouts/dashboard"));
+const SignIn = lazy(() => import("layouts/authentication/sign-in"));
+const SignUp = lazy(() => import("layouts/authentication/sign-up"));
+const ContentOrganization = lazy(() => import("layouts/contentOrganization"));
+const BrandDetail = lazy(() => import("layouts/brandDetail"));
+const PaymentDetails = lazy(() => import("layouts/payments/components/paymentDetails"));
+const Products = lazy(() => import("layouts/products"));
+const EditProduct = lazy(() => import("layouts/products/editProduct"));
+const StripeForm = lazy(() => import("stripe"));
+const Payments = lazy(() => import("layouts/payments"));
+const Buyers = lazy(() => import("layouts/Buyers"));
+const SalesRep = lazy(() => import("layouts/sales-rep"));
+const Users = lazy(() => import("layouts/dashboard/users"));
+const DistributorDashboard = lazy(() => import("layouts/distributor-dashboard"));
+const Plugins = lazy(() => import("layouts/plugins"));
+
+const SuspendedComponent = (Component) => (
+  <Suspense>
+    <Component />
+  </Suspense>
+);
 
 export const brandRoutes = [
   {
@@ -25,7 +32,7 @@ export const brandRoutes = [
     key: "dashboard",
     icon: <Icon fontSize="small">dashboard</Icon>,
     route: "/dashboard",
-    component: <Dashboard />,
+    component: SuspendedComponent(Dashboard),
     isPrivate: true,
     isNavbar: true,
   },
@@ -45,7 +52,7 @@ export const brandRoutes = [
     key: "products",
     icon: <Icon fontSize="small">table</Icon>,
     route: "/products",
-    component: <Products />,
+    component: SuspendedComponent(Products),
     isPrivate: true,
     isNavbar: true,
   },
@@ -55,7 +62,7 @@ export const brandRoutes = [
     key: "content-organization",
     icon: <Icon fontSize="small">assignment</Icon>,
     route: "/content-organization",
-    component: <ContentOrganization />,
+    component: SuspendedComponent(ContentOrganization),
     isPrivate: true,
     isNavbar: true,
   },
@@ -65,7 +72,7 @@ export const brandRoutes = [
     key: "buyers",
     icon: <Icon fontSize="small">person</Icon>,
     route: "/buyers",
-    component: <Buyers />,
+    component: SuspendedComponent(Buyers),
     isPrivate: true,
     isNavbar: true,
   },
@@ -75,7 +82,7 @@ export const brandRoutes = [
     key: "plugins",
     icon: <Icon fontSize="small">shopify</Icon>,
     route: "/plugins",
-    component: <Plugins />,
+    component: SuspendedComponent(Plugins),
     isPrivate: true,
     isNavbar: true,
   },
@@ -86,7 +93,7 @@ export const brandRoutes = [
     key: "profile",
     icon: <Icon fontSize="small">settings</Icon>,
     route: "/profile",
-    component: <Profile />,
+    component: SuspendedComponent(Profile),
     isPrivate: true,
     isNavbar: true,
     children: [
@@ -96,7 +103,7 @@ export const brandRoutes = [
         key: "users",
         icon: <Icon fontSize="small">person</Icon>,
         route: "/users",
-        component: <Users />,
+        component: SuspendedComponent(Users),
         isPrivate: true,
         isNavbar: true,
       },
@@ -108,18 +115,17 @@ export const brandRoutes = [
     key: "sign-in",
     icon: <Icon fontSize="small">login</Icon>,
     route: "/authentication/sign-in",
-    component: <SignIn />,
+    component: SuspendedComponent(SignIn),
     isPrivate: false,
     isNavbar: false,
   },
-
   {
     type: "collapse",
     name: "Sign Up",
     key: "sign-up",
     icon: <Icon fontSize="small">assignment</Icon>,
     route: "/authentication/sign-up",
-    component: <SignUp />,
+    component: SuspendedComponent(SignUp),
     isPrivate: false,
     isNavbar: false,
   },
@@ -127,7 +133,7 @@ export const brandRoutes = [
     name: "product/:id",
     key: "product/:id",
     route: "/product/:id",
-    component: <EditProduct />,
+    component: SuspendedComponent(EditProduct),
     isPrivate: true,
     isNavbar: true,
   },
@@ -140,7 +146,7 @@ export const distributorRoutes = [
     key: "dashboard",
     icon: <Icon fontSize="small">table</Icon>,
     route: "/dashboard",
-    component: <DistributorDashboard />,
+    component: SuspendedComponent(DistributorDashboard),
     isPrivate: true,
     isNavbar: true,
   },
@@ -158,7 +164,7 @@ export const distributorRoutes = [
     name: "Brands Details",
     key: "Brands-Details",
     route: "/brand-detail/:id",
-    component: <BrandDetail />,
+    component: SuspendedComponent(BrandDetail),
     isPrivate: true,
     isNavbar: true,
   },
@@ -168,7 +174,7 @@ export const distributorRoutes = [
     key: "payments",
     icon: <Icon fontSize="small">payments</Icon>,
     route: "/payments",
-    component: <Payments />,
+    component: SuspendedComponent(Payments),
     isPrivate: true,
     isNavbar: true,
   },
@@ -178,7 +184,7 @@ export const distributorRoutes = [
     key: "plugins",
     icon: <Icon fontSize="small">shopify</Icon>,
     route: "/plugins",
-    component: <Plugins />,
+    component: SuspendedComponent(Plugins),
     isPrivate: true,
     isNavbar: true,
   },
@@ -186,7 +192,7 @@ export const distributorRoutes = [
     name: "Payment Details",
     key: "Payment-Details",
     route: "/payment-detail/:id",
-    component: <PaymentDetails />,
+    component: SuspendedComponent(PaymentDetails),
     isPrivate: true,
     isNavbar: true,
   },
@@ -197,7 +203,7 @@ export const distributorRoutes = [
     key: "profile",
     icon: <Icon fontSize="small">settings</Icon>,
     route: "/profile",
-    component: <Profile />,
+    component: SuspendedComponent(Profile),
     isPrivate: true,
     isNavbar: true,
     children: [
@@ -207,7 +213,7 @@ export const distributorRoutes = [
         key: "users",
         icon: <Icon fontSize="small">person</Icon>,
         route: "/users",
-        component: <Users />,
+        component: SuspendedComponent(Users),
         isPrivate: true,
         isNavbar: true,
       },
@@ -217,7 +223,7 @@ export const distributorRoutes = [
         key: "sales-rep",
         icon: <Icon fontSize="small">attach_money</Icon>,
         route: "/sales-rep",
-        component: <SalesRep />,
+        component: SuspendedComponent(SalesRep),
         isPrivate: true,
         isNavbar: true,
       },
@@ -229,7 +235,7 @@ export const distributorRoutes = [
     key: "sign-in",
     icon: <Icon fontSize="small">login</Icon>,
     route: "/authentication/sign-in",
-    component: <SignIn />,
+    component: SuspendedComponent(SignIn),
     isPrivate: false,
     isNavbar: false,
   },
@@ -239,7 +245,7 @@ export const distributorRoutes = [
     key: "sign-up",
     icon: <Icon fontSize="small">assignment</Icon>,
     route: "/authentication/sign-up",
-    component: <SignUp />,
+    component: SuspendedComponent(SignUp),
     isPrivate: false,
     isNavbar: false,
   },
@@ -249,6 +255,6 @@ export const distributorRoutes = [
     route: "/payment/:id",
     isPrivate: false,
     isNavbar: true,
-    component: <StripeForm />,
+    component: SuspendedComponent(StripeForm),
   },
 ];

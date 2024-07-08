@@ -13,6 +13,7 @@
     "@react-google-maps/api": "^2.19.3",
     "@stripe/react-stripe-js": "^2.7.0",
     "@stripe/stripe-js": "^3.3.0",
+    "ajv": "^8.16.0",
     "apexcharts": "3.46.0",
     "axios": "^1.7.2",
     "chart.js": "4.3.0",
