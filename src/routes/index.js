@@ -1,11 +1,11 @@
 import React, { Suspense, lazy } from "react";
 import Icon from "@mui/material/Icon";
+import SignIn from "layouts/authentication/sign-in";
+import SignUp from "layouts/authentication/sign-up";
 
 const Wcw = lazy(() => import("layouts/wcw"));
 const Profile = lazy(() => import("layouts/profile"));
 const Dashboard = lazy(() => import("layouts/dashboard"));
-const SignIn = lazy(() => import("layouts/authentication/sign-in"));
-const SignUp = lazy(() => import("layouts/authentication/sign-up"));
 const ContentOrganization = lazy(() => import("layouts/contentOrganization"));
 const BrandDetail = lazy(() => import("layouts/brandDetail"));
 const PaymentDetails = lazy(() => import("layouts/payments/components/paymentDetails"));
@@ -115,7 +115,7 @@ export const brandRoutes = [
     key: "sign-in",
     icon: <Icon fontSize="small">login</Icon>,
     route: "/authentication/sign-in",
-    component: SuspendedComponent(SignIn),
+    component: <SignIn />,
     isPrivate: false,
     isNavbar: false,
   },
@@ -125,7 +125,7 @@ export const brandRoutes = [
     key: "sign-up",
     icon: <Icon fontSize="small">assignment</Icon>,
     route: "/authentication/sign-up",
-    component: SuspendedComponent(SignUp),
+    component: <SignUp />,
     isPrivate: false,
     isNavbar: false,
   },
@@ -235,7 +235,7 @@ export const distributorRoutes = [
     key: "sign-in",
     icon: <Icon fontSize="small">login</Icon>,
     route: "/authentication/sign-in",
-    component: SuspendedComponent(SignIn),
+    component: <SignIn />,
     isPrivate: false,
     isNavbar: false,
   },
@@ -245,7 +245,7 @@ export const distributorRoutes = [
     key: "sign-up",
     icon: <Icon fontSize="small">assignment</Icon>,
     route: "/authentication/sign-up",
-    component: SuspendedComponent(SignUp),
+    component: <SignUp />,
     isPrivate: false,
     isNavbar: false,
   },
