@@ -42,14 +42,25 @@ const Vectormap = ({ data, width, color }) => {
           buyer.location.lat !== "INVALID" &&
           buyer.location.long !== "INVALID"
       )
-      .map((buyer) => ({
-        latLng: [parseFloat(buyer.location.lat), parseFloat(buyer.location.long)],
-        name: buyer?.displayName || buyer?.companyName || "",
-        style: {
-          fill: getMarkerColor(buyer.salesVolume),
-          r: getMarkerSize(buyer.salesVolume),
-        },
-      }));
+      .map((buyer) => {
+        const tooltipContent = `
+          <div>
+            <p>${buyer?.displayName || buyer?.companyName || ""}</p>
+            <p>${buyer?.location?.line1}&nbsp;${buyer?.location?.city}&nbsp;${
+          buyer?.location?.countrySubDivisionCode
+        }</p>
+          </div>
+        `;
+        return {
+          latLng: [parseFloat(buyer.location.lat), parseFloat(buyer.location.long)],
+          name: buyer?.displayName || buyer?.companyName || "",
+          style: {
+            fill: getMarkerColor(buyer.salesVolume),
+            r: getMarkerSize(buyer.salesVolume),
+          },
+          tooltip: tooltipContent,
+        };
+      });
   };
 
   const handleRegionTipShow = (e, el, code) => {
@@ -57,18 +68,17 @@ const Vectormap = ({ data, width, color }) => {
       console.error("Tooltip element is not defined.");
       return;
     }
-    if (!salesData[code]) {
-      e.preventDefault();
-      return;
-    }
     const tooltipContent = `
       <div>
-        <p>Name: ${el.text()}</p>
-        <p>Sales: ${salesData[code]}</p>
+        <p>${el.text()}</p>
       </div>
     `;
     el.html(tooltipContent);
     el.css({ marginLeft: "75px" });
+  };
+
+  const handleMarkerTipShow = (e, label, index) => {
+    label.html(updatedMarkers[index].tooltip);
   };
 
   return (
@@ -81,6 +91,7 @@ const Vectormap = ({ data, width, color }) => {
           height: "100%",
         }}
         markers={updatedMarkers}
+        onMarkerTipShow={handleMarkerTipShow}
         onRegionTipShow={handleRegionTipShow}
         regionStyle={{
           initial: {
