@@ -121,6 +121,7 @@ export const brandRoutes = [
     isNavbar: false,
   },
   {
+    type: "collapse",
     name: "Privacy Policy",
     key: "privacyPolicy",
     route: "/privacy-policy",
