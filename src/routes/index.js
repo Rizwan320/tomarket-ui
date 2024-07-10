@@ -129,7 +129,6 @@ export const brandRoutes = [
     isPrivate: false,
     isNavbar: false,
   },
-
   {
     type: "collapse",
     name: "Sign Up",

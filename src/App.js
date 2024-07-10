@@ -53,6 +53,12 @@ export default function App() {
     document.scrollingElement.scrollTop = 0;
   }, [pathname]);
 
+  // List of paths where Sidenav should be hidden
+  const excludedPaths = ["/privacy-policy"];
+
+  const shouldRenderSidenav =
+    layout === "dashboard" && user.isAuthenticated && !excludedPaths.includes(pathname);
+
   const getRoutes = (allRoutes) =>
     allRoutes.map((route) => {
       if (route.children) {
@@ -89,7 +95,7 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      {layout === "dashboard" && user.isAuthenticated && (
+      {shouldRenderSidenav && (
         <Sidenav
           color={sidenavColor}
           brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
