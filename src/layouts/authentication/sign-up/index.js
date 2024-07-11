@@ -30,6 +30,7 @@ const SignUp = () => {
     email: "",
     password: "",
     confirmPassword: "",
+    shopifyAppUrl: "",
   };
 
   const validationSchema = Yup.object({
@@ -44,6 +45,7 @@ const SignUp = () => {
     confirmPassword: Yup.string()
       .oneOf([Yup.ref("password"), null], "Passwords must match")
       .required("Confirm Password is required"),
+    shopifyAppUrl: Yup.string().url("Invalid URL format").notRequired(),
   });
 
   const handleSubmit = async (values, { setSubmitting }) => {
@@ -121,16 +123,6 @@ const SignUp = () => {
                     />
                     <ErrorMessage name="accountName" component="h6" style={{ color: "red" }} />
                   </MDBox>
-                  {/* <MDBox ml={1} flex={1}>
-                    <Field
-                      name="companyEmail"
-                      as={MDInput}
-                      type="email"
-                      label="Company Email"
-                      fullWidth
-                    />
-                    <ErrorMessage name="companyEmail" component="h6" style={{ color: "red" }} />
-                  </MDBox> */}
                   <MDBox ml={1} flex={1}>
                     <Field name="accountType">
                       {({ field }) => (
@@ -151,21 +143,28 @@ const SignUp = () => {
                     <ErrorMessage name="accountType" component="h6" style={{ color: "red" }} />
                   </MDBox>
                 </MDBox>
-                <MDBox mb={2} display="flex" justifyContent="space-between" alignItems="flex-end">
-                  <MDBox mr={1} flex={1}>
-                    <Field name="mailingAddress">
-                      {({ field, form }) => (
-                        <GooglePlacesAutocomplete
-                          value={field.value}
-                          onChange={field.onChange(field.name)}
-                          onPlaceSelected={(place) =>
-                            handlePlaceSelected(place, form.setFieldValue)
-                          }
-                        />
-                      )}
-                    </Field>
-                    <ErrorMessage name="mailingAddress" component="h6" style={{ color: "red" }} />
-                  </MDBox>
+                {/* <MDBox mb={2} display="flex" justifyContent="space-between" alignItems="flex-end"> */}
+                <MDBox mb={2} mr={1} flex={1}>
+                  <Field name="mailingAddress">
+                    {({ field, form }) => (
+                      <GooglePlacesAutocomplete
+                        value={field.value}
+                        onChange={field.onChange(field.name)}
+                        onPlaceSelected={(place) => handlePlaceSelected(place, form.setFieldValue)}
+                      />
+                    )}
+                  </Field>
+                  <ErrorMessage name="mailingAddress" component="h6" style={{ color: "red" }} />
+                </MDBox>
+                <MDBox mb={2} mr={1} flex={1}>
+                  <Field
+                    name="shopifyAppUrl"
+                    as={MDInput}
+                    type="text"
+                    label="Shopify App Link"
+                    fullWidth
+                  />
+                  <ErrorMessage name="shopifyAppUrl" component="h6" style={{ color: "red" }} />
                 </MDBox>
                 <MDBox mb={2} display="flex" justifyContent="space-between">
                   <MDBox mr={1} flex={1}>
