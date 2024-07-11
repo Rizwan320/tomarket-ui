@@ -2,6 +2,7 @@ import React, { Suspense, lazy } from "react";
 import Icon from "@mui/material/Icon";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
+import PrivacyPolicy from "layouts/PrivacyPolicy";
 
 const Wcw = lazy(() => import("layouts/wcw"));
 const Profile = lazy(() => import("layouts/profile"));
@@ -116,6 +117,15 @@ export const brandRoutes = [
     icon: <Icon fontSize="small">login</Icon>,
     route: "/authentication/sign-in",
     component: <SignIn />,
+    isPrivate: false,
+    isNavbar: false,
+  },
+  {
+    type: "collapse",
+    name: "Privacy Policy",
+    key: "privacyPolicy",
+    route: "/privacy-policy",
+    component: <PrivacyPolicy />,
     isPrivate: false,
     isNavbar: false,
   },
