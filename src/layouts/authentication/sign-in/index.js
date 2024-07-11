@@ -7,7 +7,7 @@ import { Box, Link } from "@mui/material";
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import Switch from "@mui/material/Switch";
-import GoogleIcon from "@mui/icons-material/Google";
+// import GoogleIcon from "@mui/icons-material/Google";
 import { toast } from "react-toastify";
 
 import MDBox from "components/MDBox";
@@ -29,7 +29,7 @@ const SignIn = () => {
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
 
-  const handleSignInWithGoogle = () => {};
+  // const handleSignInWithGoogle = () => {};
 
   const handleForgotPassword = (e) => e.preventDefault();
 
