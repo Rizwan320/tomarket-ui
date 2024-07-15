@@ -1,24 +1,25 @@
-import React, { Suspense, lazy } from "react";
+import { Suspense, lazy } from "react";
 import Icon from "@mui/material/Icon";
+
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
 import PrivacyPolicy from "layouts/PrivacyPolicy";
 
 const Wcw = lazy(() => import("layouts/wcw"));
-const Profile = lazy(() => import("layouts/profile"));
-const Dashboard = lazy(() => import("layouts/dashboard"));
-const ContentOrganization = lazy(() => import("layouts/contentOrganization"));
-const BrandDetail = lazy(() => import("layouts/brandDetail"));
-const PaymentDetails = lazy(() => import("layouts/payments/components/paymentDetails"));
-const Products = lazy(() => import("layouts/products"));
-const EditProduct = lazy(() => import("layouts/products/editProduct"));
-const StripeForm = lazy(() => import("stripe"));
-const Payments = lazy(() => import("layouts/payments"));
 const Buyers = lazy(() => import("layouts/Buyers"));
-const SalesRep = lazy(() => import("layouts/sales-rep"));
-const Users = lazy(() => import("layouts/dashboard/users"));
-const DistributorDashboard = lazy(() => import("layouts/distributor-dashboard"));
 const Plugins = lazy(() => import("layouts/plugins"));
+const Profile = lazy(() => import("layouts/profile"));
+const SalesRep = lazy(() => import("layouts/sales-rep"));
+const Products = lazy(() => import("layouts/products"));
+const Payments = lazy(() => import("layouts/payments"));
+const Dashboard = lazy(() => import("layouts/dashboard"));
+const StripeForm = lazy(() => import("stripe"));
+const BrandDetail = lazy(() => import("layouts/brandDetail"));
+const EditProduct = lazy(() => import("layouts/products/editProduct"));
+const EditProfile = lazy(() => import("layouts/dashboard/users"));
+const PaymentDetails = lazy(() => import("layouts/payments/components/paymentDetails"));
+const ContentOrganization = lazy(() => import("layouts/contentOrganization"));
+const DistributorDashboard = lazy(() => import("layouts/distributor-dashboard"));
 
 const SuspendedComponent = (Component) => (
   <Suspense>
@@ -104,7 +105,7 @@ export const brandRoutes = [
         key: "users",
         icon: <Icon fontSize="small">person</Icon>,
         route: "/users",
-        component: SuspendedComponent(Users),
+        component: SuspendedComponent(EditProfile),
         isPrivate: true,
         isNavbar: true,
       },
@@ -223,7 +224,7 @@ export const distributorRoutes = [
         key: "users",
         icon: <Icon fontSize="small">person</Icon>,
         route: "/users",
-        component: SuspendedComponent(Users),
+        component: SuspendedComponent(EditProfile),
         isPrivate: true,
         isNavbar: true,
       },

@@ -1,11 +1,11 @@
 import MDBox from "components/MDBox";
 
-function Overview() {
+const ProfileEdit = () => {
   return (
     <>
       <MDBox>Hello Settings ....</MDBox>
     </>
   );
-}
+};
 
-export default Overview;
+export default ProfileEdit;
