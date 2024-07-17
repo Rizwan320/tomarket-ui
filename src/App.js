@@ -54,7 +54,7 @@ export default function App() {
   }, [pathname]);
 
   // List of paths where Sidenav should be hidden
-  const excludedPaths = ["/privacy-policy"];
+  const excludedPaths = ["/privacy-policy", "/authentication/sign-in", "/authentication/sign-up"];
 
   const shouldRenderSidenav =
     layout === "dashboard" && user.isAuthenticated && !excludedPaths.includes(pathname);

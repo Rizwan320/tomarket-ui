@@ -10,6 +10,7 @@ import buyersdata from "layouts/Buyers/components/data";
 import MDButton from "components/MDButton";
 import api from "../../axios";
 import Loader from "components/Loader";
+import FileUploadButton from "./components/UploadFileButton";
 
 const COLUMNS = [
   { Header: "Logo", accessor: "logo", align: "left" },
@@ -65,7 +66,7 @@ const Buyers = () => {
               alignItems: "space-between",
             }}
           >
-            {/* <MDTypography>Click to login Quickbooks to get Map Data</MDTypography> */}
+            {/* <FileUploadButton /> */}
             <MDButton
               onClick={() => refetchBuyers()}
               type="button"
