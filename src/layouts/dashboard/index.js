@@ -12,6 +12,8 @@ import DropdownMenu from "muiComponents/MultiSelectDropdown";
 // import MDTypography from "components/MDTypography";
 // import MDButton from "components/MDButton";
 import api from "../../axios";
+import PaymentDialog from "layouts/billing/components/PaymentDialog";
+import { useUser } from "context/userContext";
 
 const cardData = [
   { title: "Total Weekly Sales", value: "$10,000", trend: "up", previousSale: "6" },
@@ -35,6 +37,8 @@ const cardData = [
 const salesVolumeData = [3000, 2000, 1700, 1000, 30, 900, 999, 670, 490, 450];
 
 const Dashboard = () => {
+  const { user } = useUser();
+  const [paymentSuccess, setPaymentSuccess] = useState(true);
   const [isMap, setIsMap] = useState(false);
   const [updatedMarker, setUpdatedMarker] = useState([]);
   const [tableColumns, setTableColumns] = useState([
@@ -45,6 +49,10 @@ const Dashboard = () => {
     "No of New Buyers",
     "Top Selling Product",
   ]);
+
+  useEffect(() => {
+    setPaymentSuccess(user.blueCustomerId && user.paymentMethodId);
+  }, [user.blueCustomerId, user.paymentMethodId]);
 
   useEffect(() => {
     fetchBuyers();
@@ -113,6 +121,7 @@ const Dashboard = () => {
 
   return (
     <>
+      <PaymentDialog open={!paymentSuccess} />
       <MDBox py={3}>
         <MDBox
           sx={{
