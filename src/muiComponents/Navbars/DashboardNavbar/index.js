@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -27,12 +27,17 @@ import {
   setMiniSidenav,
   setOpenConfigurator,
 } from "context";
+import { useUser } from "context/userContext";
 
 const DashboardNavbar = ({ absolute, light, isMini }) => {
   const [navbarType, setNavbarType] = useState();
   const [controller, dispatch] = useMaterialUIController();
   const { miniSidenav, transparentNavbar, fixedNavbar, openConfigurator, darkMode } = controller;
   const [openMenu, setOpenMenu] = useState(false);
+  const [openProfileMenu, setOpenProfileMenu] = useState(false);
+  const [accountMenuAnchor, setAccountMenuAnchor] = useState(null);
+  const { logout } = useUser();
+  const navigate = useNavigate();
   const route = useLocation().pathname.split("/").slice(1);
 
   useEffect(() => {
@@ -52,8 +57,16 @@ const DashboardNavbar = ({ absolute, light, isMini }) => {
   const handleConfiguratorOpen = () => setOpenConfigurator(dispatch, !openConfigurator);
   const handleOpenMenu = (event) => setOpenMenu(event.currentTarget);
   const handleCloseMenu = () => setOpenMenu(false);
+  const handleCloseProfileMenu = () => setOpenProfileMenu(false);
 
-  const renderMenu = () => (
+  const handleAccountMenuOpen = (event) => setAccountMenuAnchor(event.currentTarget);
+  const handleAccountMenuClose = () => setAccountMenuAnchor(null);
+  const handleLogout = () => {
+    logout();
+    navigate("/authentication/sign-in");
+  };
+
+  const renderNotificationMenu = () => (
     <Menu
       anchorEl={openMenu}
       anchorReference={null}
@@ -68,6 +81,28 @@ const DashboardNavbar = ({ absolute, light, isMini }) => {
       <NotificationItem icon={<Icon>email</Icon>} title="Check new messages" />
       <NotificationItem icon={<Icon>podcasts</Icon>} title="Manage Podcast sessions" />
       <NotificationItem icon={<Icon>shopping_cart</Icon>} title="Payment successfully completed" />
+    </Menu>
+  );
+
+  const renderAccountMenu = () => (
+    <Menu
+      anchorEl={accountMenuAnchor}
+      anchorReference={null}
+      anchorOrigin={{
+        vertical: "bottom",
+        horizontal: "left",
+      }}
+      open={Boolean(accountMenuAnchor)}
+      onClose={handleAccountMenuClose}
+      sx={{ mt: 2 }}
+    >
+      <NotificationItem
+        icon={<Icon>person</Icon>}
+        title="Profile"
+        to="/profile"
+        onClose={handleAccountMenuClose}
+      />
+      <NotificationItem icon={<Icon>logout</Icon>} title="Logout" onClose={handleLogout} />
     </Menu>
   );
 
@@ -99,11 +134,16 @@ const DashboardNavbar = ({ absolute, light, isMini }) => {
               <MDInput label="Search here" />
             </MDBox>
             <MDBox color={light ? "white" : "inherit"}>
-              <Link to="/authentication/sign-in/basic">
-                <IconButton sx={navbarIconButton} size="small" disableRipple>
-                  <Icon sx={iconsStyle}>account_circle</Icon>
-                </IconButton>
-              </Link>
+              <IconButton
+                sx={navbarIconButton}
+                size="small"
+                disableRipple
+                aria-controls="account-menu"
+                aria-haspopup="true"
+                onClick={handleAccountMenuOpen}
+              >
+                <Icon sx={iconsStyle}>account_circle</Icon>
+              </IconButton>
               <IconButton
                 size="small"
                 disableRipple
@@ -127,7 +167,8 @@ const DashboardNavbar = ({ absolute, light, isMini }) => {
               >
                 <Icon sx={iconsStyle}>notifications</Icon>
               </IconButton>
-              {renderMenu()}
+              {renderNotificationMenu()}
+              {renderAccountMenu()}
             </MDBox>
           </MDBox>
         )}

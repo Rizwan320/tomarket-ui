@@ -6,9 +6,11 @@ import SignUp from "layouts/authentication/sign-up";
 import PrivacyPolicy from "layouts/PrivacyPolicy";
 
 const Wcw = lazy(() => import("layouts/wcw"));
+const Users = lazy(() => import("layouts/users"));
 const Buyers = lazy(() => import("layouts/Buyers"));
 const Plugins = lazy(() => import("layouts/plugins"));
 const Profile = lazy(() => import("layouts/profile"));
+const Settings = lazy(() => import("layouts/settings"));
 const SalesRep = lazy(() => import("layouts/sales-rep"));
 const Products = lazy(() => import("layouts/products"));
 const Payments = lazy(() => import("layouts/payments"));
@@ -16,7 +18,6 @@ const Dashboard = lazy(() => import("layouts/dashboard"));
 const StripeForm = lazy(() => import("stripe"));
 const BrandDetail = lazy(() => import("layouts/brandDetail"));
 const EditProduct = lazy(() => import("layouts/products/editProduct"));
-const EditProfile = lazy(() => import("layouts/dashboard/users"));
 const PaymentDetails = lazy(() => import("layouts/payments/components/paymentDetails"));
 const ContentOrganization = lazy(() => import("layouts/contentOrganization"));
 const DistributorDashboard = lazy(() => import("layouts/distributor-dashboard"));
@@ -92,10 +93,10 @@ export const brandRoutes = [
     type: "collapse",
     name: "Settings",
     href: true,
-    key: "profile",
+    key: "settings",
     icon: <Icon fontSize="small">settings</Icon>,
-    route: "/profile",
-    component: SuspendedComponent(Profile),
+    route: "/settings",
+    component: SuspendedComponent(Settings),
     isPrivate: true,
     isNavbar: true,
     children: [
@@ -105,7 +106,7 @@ export const brandRoutes = [
         key: "users",
         icon: <Icon fontSize="small">person</Icon>,
         route: "/users",
-        component: SuspendedComponent(EditProfile),
+        component: SuspendedComponent(Users),
         isPrivate: true,
         isNavbar: true,
       },
@@ -122,7 +123,6 @@ export const brandRoutes = [
     isNavbar: false,
   },
   {
-    type: "collapse",
     name: "Privacy Policy",
     key: "privacyPolicy",
     route: "/privacy-policy",
@@ -145,6 +145,15 @@ export const brandRoutes = [
     key: "product/:id",
     route: "/product/:id",
     component: SuspendedComponent(EditProduct),
+    isPrivate: true,
+    isNavbar: true,
+  },
+  {
+    name: "Profile",
+    key: "Profile",
+    icon: <Icon fontSize="small">table</Icon>,
+    route: "/profile",
+    component: SuspendedComponent(Profile),
     isPrivate: true,
     isNavbar: true,
   },
@@ -211,20 +220,19 @@ export const distributorRoutes = [
     type: "collapse",
     name: "Settings",
     href: true,
-    key: "profile",
+    key: "settings",
     icon: <Icon fontSize="small">settings</Icon>,
-    route: "/profile",
-    component: SuspendedComponent(Profile),
+    route: "/settings",
+    component: SuspendedComponent(Settings),
     isPrivate: true,
     isNavbar: true,
     children: [
       {
-        type: "collapse",
         name: "Users",
         key: "users",
         icon: <Icon fontSize="small">person</Icon>,
         route: "/users",
-        component: SuspendedComponent(EditProfile),
+        component: SuspendedComponent(Users),
         isPrivate: true,
         isNavbar: true,
       },
