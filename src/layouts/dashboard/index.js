@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 // import { Link } from "react-router-dom";
 import Grid from "@mui/material/Grid";
-// import { toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 import MDBox from "components/MDBox";
 import SalesChart from "muiComponents/Charts/ApexChart";
@@ -37,7 +37,7 @@ const cardData = [
 const salesVolumeData = [3000, 2000, 1700, 1000, 30, 900, 999, 670, 490, 450];
 
 const Dashboard = () => {
-  const { user } = useUser();
+  const { updateUser, user } = useUser();
   const [paymentSuccess, setPaymentSuccess] = useState(true);
   const [isMap, setIsMap] = useState(false);
   const [updatedMarker, setUpdatedMarker] = useState([]);
@@ -51,8 +51,22 @@ const Dashboard = () => {
   ]);
 
   useEffect(() => {
-    setPaymentSuccess(user.blueCustomerId && user.paymentMethodId);
-  }, [user.blueCustomerId, user.paymentMethodId]);
+    setPaymentSuccess(Boolean(user?.user?.blueCustomerId) && Boolean(user?.user?.paymentMethodId));
+  }, [user?.user?.blueCustomerId, user?.user?.paymentMethodId]);
+
+  const handleOnSubmit = async (values) => {
+    try {
+      const { data: response } = await api.post("payment", values);
+      if (response.success) {
+        toast.success(response.message);
+        updateUser(response.data);
+      } else {
+        toast.error(response.error);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
   useEffect(() => {
     fetchBuyers();
@@ -121,7 +135,7 @@ const Dashboard = () => {
 
   return (
     <>
-      <PaymentDialog open={!paymentSuccess} />
+      <PaymentDialog open={!paymentSuccess} onSubmit={handleOnSubmit} />
       <MDBox py={3}>
         <MDBox
           sx={{
