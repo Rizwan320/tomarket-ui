@@ -10,7 +10,7 @@ const PaymentDialog = ({ open, onClose, onSubmit }) => {
         <ListItemText
           sx={{ textAlign: "center" }}
           primary="Please add payment details to start a free trail."
-          secondary="Free for 1 month, then $11.99 per month after."
+          secondary="Free for 1 month, then $25 per month after."
         />
         <PaymentForm onSubmit={onSubmit} />
       </Stack>
