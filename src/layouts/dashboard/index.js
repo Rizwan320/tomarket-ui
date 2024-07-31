@@ -43,7 +43,8 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const { updateUser, user } = useUser();
   const [open, setOpen] = useState(false);
-  const [showPaymentAlert, setShowPaymentAlert] = useState(true);
+  const [showPaymentAlert, setShowPaymentAlert] = useState(false);
+  const [showVerifyPaymentAlert, setVerifyShowPaymentAlert] = useState(false);
   const [isMap, setIsMap] = useState(false);
   const [updatedMarker, setUpdatedMarker] = useState([]);
   const [tableColumns, setTableColumns] = useState([
@@ -60,6 +61,10 @@ const Dashboard = () => {
       !Boolean(user?.user?.blueCustomerId) && !Boolean(user?.user?.paymentMethodId)
     );
   }, [user?.user?.blueCustomerId, user?.user?.paymentMethodId]);
+
+  useEffect(() => {
+    setVerifyShowPaymentAlert(!user?.user?.paymentVerified);
+  }, [user?.user?.paymentVerified]);
 
   const handleOnSubmit = async (values) => {
     try {
@@ -138,7 +143,7 @@ const Dashboard = () => {
 
   return (
     <>
-      {showPaymentAlert && (
+      {showPaymentAlert ? (
         <>
           <AddPaymnetAlert
             onClick={() => setOpen(true)}
@@ -157,9 +162,8 @@ const Dashboard = () => {
             onClose={() => setOpen(false)}
           />
         </>
-      )}
-      {!user?.user?.paymentVerified && !showPaymentAlert && (
-        <VerifyPaymnetAlert onClick={() => navigate("/profile")} />
+      ) : (
+        showVerifyPaymentAlert && <VerifyPaymnetAlert onClick={() => navigate("/profile")} />
       )}
       <MDBox py={3}>
         <MDBox
