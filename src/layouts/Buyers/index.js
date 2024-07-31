@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 import Card from "@mui/material/Card";
 
 import MDBox from "components/MDBox";
@@ -10,11 +12,7 @@ import buyersdata from "layouts/Buyers/components/data";
 import MDButton from "components/MDButton";
 import api from "../../axios";
 import Loader from "components/Loader";
-import UploadFile from "./components/UploadFile";
-import { Modal } from "@mui/material";
-import CsvDownloader from "react-csv-downloader";
-import CloseIcon from "@mui/icons-material/Close";
-import { toast } from "react-toastify";
+import UploadFileModal from "layouts/Buyers/components/Modals/UploadFileModal";
 
 const COLUMNS = [
   { Header: "Logo", accessor: "logo", align: "left" },
@@ -33,18 +31,7 @@ const COLUMNS = [
   { Header: "Units Sold Last Week", accessor: "unitsSoldLastWeek", align: "center" },
 ];
 
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 800,
-  bgcolor: "background.paper",
-  boxShadow: 24,
-  p: 4,
-};
-
-const columnss = [
+const BUYER_FILE_HEADERS = [
   {
     id: "displayName",
     displayName: "DisplayName",
@@ -67,29 +54,28 @@ const columnss = [
   },
   {
     id: "countrySubDivisionCode",
-    displayName: "CountrySubDivisioCode",
+    displayName: "CountrySubDivisionCode",
   },
-];
-const buyerTemplate = "Download Buyer Template Form Here";
-
-const datas = [
-  // {
-  //   displayName: "Usman",
-  //   email: "usman@tomarket.farm",
-  //   city: "Silicon Valley",
-  //   line1: "Nil",
-  //   postalCode: "100000",
-  //   countrySubDivisionCode: "CA",
-  // },
+  {
+    id: "country",
+    displayName: "Country",
+  },
 ];
 
 const Buyers = () => {
   const [loading, setLoading] = useState(false);
-  const [tableColumns, setTableColumns] = useState(["logo", "displayName", "email", "showOnMap"]);
+  const [tableColumns, setTableColumns] = useState([
+    "id",
+    "logo",
+    "displayName",
+    "email",
+    "showOnMap",
+  ]);
   const [refresh, setRefresh] = useState(false);
   const { columns, rows } = buyersdata(tableColumns, refresh);
   const [open, setOpen] = useState(false);
   const [file, setFile] = useState();
+  const navigate = useNavigate();
 
   const handleOpen = () => setOpen(true);
 
@@ -101,14 +87,15 @@ const Buyers = () => {
     const formData = new FormData();
     formData.append("file", file);
     try {
-      const response = await api.post("file/upload", formData, {
+      const response = await api.post("buyers/upload", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
       toast.success(response.data.message);
     } catch (error) {
-      console.log(error.message);
+      console.log(error?.message);
+      toast.error(error?.message);
     } finally {
       setOpen(false);
     }
@@ -126,6 +113,11 @@ const Buyers = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleRowClicked = (row) => {
+    console.log(row);
+    navigate("dashboard");
   };
 
   return (
@@ -176,80 +168,21 @@ const Buyers = () => {
             noEndBorder
             showCheckbox={false}
             entriesPerPage={false}
+            onRowClick={handleRowClicked}
           />
         </MDBox>
       </Card>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-title"
-        aria-describedby="modal-description"
-      >
-        <MDBox sx={style}>
-          <MDBox
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <MDBox
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <MDTypography id="modal-title" variant="h6" component="h2">
-                {buyerTemplate}
-              </MDTypography>
-              <CsvDownloader
-                style={{
-                  backgroundColor: "#4CAF50",
-                  color: "white",
-                  margin: "10px",
-                  padding: 12,
-                  border: "2px solid",
-                  borderRadius: "10px",
-                  fontWeight: "bold",
-                  cursor: "pointer",
-                }}
-                filename="TM-buyer-upload-template"
-                extension=".xlsx"
-                separator=","
-                wrapColumnChar=""
-                columns={columnss}
-                datas={datas}
-                text="DOWNLOAD"
-              />
-            </MDBox>
-
-            <CloseIcon
-              sx={{
-                "&:hover": {
-                  backgroundColor: "rgba(0, 0, 0, 0.1)",
-                  borderRadius: "50%",
-                  cursor: "pointer",
-                },
-              }}
-              onClick={handleModalClose}
-            />
-          </MDBox>
-
-          <UploadFile open={open} onClose={handleClose} />
-          <MDBox
-            sx={{
-              display: "flex",
-              justifyContent: "flex-end",
-              alignItems: "flex-end",
-            }}
-          >
-            <MDButton onClick={handleSubmit} variant="contained" color="success" sx={{ mt: 2 }}>
-              Submit
-            </MDButton>
-          </MDBox>
-        </MDBox>
-      </Modal>
+      {open && (
+        <UploadFileModal
+          open={open}
+          fileName="TM-buyer-upload-template"
+          handleClose={handleClose}
+          handleModalClose={handleModalClose}
+          handleSubmit={handleSubmit}
+          columns={BUYER_FILE_HEADERS}
+          heading="Download Buyer Template From Here"
+        />
+      )}
     </>
   );
 };

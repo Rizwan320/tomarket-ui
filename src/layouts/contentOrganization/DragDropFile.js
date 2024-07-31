@@ -19,10 +19,9 @@ import MDTypography from "components/MDTypography";
 import MDInput from "components/MDInput";
 import FolderIcon from "@mui/icons-material/Folder";
 
-function DragDropFile() {
+const DragDropFile = () => {
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [openDialog, setOpenDialog] = useState(false);
-  const [selectedFolder, setSelectedFolder] = useState("");
 
   const onDrop = useCallback((acceptedFiles) => {
     setUploadedFiles(acceptedFiles);
@@ -40,8 +39,6 @@ function DragDropFile() {
   const handleFolderSelection = (folder) => {
     console.log("Selected folder:", folder);
     console.log("Uploaded files:", uploadedFiles);
-
-    setSelectedFolder(folder);
     handleCloseDialog();
   };
 
@@ -111,6 +108,6 @@ function DragDropFile() {
       </Dialog>
     </Container>
   );
-}
+};
 
 export default DragDropFile;
