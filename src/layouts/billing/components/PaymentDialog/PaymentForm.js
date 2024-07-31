@@ -7,8 +7,6 @@ import MDButton from "components/MDButton";
 import MDInput from "components/MDInput";
 import MasterCard from "../MasterCard";
 import { billingFormValidationSchema } from "./schema";
-import { useUser } from "context/userContext";
-import { useNavigate } from "react-router-dom";
 import Loader from "components/Loader";
 
 const FieldWrapper = ({ name, children }) => {
@@ -21,14 +19,6 @@ const FieldWrapper = ({ name, children }) => {
 };
 
 const PaymentForm = ({ onSubmit }) => {
-  const { logout } = useUser();
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    logout();
-    navigate("/authentication/sign-in");
-  };
-
   const initialValues = {
     name: "",
     card: "",
@@ -62,10 +52,8 @@ const PaymentForm = ({ onSubmit }) => {
                 <MDBox maxWidth="450px">
                   <MasterCard
                     number={values.card}
-                    holder={values.name || "..."}
-                    expires={`${values.expiry_month || ".."}/${
-                      values.expiry_year.toString().slice(2, 4) || ".."
-                    }`}
+                    holder={values.name}
+                    expires={`${values.expiry_month}/${values.expiry_year.toString().slice(2, 4)}`}
                     cvv={values.cvv2}
                   />
                 </MDBox>
@@ -131,15 +119,6 @@ const PaymentForm = ({ onSubmit }) => {
                   </Grid>
                 </Grid>
                 <MDBox display="flex" justifyContent="flex-end" mt={2}>
-                  <MDButton
-                    sx={{ mr: 2 }}
-                    type="button"
-                    variant="contained"
-                    color="error"
-                    onClick={handleLogout}
-                  >
-                    Logout
-                  </MDButton>
                   <MDButton
                     type="submit"
                     variant="contained"

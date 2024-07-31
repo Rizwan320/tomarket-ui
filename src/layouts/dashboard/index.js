@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 // import { Link } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import { toast } from "react-toastify";
-
+import { ListItemText } from "@mui/material";
 import MDBox from "components/MDBox";
 import SalesChart from "muiComponents/Charts/ApexChart";
 import MapsVector from "muiComponents/Maps";
@@ -16,6 +16,7 @@ import PaymentDialog from "layouts/billing/components/PaymentDialog";
 import { useUser } from "context/userContext";
 import AddPaymnetAlert from "./components/AddPaymnetAlert";
 import VerifyPaymnetAlert from "./components/VerifyPaymentAlert";
+import { useNavigate } from "react-router-dom";
 
 const cardData = [
   { title: "Total Weekly Sales", value: "$10,000", trend: "up", previousSale: "6" },
@@ -39,9 +40,11 @@ const cardData = [
 const salesVolumeData = [3000, 2000, 1700, 1000, 30, 900, 999, 670, 490, 450];
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const { updateUser, user } = useUser();
   const [open, setOpen] = useState(false);
-  const [showPaymentAlert, setShowPaymentAlert] = useState(true);
+  const [showPaymentAlert, setShowPaymentAlert] = useState(false);
+  const [showVerifyPaymentAlert, setVerifyShowPaymentAlert] = useState(false);
   const [isMap, setIsMap] = useState(false);
   const [updatedMarker, setUpdatedMarker] = useState([]);
   const [tableColumns, setTableColumns] = useState([
@@ -59,17 +62,17 @@ const Dashboard = () => {
     );
   }, [user?.user?.blueCustomerId, user?.user?.paymentMethodId]);
 
+  useEffect(() => {
+    setVerifyShowPaymentAlert(!user?.user?.paymentVerified);
+  }, [user?.user?.paymentVerified]);
+
   const handleOnSubmit = async (values) => {
     try {
       const { data: response } = await api.post("payment", values);
-      if (response.success) {
-        toast.success(response.message);
-        updateUser(response.data);
-      } else {
-        toast.error(response.error);
-      }
+      toast.success(response.message);
+      updateUser(response.data);
     } catch (error) {
-      console.error("Error:", error);
+      toast.error(error.response.data.message);
     }
   };
 
@@ -140,16 +143,28 @@ const Dashboard = () => {
 
   return (
     <>
-      {showPaymentAlert && (
+      {showPaymentAlert ? (
         <>
           <AddPaymnetAlert
             onClick={() => setOpen(true)}
             trialStartDate={user?.user?.trialStartDate}
           />
-          <PaymentDialog open={open} onSubmit={handleOnSubmit} onClose={() => setOpen(false)} />
+          <PaymentDialog
+            title={
+              <ListItemText
+                sx={{ textAlign: "center" }}
+                primary="Please add payment details to start a free trail."
+                secondary="Free for 1 month, then $25 + charges per month after."
+              />
+            }
+            open={open}
+            onSubmit={handleOnSubmit}
+            onClose={() => setOpen(false)}
+          />
         </>
+      ) : (
+        showVerifyPaymentAlert && <VerifyPaymnetAlert onClick={() => navigate("/profile")} />
       )}
-      {!user?.user?.paymentVerified && !showPaymentAlert && <VerifyPaymnetAlert />}
       <MDBox py={3}>
         <MDBox
           sx={{

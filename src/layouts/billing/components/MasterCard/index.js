@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import Card from "@mui/material/Card";
 import Icon from "@mui/material/Icon";
+import { IconButton } from "@mui/material";
 
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
@@ -30,13 +31,13 @@ const CardType = {
   default: creditCardLogo,
 };
 
-function MasterCard({ color, number, holder, expires, cvv }) {
+function MasterCard({ color, number, holder, expires, cvv, cardType, onEdit }) {
   const numbers = number ? [...number] : [..."0000000000000000"];
   const num1 = numbers.slice(0, 4).join("");
   const num2 = numbers.slice(4, 8).join("");
   const num3 = numbers.slice(8, 12).join("");
   const num4 = numbers.slice(12, 16).join("");
-  const type = getCardType(num1);
+  const type = cardType || getCardType(num1);
 
   return (
     <Card
@@ -61,8 +62,17 @@ function MasterCard({ color, number, holder, expires, cvv }) {
         }}
       />
       <MDBox position="relative" zIndex={2} p={2}>
-        <MDBox color="white" p={1} lineHeight={0} display="inline-block">
+        <MDBox color="white" p={1} lineHeight={0} display="flex" justifyContent="space-between">
           <Icon fontSize="default">wifi</Icon>
+          {onEdit && (
+            <IconButton
+              sx={{ padding: 0.5, "&:hover": { backgroundColor: "grey" } }}
+              color="light"
+              onClick={onEdit}
+            >
+              <Icon fontSize="default">edit</Icon>
+            </IconButton>
+          )}
         </MDBox>
         <MDBox display="flex" justifyContent="space-between" alignItems="center" gap={2}>
           <MDTypography variant="h5" color="white" fontWeight="medium" sx={{ mt: 3, mb: 5, pb: 1 }}>
@@ -85,7 +95,7 @@ function MasterCard({ color, number, holder, expires, cvv }) {
               Card Holder
             </MDTypography>
             <MDTypography variant="h6" color="white" fontWeight="medium" textTransform="capitalize">
-              {holder}
+              {holder || "..."}
             </MDTypography>
           </MDBox>
           <MDBox display="flex" justifyContent="flex-end" width="20%" gap={2}>
@@ -94,7 +104,7 @@ function MasterCard({ color, number, holder, expires, cvv }) {
                 Expires
               </MDTypography>
               <MDTypography variant="h6" color="white" fontWeight="medium">
-                {expires}
+                {expires || "../.."}
               </MDTypography>
             </MDBox>
             <MDBox component="img" src={CardType[type]} alt="master card" width="60%" mt={1} />

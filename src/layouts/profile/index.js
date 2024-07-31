@@ -14,6 +14,7 @@ import MDButton from "components/MDButton";
 import GooglePlacesAutocomplete from "google/GooglePlacesAutocomplete";
 import api from "../../axios";
 import Loader from "components/Loader";
+import PaymentDetails from "layouts/billing/components/PaymentDetails";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -107,33 +108,34 @@ const Profile = () => {
   };
 
   return (
-    <Card sx={{ width: "100%" }}>
-      {loading && <Loader />}
-      <MDBox pt={4} pb={3} px={3}>
-        <Formik
-          initialValues={initialValues}
-          validationSchema={validationSchema}
-          onSubmit={handleSubmit}
-          enableReinitialize
-        >
-          {({ isSubmitting, setFieldValue }) => (
-            <Form>
-              <MDBox mb={2} display="flex" justifyContent="space-between">
-                <MDBox mr={1} flex={1}>
-                  <Field
-                    name="account.accountName"
-                    as={MDInput}
-                    type="text"
-                    label="Account Name"
-                    fullWidth
-                  />
-                  <ErrorMessage
-                    name="account.accountName"
-                    component="h6"
-                    style={{ color: "red" }}
-                  />
-                </MDBox>
-                {/* <MDBox ml={1} flex={1}>
+    <>
+      <Card sx={{ width: "100%" }}>
+        {loading && <Loader />}
+        <MDBox pt={4} pb={3} px={3}>
+          <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={handleSubmit}
+            enableReinitialize
+          >
+            {({ isSubmitting, setFieldValue }) => (
+              <Form>
+                <MDBox mb={2} display="flex" justifyContent="space-between">
+                  <MDBox mr={1} flex={1}>
+                    <Field
+                      name="account.accountName"
+                      as={MDInput}
+                      type="text"
+                      label="Account Name"
+                      fullWidth
+                    />
+                    <ErrorMessage
+                      name="account.accountName"
+                      component="h6"
+                      style={{ color: "red" }}
+                    />
+                  </MDBox>
+                  {/* <MDBox ml={1} flex={1}>
                   <Field name="account.accountType">
                     {({ field }) => (
                       <FormControl fullWidth>
@@ -156,40 +158,40 @@ const Profile = () => {
                     style={{ color: "red" }}
                   />
                 </MDBox> */}
-              </MDBox>
-              <MDBox mb={2} mr={1} flex={1}>
-                <Field name="mailingAddress">
-                  {({ field, form }) => (
-                    <GooglePlacesAutocomplete
-                      value={field.value}
-                      onChange={field.onChange(field.name)}
-                      onPlaceSelected={(place) => handlePlaceSelected(place, form.setFieldValue)}
-                    />
-                  )}
-                </Field>
-                <ErrorMessage name="mailingAddress" component="h6" style={{ color: "red" }} />
-              </MDBox>
-              <MDBox mb={2} mr={1} flex={1}>
-                <Field
-                  name="shopifyAppUrl"
-                  as={MDInput}
-                  type="text"
-                  label="Shopify App Link"
-                  fullWidth
-                />
-                <ErrorMessage name="shopifyAppUrl" component="h6" style={{ color: "red" }} />
-              </MDBox>
-              <MDBox mb={2} display="flex" justifyContent="space-between">
-                <MDBox mr={1} flex={1}>
-                  <Field name="userName" as={MDInput} type="text" label="Full Name" fullWidth />
-                  <ErrorMessage name="userName" component="h6" style={{ color: "red" }} />
                 </MDBox>
-                <MDBox ml={1} flex={1}>
-                  <Field name="email" as={MDInput} type="email" label="User Email" fullWidth />
-                  <ErrorMessage name="email" component="h6" style={{ color: "red" }} />
+                <MDBox mb={2} mr={1} flex={1}>
+                  <Field name="mailingAddress">
+                    {({ field, form }) => (
+                      <GooglePlacesAutocomplete
+                        value={field.value}
+                        onChange={field.onChange(field.name)}
+                        onPlaceSelected={(place) => handlePlaceSelected(place, form.setFieldValue)}
+                      />
+                    )}
+                  </Field>
+                  <ErrorMessage name="mailingAddress" component="h6" style={{ color: "red" }} />
                 </MDBox>
-              </MDBox>
-              {/* <MDBox mb={2} display="flex" justifyContent="space-between">
+                <MDBox mb={2} mr={1} flex={1}>
+                  <Field
+                    name="shopifyAppUrl"
+                    as={MDInput}
+                    type="text"
+                    label="Shopify App Link"
+                    fullWidth
+                  />
+                  <ErrorMessage name="shopifyAppUrl" component="h6" style={{ color: "red" }} />
+                </MDBox>
+                <MDBox mb={2} display="flex" justifyContent="space-between">
+                  <MDBox mr={1} flex={1}>
+                    <Field name="userName" as={MDInput} type="text" label="Full Name" fullWidth />
+                    <ErrorMessage name="userName" component="h6" style={{ color: "red" }} />
+                  </MDBox>
+                  <MDBox ml={1} flex={1}>
+                    <Field name="email" as={MDInput} type="email" label="User Email" fullWidth />
+                    <ErrorMessage name="email" component="h6" style={{ color: "red" }} />
+                  </MDBox>
+                </MDBox>
+                {/* <MDBox mb={2} display="flex" justifyContent="space-between">
                 <MDBox mr={1} flex={1}>
                   <Field name="password" as={MDInput} type="password" label="Password" fullWidth />
                   <ErrorMessage name="password" component="h6" style={{ color: "red" }} />
@@ -205,16 +207,23 @@ const Profile = () => {
                   <ErrorMessage name="confirmPassword" component="h6" style={{ color: "red" }} />
                 </MDBox>
               </MDBox> */}
-              <MDBox mt={4} mb={1}>
-                <MDButton type="submit" variant="gradient" color="success" disabled={isSubmitting}>
-                  Update Profile
-                </MDButton>
-              </MDBox>
-            </Form>
-          )}
-        </Formik>
-      </MDBox>
-    </Card>
+                <MDBox mt={4} mb={1}>
+                  <MDButton
+                    type="submit"
+                    variant="gradient"
+                    color="success"
+                    disabled={isSubmitting}
+                  >
+                    Update Profile
+                  </MDButton>
+                </MDBox>
+              </Form>
+            )}
+          </Formik>
+        </MDBox>
+      </Card>
+      <PaymentDetails />
+    </>
   );
 };
 
