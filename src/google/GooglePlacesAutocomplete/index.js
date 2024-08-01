@@ -6,7 +6,7 @@ import MDInput from "components/MDInput";
 const libraries = ["places"];
 // const MAP_KEY = "AIzaSyAC3encvyG1cRV9N9ieotVz8iypkAVU6OI";
 
-const GooglePlacesAutocomplete = ({ onPlaceSelected, value, onChange }) => {
+const GooglePlacesAutocomplete = ({ onPlaceSelected, value, onChange, label }) => {
   const inputRef = useRef(null);
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAP_API_KEY,
@@ -37,7 +37,7 @@ const GooglePlacesAutocomplete = ({ onPlaceSelected, value, onChange }) => {
   return (
     <Field
       inputRef={inputRef}
-      label="Mailing Address"
+      label={label}
       variant="outlined"
       fullWidth
       value={value}

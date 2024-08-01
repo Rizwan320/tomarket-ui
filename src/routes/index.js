@@ -21,6 +21,7 @@ const EditProduct = lazy(() => import("layouts/products/editProduct"));
 const PaymentDetails = lazy(() => import("layouts/payments/components/paymentDetails"));
 const ContentOrganization = lazy(() => import("layouts/contentOrganization"));
 const DistributorDashboard = lazy(() => import("layouts/distributor-dashboard"));
+const EditBuyer = lazy(() => import("layouts/Buyers/editBuyer"));
 
 const SuspendedComponent = (Component) => (
   <Suspense>
@@ -145,6 +146,14 @@ export const brandRoutes = [
     key: "product/:id",
     route: "/product/:id",
     component: SuspendedComponent(EditProduct),
+    isPrivate: true,
+    isNavbar: true,
+  },
+  {
+    name: "editbuyer",
+    key: "editbuyer",
+    route: "/editbuyer/:id",
+    component: SuspendedComponent(EditBuyer),
     isPrivate: true,
     isNavbar: true,
   },
