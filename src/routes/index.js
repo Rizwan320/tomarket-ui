@@ -142,7 +142,7 @@ export const brandRoutes = [
     isNavbar: false,
   },
   {
-    name: "product/:id",
+    name: "Edit Product",
     key: "product/:id",
     route: "/product/:id",
     component: SuspendedComponent(EditProduct),
@@ -150,7 +150,7 @@ export const brandRoutes = [
     isNavbar: true,
   },
   {
-    name: "editbuyer",
+    name: "Edit Buyer",
     key: "editbuyer",
     route: "/editbuyer/:id",
     component: SuspendedComponent(EditBuyer),

@@ -30,7 +30,6 @@ const EditBuyer = () => {
     displayName: Yup.string().required("Display Name is required"),
     email: Yup.string().email("Invalid email format").required("Email is required"),
   });
-
   const validationSchemaLocation = Yup.object({
     city: Yup.string().required("City is required"),
     // country: Yup.string().required("Country is required"),
@@ -43,32 +42,29 @@ const EditBuyer = () => {
     const fetchBuyer = async () => {
       try {
         const response = await api.get(`/buyers/${id}`);
-        const buyerData = response.data.data;
-        const { displayName = "", email = "", location = {} } = buyerData || {};
-
+        const { displayName, email, location } = response?.data?.data;
         setBuyer({
           displayName,
           email,
         });
-
+        const { city, country, countrySubDivisionCode, line1, postalCode } = location;
         setLocation({
-          city: location.city || "",
-          country: location.country || "",
-          countrySubDivisionCode: location.countrySubDivisionCode || "",
-          line1: location.line1 || "",
-          postalCode: location.postalCode || "",
+          city,
+          country,
+          countrySubDivisionCode,
+          line1,
+          postalCode,
         });
       } catch (error) {
         toast.error(error?.response?.data?.message);
       }
     };
-
     fetchBuyer();
   }, [id]);
 
   const handleSubmitBuyer = async (values, { setSubmitting }) => {
     try {
-      const response = await api.put(`/buyers/${id}`, values);
+      const response = await api.patch(`/buyers/buyer/${id}`, values);
       if (response.status === 200) {
         toast.success("Buyer info updated successfully");
       }
@@ -124,6 +120,7 @@ const EditBuyer = () => {
                       autoComplete="displayName"
                       autoFocus
                       variant="outlined"
+                      disabled={true}
                     />
                     <ErrorMessage
                       name="displayName"
@@ -148,7 +145,7 @@ const EditBuyer = () => {
                     />
                   </Grid>
                 </Grid>
-                <MDBox display="flex" justifyContent="space-between" alignItems="center">
+                <MDBox display="flex" justifyContent="flex-end" alignItems="flex-end">
                   <MDButton
                     type="submit"
                     color="success"
@@ -157,15 +154,6 @@ const EditBuyer = () => {
                     disabled={isSubmitting}
                   >
                     Update
-                  </MDButton>
-                  <MDButton
-                    type="button"
-                    color="error"
-                    variant="gradient"
-                    sx={{ mt: 3, mb: 2, mx: 2 }}
-                    onClick={() => navigate("/buyers")}
-                  >
-                    Cancel
                   </MDButton>
                 </MDBox>
               </Form>
@@ -271,7 +259,7 @@ const EditBuyer = () => {
                   </Grid>
                 </Grid>
 
-                <MDBox display="flex" justifyContent="space-between" alignItems="center">
+                <MDBox display="flex" justifyContent="flex-end" alignItems="flex-end">
                   <MDButton
                     type="submit"
                     color="success"
@@ -279,16 +267,7 @@ const EditBuyer = () => {
                     sx={{ mt: 3, mb: 2 }}
                     disabled={isSubmitting}
                   >
-                    Update Location
-                  </MDButton>
-                  <MDButton
-                    type="button"
-                    color="error"
-                    variant="gradient"
-                    sx={{ mt: 3, mb: 2, mx: 2 }}
-                    onClick={() => navigate("/buyers")}
-                  >
-                    Cancel
+                    Update
                   </MDButton>
                 </MDBox>
               </Form>
