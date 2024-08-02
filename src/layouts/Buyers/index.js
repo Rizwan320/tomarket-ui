@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Card from "@mui/material/Card";
+import { useNavigate } from "react-router-dom";
 
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
@@ -90,12 +91,15 @@ const Buyers = () => {
   const { columns, rows } = buyersdata(tableColumns, refresh);
   const [open, setOpen] = useState(false);
   const [file, setFile] = useState();
+  const navigate = useNavigate();
 
   const handleOpen = () => setOpen(true);
 
   const handleModalClose = () => setOpen(false);
 
   const handleClose = (fileData) => setFile(fileData);
+
+  const handleBuyer = (row) => navigate(`/editBuyer/${row?.id}`);
 
   const handleSubmit = async () => {
     const formData = new FormData();
@@ -176,6 +180,7 @@ const Buyers = () => {
             noEndBorder
             showCheckbox={false}
             entriesPerPage={false}
+            onRowClick={handleBuyer}
           />
         </MDBox>
       </Card>
