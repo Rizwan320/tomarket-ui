@@ -83,6 +83,8 @@ const Buyers = () => {
 
   const handleClose = (fileData) => setFile(fileData);
 
+  const handleBuyer = (row) => navigate(`/editBuyer/${row?.id}`);
+
   const handleSubmit = async () => {
     const formData = new FormData();
     formData.append("file", file);
@@ -168,7 +170,7 @@ const Buyers = () => {
             noEndBorder
             showCheckbox={false}
             entriesPerPage={false}
-            onRowClick={handleRowClicked}
+            onRowClick={handleBuyer}
           />
         </MDBox>
       </Card>

@@ -9,7 +9,6 @@ import MDAvatar from "components/MDAvatar";
 import MDTypography from "components/MDTypography";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
-import { BUYER_DATA } from "./BuyerData";
 import api from "../../../../axios";
 import { toast } from "react-toastify";
 
@@ -105,7 +104,7 @@ const buyersdata = (tableColumns, refresh) => {
           open={open}
           onClose={() => setOpen(false)}
           onOpen={() => setOpen(true)}
-          value={row.skusPurchased.indexOf(row.selectedSku) || 0}
+          value={row?.skusPurchased?.indexOf(row?.selectedSku) || 0}
           onChange={handleSelect}
           fullWidth
         >
@@ -146,8 +145,9 @@ const buyersdata = (tableColumns, refresh) => {
     try {
       const res = await api.patch(`buyers/${rowId}`, { showOnMap: value });
       if (res.status == 200) {
-        setTableData((prevData) =>
-          prevData.map((row) => (row.id === rowId ? { ...row, showOnMap: value } : row))
+        setTableData(
+          (prevData) =>
+            prevData.map((row) => (row.id === rowId ? { ...row, showOnMap: value } : row)) //line to be fixed
         );
       }
     } catch (error) {
@@ -156,6 +156,7 @@ const buyersdata = (tableColumns, refresh) => {
   };
 
   const allColumns = {
+    id: {},
     logo: { Header: "Logo", accessor: "logo", align: "left" },
     businessName: {
       Header: "Business Name",
@@ -222,6 +223,7 @@ const buyersdata = (tableColumns, refresh) => {
 
   const renderBuyersComponent = (column, row) => {
     const componentsMap = {
+      id: row.id,
       logo: () => <Logo name={"https://via.placeholder.com/40"} />,
       businessName: () => <Brand name={row?.businessName} />,
       displayName: () => <Brand name={row?.displayName} />,
@@ -237,14 +239,15 @@ const buyersdata = (tableColumns, refresh) => {
       unitsSoldLastWeek: () => <TrendBadge trend={row?.unitsSoldLastWeek} />,
       showOnMap: () => <ToggleSwitch row={row} onChange={updateShowOnMap} />,
     };
-
     return componentsMap[column] ? componentsMap[column]() : null;
   };
+
   return {
     columns: filteredColumns,
     rows: tableData?.map((row) => {
       return tableColumns?.reduce((acc, column) => {
         acc[column] = renderBuyersComponent(column, row);
+        acc["id"] = row.id;
         return acc;
       }, {});
     }),

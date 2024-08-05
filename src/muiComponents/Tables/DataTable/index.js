@@ -104,20 +104,25 @@ const DataTable = ({
       typeof element === "object" &&
       element.$$typeof === Symbol.for("react.element")
     ) {
-      if ("children" in element.props) return element.props.children;
-      if ("id" in element.props) return element.props.id;
+      if ("children" in element.props) {
+        return element.props.children;
+      }
+      if ("id" in element.props) {
+        return element.props.id;
+      }
       const keys = Object.keys(element.props);
-      if (keys.length > 0) return element.props[keys[0]];
+      if (keys.length > 0) {
+        return element.props[keys[0]];
+      }
     }
     return null;
   };
   const handleRowClick = (row) => {
     const rowData = {};
-
     row.cells.forEach((cell) => {
       rowData[cell.column.id] = extractDataFromElement(cell.value);
     });
-    rowData["id"] = Number(row.original.id);
+    rowData["id"] = Number(row.original?.id ?? null);
     if (onRowClick) onRowClick(rowData);
   };
 
