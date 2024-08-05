@@ -32,7 +32,7 @@ const EditBuyer = () => {
   });
   const validationSchemaLocation = Yup.object({
     city: Yup.string().required("City is required"),
-    // country: Yup.string().required("Country is required"),
+    country: Yup.string().required("Counmtry is required"),
     countrySubDivisionCode: Yup.string().required("Country Subdivision Code is required"),
     line1: Yup.string().required("Line 1 is required"),
     postalCode: Yup.string().required("Postal Code is required"),
@@ -44,16 +44,16 @@ const EditBuyer = () => {
         const response = await api.get(`/buyers/${id}`);
         const { displayName, email, location } = response?.data?.data;
         setBuyer({
-          displayName,
-          email,
+          displayName: displayName || "",
+          email: email || "",
         });
         const { city, country, countrySubDivisionCode, line1, postalCode } = location;
         setLocation({
-          city,
-          country,
-          countrySubDivisionCode,
-          line1,
-          postalCode,
+          city: city || "",
+          country: country || "",
+          countrySubDivisionCode: countrySubDivisionCode || "",
+          line1: line1 || "",
+          postalCode: postalCode || "",
         });
       } catch (error) {
         toast.error(error?.response?.data?.message);

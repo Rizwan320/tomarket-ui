@@ -223,7 +223,6 @@ const buyersdata = (tableColumns, refresh) => {
 
   const renderBuyersComponent = (column, row) => {
     const componentsMap = {
-      id: row.id,
       logo: () => <Logo name={"https://via.placeholder.com/40"} />,
       businessName: () => <Brand name={row?.businessName} />,
       displayName: () => <Brand name={row?.displayName} />,
