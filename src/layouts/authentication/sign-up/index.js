@@ -151,6 +151,7 @@ const SignUp = () => {
                         value={field.value}
                         onChange={field.onChange(field.name)}
                         onPlaceSelected={(place) => handlePlaceSelected(place, form.setFieldValue)}
+                        label="Mailing Address"
                       />
                     )}
                   </Field>
