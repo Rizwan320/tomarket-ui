@@ -117,11 +117,6 @@ const Buyers = () => {
     }
   };
 
-  const handleRowClicked = (row) => {
-    console.log(row);
-    navigate("dashboard");
-  };
-
   return (
     <>
       {loading && <Loader />}
