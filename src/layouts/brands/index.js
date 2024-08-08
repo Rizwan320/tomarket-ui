@@ -23,6 +23,20 @@ const Brands = () => {
     { heading: "Brands' Requests", accessor: "request_by_brand" },
   ];
 
+  const fetchBrands = async () => {
+    try {
+      setLoading(true);
+      const response = await api.get("accounts/brands");
+      if (response.data) {
+        setBrandsTableData(response.data);
+      }
+    } catch (error) {
+      console.log(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     const fetchConnectionRequests = async (state) => {
       try {
@@ -42,23 +56,12 @@ const Brands = () => {
     };
     if (activeTab !== "brands") {
       fetchConnectionRequests(activeTab);
+    } else {
+      fetchBrands();
     }
   }, [activeTab]);
 
   useEffect(() => {
-    const fetchBrands = async () => {
-      try {
-        setLoading(true);
-        const response = await api.get("accounts/brands");
-        if (response.data) {
-          setBrandsTableData(response.data);
-        }
-      } catch (error) {
-        console.log(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
     fetchBrands();
   }, []);
 

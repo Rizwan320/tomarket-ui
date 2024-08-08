@@ -22,6 +22,20 @@ const Distributor = () => {
     { heading: "Distributors' Requests", accessor: "request_by_distributor" },
   ];
 
+  const fetchDistributors = async () => {
+    try {
+      setLoading(true);
+      const response = await api.get("accounts/distributors");
+      if (response.data) {
+        setDistributorsTableData(response.data);
+      }
+    } catch (error) {
+      console.log(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     const fetchConnectionRequests = async (state) => {
       try {
@@ -44,23 +58,12 @@ const Distributor = () => {
     };
     if (activeTab !== "distributors") {
       fetchConnectionRequests(activeTab);
+    } else {
+      fetchDistributors();
     }
   }, [activeTab]);
 
   useEffect(() => {
-    const fetchDistributors = async () => {
-      try {
-        setLoading(true);
-        const response = await api.get("accounts/distributors");
-        if (response.data) {
-          setDistributorsTableData(response.data);
-        }
-      } catch (error) {
-        console.log(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
     fetchDistributors();
   }, []);
 

@@ -31,7 +31,6 @@ const connectionRequestsData = (tableData, setTableData) => {
 
   const Connect = ({ id, state }) => {
     const [loading, setLoading] = useState(false);
-    console.log(state);
     const handleOnClick = async (value) => {
       try {
         setLoading(true);
