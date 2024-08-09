@@ -21,6 +21,8 @@ const EditProduct = lazy(() => import("layouts/products/editProduct"));
 const PaymentDetails = lazy(() => import("layouts/payments/components/paymentDetails"));
 const ContentOrganization = lazy(() => import("layouts/contentOrganization"));
 const DistributorDashboard = lazy(() => import("layouts/distributor-dashboard"));
+const Distributors = lazy(() => import("layouts/distributor"));
+const Brands = lazy(() => import("layouts/brands"));
 const EditBuyer = lazy(() => import("layouts/Buyers/editBuyer"));
 
 const SuspendedComponent = (Component) => (
@@ -77,6 +79,16 @@ export const brandRoutes = [
     icon: <Icon fontSize="small">person</Icon>,
     route: "/buyers",
     component: SuspendedComponent(Buyers),
+    isPrivate: true,
+    isNavbar: true,
+  },
+  {
+    type: "collapse",
+    name: "Distributors",
+    key: "distributors",
+    icon: <Icon fontSize="small">table</Icon>,
+    route: "/distributors",
+    component: SuspendedComponent(Distributors),
     isPrivate: true,
     isNavbar: true,
   },
@@ -204,6 +216,16 @@ export const distributorRoutes = [
     icon: <Icon fontSize="small">payments</Icon>,
     route: "/payments",
     component: SuspendedComponent(Payments),
+    isPrivate: true,
+    isNavbar: true,
+  },
+  {
+    type: "collapse",
+    name: "Add Brands",
+    key: "brands",
+    icon: <Icon fontSize="small">table</Icon>,
+    route: "/brands",
+    component: SuspendedComponent(Brands),
     isPrivate: true,
     isNavbar: true,
   },
