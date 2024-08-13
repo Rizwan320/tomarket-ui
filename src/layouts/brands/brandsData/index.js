@@ -64,8 +64,8 @@ const brandsData = (tableData) => {
 
   const renderComponent = (column, row) => {
     const componentsMap = {
-      name: () => <Brand name={row?.accountName} />,
-      connect: () => <Connect id={row?.brand.id} />,
+      name: () => <Brand name={row?.name} />,
+      connect: () => <Connect id={row?.id} />,
     };
 
     return componentsMap[column] ? componentsMap[column]() : null;

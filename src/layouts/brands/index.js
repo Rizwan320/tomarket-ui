@@ -26,7 +26,7 @@ const Brands = () => {
   const fetchBrands = async () => {
     try {
       setLoading(true);
-      const response = await api.get("accounts/brands");
+      const response = await api.get("connections/nonconnected-brands");
       if (response.data) {
         setBrandsTableData(response.data);
       }

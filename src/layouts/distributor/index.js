@@ -25,7 +25,7 @@ const Distributor = () => {
   const fetchDistributors = async () => {
     try {
       setLoading(true);
-      const response = await api.get("accounts/distributors");
+      const response = await api.get("connections/nonconnected-distributors");
       if (response.data) {
         setDistributorsTableData(response.data);
       }
