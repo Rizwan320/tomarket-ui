@@ -1,9 +1,12 @@
+import { useEffect, useState } from "react";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
-import { PRODUCT_DATA } from "./Products";
+import api from "./../../../axios";
+import { toast } from "react-toastify";
 
 const productData = (tableColumns) => {
+  const [tableData, setTableData] = useState([]);
   const Logo = ({ name }) => (
     <MDBox display="flex" alignItems="left" lineHeight={1}>
       <MDAvatar src={name} size="sm" />
@@ -17,6 +20,30 @@ const productData = (tableColumns) => {
       </MDTypography>
     </MDBox>
   );
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await api.get("/products");
+        if (response.data.data) {
+          const product = response.data.data.map((row) => ({
+            ...row,
+            id: row.id,
+            name: row.name,
+            description: row.description,
+            sku: row.sku,
+            price: row.price,
+            unit: row.unit,
+          }));
+          setTableData(product);
+        }
+      } catch (error) {
+        toast.error(error.message);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   const allColumns = {
     logo: { Header: "Logo", accessor: "logo", align: "left" },
@@ -77,7 +104,7 @@ const productData = (tableColumns) => {
 
   return {
     columns: filteredColumns,
-    rows: PRODUCT_DATA.map((row) => {
+    rows: tableData.map((row) => {
       return tableColumns?.reduce((acc, column) => {
         acc[column] = renderBuyersComponent(column, row);
         return acc;

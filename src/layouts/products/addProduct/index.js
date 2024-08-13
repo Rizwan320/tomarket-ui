@@ -1,15 +1,22 @@
-import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { Card, CardContent, Container, Grid, FormControl } from "@mui/material";
+import {
+  Container,
+  Card,
+  CardContent,
+  Grid,
+  MenuItem,
+  Select,
+  InputLabel,
+  FormControl,
+} from "@mui/material";
 import { Formik, Field, Form, ErrorMessage } from "formik";
+import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import { toast } from "react-toastify";
-
 import MDBox from "components/MDBox";
 import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
-import api from "./../../../axios";
+import { toast } from "react-toastify";
+import api from "../../../axios";
 import { units } from "utils/salesUnits";
 
 const FieldWrapper = ({ name, children }) => (
@@ -19,53 +26,48 @@ const FieldWrapper = ({ name, children }) => (
   </FormControl>
 );
 
-const EditProduct = () => {
-  const [initialValues, setInitialValues] = useState({
+const AddProduct = () => {
+  const initialValues = {
     name: "",
     sku: "",
+    price: "",
     description: "",
     unit: "",
-    price: "",
-  });
+  };
 
-  const { id } = useParams();
   const navigate = useNavigate();
 
+  const handleCancel = () => navigate("/products");
+
   const validationSchema = Yup.object({
-    name: Yup.string().required("Product Name is required"),
-    sku: Yup.string().required("SKU is required"),
+    productName: Yup.string().required("Product Name is required"),
+    SKU: Yup.string().required("SKU is required"),
     price: Yup.number().required("Price is required").positive("Price must be positive"),
     description: Yup.string(),
-    unit: Yup.string(),
+    unit: Yup.string().required("Unit is required"),
   });
-  useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        const response = await api.get(`/products/${id}`);
-        const data = response.data.data;
-        setInitialValues({
-          name: data.name || "",
-          sku: data.sku || "",
-          description: data.description || "",
-          unit: data.productSaleUnits[0].salesUnit.abbreviation || "",
-          price: Number(data.price),
-        });
-      } catch (error) {
-        toast.error("Error fetching product details");
-      }
-    };
-    fetchProduct();
-  }, [id]);
 
   const handleSubmit = async (values, { setSubmitting }) => {
+    const payload = {
+      name: values.productName,
+      sku: values.SKU,
+      price: values.price,
+      description: values.description,
+      unit: values.unit,
+    };
+
     try {
-      const response = await api.patch(`/products/${id}`, values);
-      if (response.status === 200) {
-        toast.success("Product updated successfully");
+      const response = await api.post("/Products", payload);
+      if (response.status === 201) {
+        toast.success("Product Added Successfully");
         navigate("/products");
       }
     } catch (error) {
-      toast.error("Error updating product");
+      if (error.response && error.response.status === 400) {
+        toast.error(`Product already exists with SKU(s): ${error.response.data.message}`);
+      } else {
+        toast.error("Error Adding Product");
+      }
     } finally {
       setSubmitting(false);
     }
@@ -76,44 +78,43 @@ const EditProduct = () => {
       <Card>
         <CardContent>
           <MDTypography variant="h6" gutterBottom>
-            Edit Product
+            Add Product
           </MDTypography>
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
-            enableReinitialize
           >
             {({ isSubmitting, setFieldValue, values }) => (
               <Form>
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
-                    <FieldWrapper name="name">
+                    <FieldWrapper name="productName">
                       <Field
-                        name="name"
+                        name="productName"
                         as={MDInput}
                         margin="normal"
                         fullWidth
                         label="Product Name"
-                        autoComplete="name"
+                        autoComplete="productName"
                         variant="outlined"
                       />
                     </FieldWrapper>
                   </Grid>
                   <Grid item xs={12}>
-                    <FieldWrapper name="sku">
+                    <FieldWrapper name="SKU">
                       <Field
-                        name="sku"
+                        name="SKU"
                         as={MDInput}
                         margin="normal"
                         fullWidth
                         label="SKU"
-                        autoComplete="sku"
+                        autoComplete="SKU"
                         variant="outlined"
                       />
                     </FieldWrapper>
                   </Grid>
-                  {/* <Grid item xs={12}>
+                  <Grid item xs={12}>
                     <FieldWrapper name="unit">
                       <InputLabel id="unit-label">Unit</InputLabel>
                       <Field
@@ -125,9 +126,6 @@ const EditProduct = () => {
                         value={values.unit}
                         sx={{ height: 45 }}
                         fullWidth
-                        InputProps={{
-                          readOnly: true,
-                        }}
                       >
                         {units.map((unit) => (
                           <MenuItem key={unit.abbreviation} value={unit.abbreviation}>
@@ -136,7 +134,7 @@ const EditProduct = () => {
                         ))}
                       </Field>
                     </FieldWrapper>
-                  </Grid> */}
+                  </Grid>
                   <Grid item xs={12}>
                     <FieldWrapper name="price">
                       <Field
@@ -168,15 +166,24 @@ const EditProduct = () => {
                   </Grid>
                 </Grid>
 
-                <MDBox display="flex" justifyContent="flex-end" alignItems="center" mt={3}>
+                <MDBox display="flex" justifyContent="flex-start" alignItems="center" mt={3}>
                   <MDButton
                     type="submit"
                     color="success"
                     variant="gradient"
-                    sx={{ mt: 3, mb: 2 }}
+                    sx={{ mt: 3, mb: 2, mr: 2 }}
                     disabled={isSubmitting}
                   >
-                    Save Product
+                    Add Product
+                  </MDButton>
+                  <MDButton
+                    type="button"
+                    color="primary"
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2 }}
+                    onClick={() => handleCancel()}
+                  >
+                    Cancel
                   </MDButton>
                 </MDBox>
               </Form>
@@ -188,4 +195,4 @@ const EditProduct = () => {
   );
 };
 
-export default EditProduct;
+export default AddProduct;

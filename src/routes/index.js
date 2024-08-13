@@ -24,6 +24,8 @@ const DistributorDashboard = lazy(() => import("layouts/distributor-dashboard"))
 const Distributors = lazy(() => import("layouts/distributor"));
 const Brands = lazy(() => import("layouts/brands"));
 const EditBuyer = lazy(() => import("layouts/Buyers/editBuyer"));
+const AddBuyer = lazy(() => import("layouts/Buyers/addBuyer"));
+const AddProduct = lazy(() => import("layouts/products/addProduct"));
 
 const SuspendedComponent = (Component) => (
   <Suspense>
@@ -155,7 +157,7 @@ export const brandRoutes = [
   },
   {
     name: "Edit Product",
-    key: "product/:id",
+    key: "edit-product",
     route: "/product/:id",
     component: SuspendedComponent(EditProduct),
     isPrivate: true,
@@ -163,11 +165,27 @@ export const brandRoutes = [
   },
   {
     name: "Edit Buyer",
-    key: "editbuyer",
-    route: "/editbuyer/:id",
+    key: "edit-buyer",
+    route: "/buyer/:id",
     component: SuspendedComponent(EditBuyer),
     isPrivate: true,
     isNavbar: true,
+  },
+  {
+    name: "Add Buyer",
+    key: "add-Buyer",
+    route: "/buyer/add",
+    component: SuspendedComponent(AddBuyer),
+    isPrivate: "true",
+    isNavbar: "true",
+  },
+  {
+    name: "Add Product",
+    key: "add-Product",
+    route: "/product/add",
+    component: SuspendedComponent(AddProduct),
+    isPrivate: "true",
+    isNavbar: "true",
   },
   {
     name: "Profile",
