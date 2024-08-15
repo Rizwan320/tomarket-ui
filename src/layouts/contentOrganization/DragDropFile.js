@@ -49,10 +49,7 @@ const DragDropFile = () => {
       const {
         user: {
           user: {
-            account: {
-              accountType: entityType,
-              brand: { id: entityId },
-            },
+            account: { accountType: entityType, id: entityId },
           },
         },
       } = user;
