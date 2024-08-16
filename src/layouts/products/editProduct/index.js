@@ -42,7 +42,7 @@ const EditProduct = () => {
     const fetchProduct = async () => {
       try {
         const response = await api.get(`/products/${id}`);
-        const data = response.data.data;
+        const data = response.data;
         setInitialValues({
           name: data.name || "",
           sku: data.sku || "",

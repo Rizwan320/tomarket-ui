@@ -25,8 +25,8 @@ const productData = (tableColumns) => {
     const fetchProducts = async () => {
       try {
         const response = await api.get("/products");
-        if (response.data.data) {
-          const product = response.data.data.map((row) => ({
+        if (response.data) {
+          const product = response.data.map((row) => ({
             ...row,
             id: row.id,
             name: row.name,
