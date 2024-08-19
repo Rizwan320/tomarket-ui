@@ -1,21 +1,23 @@
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import {
   Container,
   Card,
   CardContent,
   Grid,
+  FormControl,
+  InputLabel,
   MenuItem,
   Select,
-  InputLabel,
-  FormControl,
 } from "@mui/material";
 import { Formik, Field, Form, ErrorMessage } from "formik";
-import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
+import { toast } from "react-toastify";
+
 import MDBox from "components/MDBox";
 import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
-import { toast } from "react-toastify";
 import api from "../../../axios";
 import { units } from "utils/salesUnits";
 
@@ -26,48 +28,65 @@ const FieldWrapper = ({ name, children }) => (
   </FormControl>
 );
 
-const AddProduct = () => {
-  const initialValues = {
+const ProductForm = () => {
+  const [initialValues, setInitialValues] = useState({
     name: "",
     sku: "",
-    price: "",
     description: "",
     unit: "",
-  };
+    price: "",
+  });
 
+  const { id } = useParams();
   const navigate = useNavigate();
-
-  const handleCancel = () => navigate("/products");
+  const isEditMode = !!id;
 
   const validationSchema = Yup.object({
-    productName: Yup.string().required("Product Name is required"),
-    SKU: Yup.string().required("SKU is required"),
+    name: Yup.string().required("Product Name is required"),
+    sku: Yup.string().required("SKU is required"),
     price: Yup.number().required("Price is required").positive("Price must be positive"),
     description: Yup.string(),
     unit: Yup.string().required("Unit is required"),
   });
 
-  const handleSubmit = async (values, { setSubmitting }) => {
-    const payload = {
-      name: values.productName,
-      sku: values.SKU,
-      price: values.price,
-      description: values.description,
-      unit: values.unit,
-    };
+  useEffect(() => {
+    if (isEditMode) {
+      const fetchProduct = async () => {
+        try {
+          const response = await api.get(`/products/${id}`);
+          const data = response.data;
+          setInitialValues({
+            name: data.name || "",
+            sku: data.sku || "",
+            description: data.description || "",
+            unit: data.productSaleUnits[0].salesUnit.abbreviation || "",
+            price: Number(data.price),
+          });
+        } catch (error) {
+          toast.error("Error fetching product details");
+        }
+      };
+      fetchProduct();
+    }
+  }, [id, isEditMode]);
 
+  const handleSubmit = async (values, { setSubmitting }) => {
     try {
-      const response = await api.post("/Products", payload);
-      if (response.status === 201) {
-        toast.success("Product Added Successfully");
-        navigate("/products");
+      if (isEditMode) {
+        const response = await api.patch(`/products/${id}`, values);
+        if (response.status === 200) {
+          toast.success("Product updated successfully");
+          navigate("/products");
+        }
+      } else {
+        const response = await api.post("/products", values);
+        if (response.status === 201) {
+          toast.success("Product added successfully");
+          navigate("/products");
+        }
       }
     } catch (error) {
-      if (error.response && error.response.status === 400) {
-        toast.error(`Product already exists with SKU(s): ${error.response.data.message}`);
-      } else {
-        toast.error("Error Adding Product");
-      }
+      toast.error(error?.response?.data?.message);
     } finally {
       setSubmitting(false);
     }
@@ -78,39 +97,41 @@ const AddProduct = () => {
       <Card>
         <CardContent>
           <MDTypography variant="h6" gutterBottom>
-            Add Product
+            {isEditMode ? "Edit Product" : "Add Product"}
           </MDTypography>
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
+            enableReinitialize
           >
             {({ isSubmitting, setFieldValue, values }) => (
               <Form>
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
-                    <FieldWrapper name="productName">
+                    <FieldWrapper name="name">
                       <Field
-                        name="productName"
+                        name="name"
                         as={MDInput}
                         margin="normal"
                         fullWidth
                         label="Product Name"
-                        autoComplete="productName"
+                        autoComplete="name"
                         variant="outlined"
                       />
                     </FieldWrapper>
                   </Grid>
                   <Grid item xs={12}>
-                    <FieldWrapper name="SKU">
+                    <FieldWrapper name="sku">
                       <Field
-                        name="SKU"
+                        name="sku"
                         as={MDInput}
                         margin="normal"
                         fullWidth
                         label="SKU"
-                        autoComplete="SKU"
+                        autoComplete="sku"
                         variant="outlined"
+                        disabled={isEditMode}
                       />
                     </FieldWrapper>
                   </Grid>
@@ -126,6 +147,7 @@ const AddProduct = () => {
                         value={values.unit}
                         sx={{ height: 45 }}
                         fullWidth
+                        disabled={isEditMode}
                       >
                         {units.map((unit) => (
                           <MenuItem key={unit.abbreviation} value={unit.abbreviation}>
@@ -166,24 +188,15 @@ const AddProduct = () => {
                   </Grid>
                 </Grid>
 
-                <MDBox display="flex" justifyContent="flex-start" alignItems="center" mt={3}>
+                <MDBox display="flex" justifyContent="flex-end" alignItems="center" mt={3}>
                   <MDButton
                     type="submit"
                     color="success"
                     variant="gradient"
-                    sx={{ mt: 3, mb: 2, mr: 2 }}
+                    sx={{ mt: 3, mb: 2 }}
                     disabled={isSubmitting}
                   >
-                    Add Product
-                  </MDButton>
-                  <MDButton
-                    type="button"
-                    color="primary"
-                    variant="contained"
-                    sx={{ mt: 3, mb: 2 }}
-                    onClick={() => handleCancel()}
-                  >
-                    Cancel
+                    {isEditMode ? "Save Changes" : "Add Product"}
                   </MDButton>
                 </MDBox>
               </Form>
@@ -195,4 +208,4 @@ const AddProduct = () => {
   );
 };
 
-export default AddProduct;
+export default ProductForm;
