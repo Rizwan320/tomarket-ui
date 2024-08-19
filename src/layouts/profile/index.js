@@ -70,11 +70,9 @@ const Profile = () => {
             // confirmPassword: "",
             shopifyAppUrl: userData?.shopifyAppUrl,
           });
-        } else {
-          toast.error("Failed to fetch user data");
         }
       } catch (error) {
-        console.log(error);
+        toast.error(error?.message);
       } finally {
         setLoading(false);
       }
@@ -84,7 +82,6 @@ const Profile = () => {
   }, []);
 
   const handleSubmit = async (values, { setSubmitting }) => {
-    console.log(values);
     const { password, confirmPassword, ...payload } = values;
     try {
       const response = await api.patch(`/users/${initialValues?.id}`, payload);
