@@ -34,7 +34,7 @@ const ProductForm = () => {
     sku: "",
     description: "",
     unit: "",
-    price: "",
+    price: 0,
   });
 
   const { id } = useParams();
@@ -59,8 +59,8 @@ const ProductForm = () => {
             name: data.name || "",
             sku: data.sku || "",
             description: data.description || "",
-            unit: data.productSaleUnits[0].salesUnit.abbreviation || "",
-            price: Number(data.price),
+            unit: data?.productSaleUnits[0]?.salesUnit?.abbreviation || "",
+            price: Number(data?.productSaleUnits[0]?.price),
           });
         } catch (error) {
           toast.error("Error fetching product details");
