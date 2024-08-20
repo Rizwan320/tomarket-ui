@@ -69,12 +69,13 @@ const ProductTable = () => {
     },
   ];
   const { columns, rows } = productData(tableColumns);
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleRowClick = (row) => {
-    console.log(row);
     navigate(`/product/${row?.id}`);
   };
+
+  const handleAddProduct = () => navigate("/product/add");
 
   const handleOpen = (file) => {
     setOpen(true);
@@ -88,7 +89,6 @@ const ProductTable = () => {
     if (uplaodFile) {
       const formData = new FormData();
       formData.append("file", uplaodFile);
-      console.log(formData);
       try {
         const response = await api.post("products/upload", formData, {
           headers: {
@@ -97,7 +97,6 @@ const ProductTable = () => {
         });
         toast.success(response.data.message);
       } catch (error) {
-        console.log(error.message);
         toast.error(error.message);
       } finally {
         setOpen(false);
@@ -121,6 +120,12 @@ const ProductTable = () => {
           <MDBox mr={2}>
             <MDButton variant="contained" color="success" onClick={handleOpen}>
               Upload File
+            </MDButton>
+          </MDBox>
+
+          <MDBox mr={2}>
+            <MDButton variant="contained" color="success" onClick={() => handleAddProduct()}>
+              Add Product
             </MDButton>
           </MDBox>
 

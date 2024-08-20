@@ -101,7 +101,7 @@ export default function App() {
           brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
           CompanyName="ToMarket"
           routes={
-            user?.user?.account.accountType === "distributor" ? distributorRoutes : brandRoutes
+            user?.user?.account?.accountType === "distributor" ? distributorRoutes : brandRoutes
           }
           // routes={brandRoutes}
           onMouseEnter={handleOnMouseEnter}
@@ -110,7 +110,7 @@ export default function App() {
       )}
       <Routes>
         {getRoutes(
-          user?.user?.account.accountType === "distributor" ? distributorRoutes : brandRoutes
+          user?.user?.account?.accountType === "distributor" ? distributorRoutes : brandRoutes
         )}
         {/* {getRoutes(brandRoutes)} */}
         <Route

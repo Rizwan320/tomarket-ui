@@ -5,6 +5,7 @@ import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
 import PrivacyPolicy from "layouts/PrivacyPolicy";
 import ContentOrganizationImages from "layouts/contentOrganization/components/ContentOrganizationImages";
+import ProductForm from "layouts/products/ProductForm";
 
 const Wcw = lazy(() => import("layouts/wcw"));
 const Users = lazy(() => import("layouts/users"));
@@ -18,13 +19,13 @@ const Payments = lazy(() => import("layouts/payments"));
 const Dashboard = lazy(() => import("layouts/dashboard"));
 const StripeForm = lazy(() => import("stripe"));
 const BrandDetail = lazy(() => import("layouts/brandDetail"));
-const EditProduct = lazy(() => import("layouts/products/editProduct"));
 const PaymentDetails = lazy(() => import("layouts/payments/components/paymentDetails"));
 const ContentOrganization = lazy(() => import("layouts/contentOrganization"));
 const DistributorDashboard = lazy(() => import("layouts/distributor-dashboard"));
 const Distributors = lazy(() => import("layouts/distributor"));
 const Brands = lazy(() => import("layouts/brands"));
 const EditBuyer = lazy(() => import("layouts/Buyers/editBuyer"));
+const AddBuyer = lazy(() => import("layouts/Buyers/addBuyer"));
 
 const SuspendedComponent = (Component) => (
   <Suspense>
@@ -172,19 +173,35 @@ export const brandRoutes = [
   },
   {
     name: "Edit Product",
-    key: "product/:id",
+    key: "edit-product",
     route: "/product/:id",
-    component: SuspendedComponent(EditProduct),
+    component: SuspendedComponent(ProductForm),
     isPrivate: true,
     isNavbar: true,
   },
   {
     name: "Edit Buyer",
-    key: "editbuyer",
-    route: "/editbuyer/:id",
+    key: "edit-buyer",
+    route: "/buyer/:id",
     component: SuspendedComponent(EditBuyer),
     isPrivate: true,
     isNavbar: true,
+  },
+  {
+    name: "Add Buyer",
+    key: "add-Buyer",
+    route: "/buyer/add",
+    component: SuspendedComponent(AddBuyer),
+    isPrivate: "true",
+    isNavbar: "true",
+  },
+  {
+    name: "Add Product",
+    key: "add-Product",
+    route: "/product/add",
+    component: SuspendedComponent(ProductForm),
+    isPrivate: "true",
+    isNavbar: "true",
   },
   {
     name: "Profile",
