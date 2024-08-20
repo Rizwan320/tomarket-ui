@@ -28,8 +28,13 @@ const DragDropFile = () => {
   const [openDialog, setOpenDialog] = useState(false);
   const [loading, setLoading] = useState(false);
   const user = useUser();
+  const maxFileLength = 5;
 
   const onDrop = useCallback((acceptedFiles) => {
+    if (acceptedFiles.length > maxFileLength) {
+      alert(`You can only upload up to ${maxFileLength} files.`);
+      return;
+    }
     setUploadedFiles(acceptedFiles);
     setOpenDialog(true);
   }, []);
@@ -67,8 +72,13 @@ const DragDropFile = () => {
           "Content-Type": "multipart/form-data",
         },
       });
-      if (response?.data?.success) {
-        toast.success(response?.data?.message);
+      const skippedFiles = response?.data?.skippedFiles;
+      if (skippedFiles.length > 0) {
+        const skippedFilesMessage = `File Already Exists: ${skippedFiles.join(", ")}`;
+        toast.warn(skippedFilesMessage);
+      }
+      if (response?.status === 201 && response?.data?.result.length) {
+        toast.success(`${response?.data?.result.length}  Files Uploaded Successfully`);
       }
     } catch (error) {
       console.error(error);
@@ -120,6 +130,7 @@ const DragDropFile = () => {
               <MDTypography variant="body1">
                 Drag and drop files here, or click to select files
               </MDTypography>
+              <MDTypography variant="body1">Maximum of {maxFileLength} files</MDTypography>
               <MDButton color="success" variant="contained" sx={{ mt: 2, color: "white" }}>
                 Browse Files
               </MDButton>

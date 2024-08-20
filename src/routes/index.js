@@ -4,6 +4,7 @@ import Icon from "@mui/material/Icon";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
 import PrivacyPolicy from "layouts/PrivacyPolicy";
+import ContentOrganizationImages from "layouts/contentOrganization/components/ContentOrganizationImages";
 
 const Wcw = lazy(() => import("layouts/wcw"));
 const Users = lazy(() => import("layouts/users"));
@@ -69,6 +70,22 @@ export const brandRoutes = [
     icon: <Icon fontSize="small">assignment</Icon>,
     route: "/content-organization",
     component: SuspendedComponent(ContentOrganization),
+    isPrivate: true,
+    isNavbar: true,
+  },
+  {
+    name: "Logo Page",
+    key: "logo-page",
+    route: "/content-organization/logo",
+    component: SuspendedComponent(ContentOrganizationImages),
+    isPrivate: true,
+    isNavbar: true,
+  },
+  {
+    name: "Product Picture",
+    key: "product-picture",
+    route: "/content-organization/product-picture",
+    component: SuspendedComponent(ContentOrganizationImages),
     isPrivate: true,
     isNavbar: true,
   },
