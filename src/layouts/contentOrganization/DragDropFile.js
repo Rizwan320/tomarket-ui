@@ -41,14 +41,14 @@ const DragDropFile = () => {
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
-  const folderListItems = ["Product pictures", "Logos", "Sales sheets", "Descriptions"];
-  const listItems = ["pictures", "logo"];
+  const folderListItems = ["Product pictures", "Logos", "Others"];
+  const listItems = ["pictures", "logo", "other"];
 
   const handleCloseDialog = () => {
     setOpenDialog(false);
   };
 
-  const saveImagesToAwsS3Bucket = async (contentType) => {
+  const saveFilesToAwsS3Bucket = async (contentType) => {
     try {
       setLoading(true);
       const {
@@ -67,7 +67,7 @@ const DragDropFile = () => {
       formData.append("contentType", contentType);
       formData.append("entityType", entityType);
       formData.append("entityId", entityId);
-      const response = await api.post("content/images", formData, {
+      const response = await api.post("content", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -91,14 +91,13 @@ const DragDropFile = () => {
   const handleFolderSelection = (folder) => {
     switch (folder) {
       case folderListItems[0]:
-        saveImagesToAwsS3Bucket(listItems[0]);
+        saveFilesToAwsS3Bucket(listItems[0]);
         break;
       case folderListItems[1]:
-        saveImagesToAwsS3Bucket(listItems[1]);
+        saveFilesToAwsS3Bucket(listItems[1]);
         break;
       case folderListItems[2]:
-        break;
-      case folderListItems[3]:
+        saveFilesToAwsS3Bucket(listItems[2]);
         break;
       default:
         break;

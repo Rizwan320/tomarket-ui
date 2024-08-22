@@ -19,8 +19,7 @@ const BrandsFolder = ({ name = "Product Organization In Brand" }) => {
   const [rows, setRows] = useState([
     { id: 1, name: "Product pictures" },
     { id: 2, name: "Logos" },
-    { id: 3, name: "Sales sheets" },
-    { id: 4, name: "Descriptions" },
+    { id: 3, name: "Others" },
   ]);
 
   const handleRowClick = (rowName) => {
@@ -34,6 +33,11 @@ const BrandsFolder = ({ name = "Product Organization In Brand" }) => {
         route: "/content-organization/logo",
         endpoint: "/content/logos",
         title: "Logos",
+      },
+      Others: {
+        route: "/content-organization/other",
+        endpoint: "/content/others",
+        title: "Others",
       },
     };
     const routeInfo = routeMap[rowName];

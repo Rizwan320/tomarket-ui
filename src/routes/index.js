@@ -4,8 +4,8 @@ import Icon from "@mui/material/Icon";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
 import PrivacyPolicy from "layouts/PrivacyPolicy";
-import ContentOrganizationImages from "layouts/contentOrganization/components/ContentOrganizationImages";
 import ProductForm from "layouts/products/ProductForm";
+import ContentOrganizationFiles from "layouts/contentOrganization/components/ContentOrganizationFiles";
 
 const Wcw = lazy(() => import("layouts/wcw"));
 const Users = lazy(() => import("layouts/users"));
@@ -75,10 +75,10 @@ export const brandRoutes = [
     isNavbar: true,
   },
   {
-    name: "Logo Page",
-    key: "logo-page",
+    name: "Logo",
+    key: "logo",
     route: "/content-organization/logo",
-    component: SuspendedComponent(ContentOrganizationImages),
+    component: SuspendedComponent(ContentOrganizationFiles),
     isPrivate: true,
     isNavbar: true,
   },
@@ -86,7 +86,15 @@ export const brandRoutes = [
     name: "Product Picture",
     key: "product-picture",
     route: "/content-organization/product-picture",
-    component: SuspendedComponent(ContentOrganizationImages),
+    component: SuspendedComponent(ContentOrganizationFiles),
+    isPrivate: true,
+    isNavbar: true,
+  },
+  {
+    name: "Other",
+    key: "other",
+    route: "/content-organization/other",
+    component: SuspendedComponent(ContentOrganizationFiles),
     isPrivate: true,
     isNavbar: true,
   },
