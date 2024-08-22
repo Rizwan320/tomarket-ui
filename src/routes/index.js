@@ -5,6 +5,7 @@ import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
 import PrivacyPolicy from "layouts/PrivacyPolicy";
 import ProductForm from "layouts/products/ProductForm";
+import ContentOrganizationFiles from "layouts/contentOrganization/components/ContentOrganizationFiles";
 
 const Wcw = lazy(() => import("layouts/wcw"));
 const Users = lazy(() => import("layouts/users"));
@@ -70,6 +71,30 @@ export const brandRoutes = [
     icon: <Icon fontSize="small">assignment</Icon>,
     route: "/content-organization",
     component: SuspendedComponent(ContentOrganization),
+    isPrivate: true,
+    isNavbar: true,
+  },
+  {
+    name: "Logo",
+    key: "logo",
+    route: "/content-organization/logo",
+    component: SuspendedComponent(ContentOrganizationFiles),
+    isPrivate: true,
+    isNavbar: true,
+  },
+  {
+    name: "Product Picture",
+    key: "product-picture",
+    route: "/content-organization/product-picture",
+    component: SuspendedComponent(ContentOrganizationFiles),
+    isPrivate: true,
+    isNavbar: true,
+  },
+  {
+    name: "Other",
+    key: "other",
+    route: "/content-organization/other",
+    component: SuspendedComponent(ContentOrganizationFiles),
     isPrivate: true,
     isNavbar: true,
   },
