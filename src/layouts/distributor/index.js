@@ -63,10 +63,6 @@ const Distributor = () => {
     }
   }, [activeTab]);
 
-  useEffect(() => {
-    fetchDistributors();
-  }, []);
-
   const { columns, rows } =
     activeTab === "distributors"
       ? distributorsData(distributorsTableData)

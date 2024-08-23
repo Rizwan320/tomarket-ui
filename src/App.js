@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 
@@ -15,6 +15,8 @@ import theme from "assets/theme";
 import brandWhite from "assets/images/logo-ct.png";
 import brandDark from "assets/images/logo-ct-dark.png";
 
+import { setNavigate } from "./axios/navigate";
+
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
   const {
@@ -29,6 +31,8 @@ export default function App() {
   const [onMouseEnter, setOnMouseEnter] = useState(false);
   const { pathname } = useLocation();
   const { user } = useUser();
+  const navigate = useNavigate();
+  setNavigate(navigate);
 
   const handleOnMouseEnter = () => {
     if (miniSidenav && !onMouseEnter) {
