@@ -135,7 +135,7 @@ const SignUp = () => {
                             variant="standard"
                           >
                             <MenuItem value="brand">Brand</MenuItem>
-                            {/* <MenuItem value="distributor">Distributor</MenuItem> */}
+                            <MenuItem value="distributor">Distributor</MenuItem>
                           </Select>
                         </FormControl>
                       )}

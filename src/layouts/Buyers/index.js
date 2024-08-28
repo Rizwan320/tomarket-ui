@@ -83,7 +83,9 @@ const Buyers = () => {
 
   const handleClose = (fileData) => setFile(fileData);
 
-  const handleBuyer = (row) => navigate(`/editBuyer/${row?.id}`);
+  const handleBuyer = (row) => navigate(`/buyer/${row?.id}`);
+
+  const addBuyer = () => navigate("/buyer/add");
 
   const handleSubmit = async () => {
     const formData = new FormData();
@@ -96,7 +98,6 @@ const Buyers = () => {
       });
       toast.success(response.data.message);
     } catch (error) {
-      console.log(error?.message);
       toast.error(error?.message);
     } finally {
       setOpen(false);
@@ -111,15 +112,10 @@ const Buyers = () => {
         setRefresh(!refresh);
       }
     } catch (error) {
-      console.log(error);
+      toast.error(error?.message);
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleRowClicked = (row) => {
-    console.log(row);
-    navigate("dashboard");
   };
 
   return (
@@ -154,6 +150,17 @@ const Buyers = () => {
               name="Refetch Buyers"
             >
               Refetch Buyers
+            </MDButton>
+
+            <MDButton
+              onClick={() => addBuyer()}
+              type="button"
+              color="success"
+              variant="gradient"
+              sx={{ mr: 2 }}
+              name="Add Buyer"
+            >
+              Add Buyer
             </MDButton>
             <DropdownMenu
               tableColumns={tableColumns}

@@ -4,6 +4,8 @@ import Icon from "@mui/material/Icon";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
 import PrivacyPolicy from "layouts/PrivacyPolicy";
+import ProductForm from "layouts/products/ProductForm";
+import ContentOrganizationFiles from "layouts/contentOrganization/components/ContentOrganizationFiles";
 
 const Wcw = lazy(() => import("layouts/wcw"));
 const Users = lazy(() => import("layouts/users"));
@@ -17,11 +19,13 @@ const Payments = lazy(() => import("layouts/payments"));
 const Dashboard = lazy(() => import("layouts/dashboard"));
 const StripeForm = lazy(() => import("stripe"));
 const BrandDetail = lazy(() => import("layouts/brandDetail"));
-const EditProduct = lazy(() => import("layouts/products/editProduct"));
 const PaymentDetails = lazy(() => import("layouts/payments/components/paymentDetails"));
 const ContentOrganization = lazy(() => import("layouts/contentOrganization"));
 const DistributorDashboard = lazy(() => import("layouts/distributor-dashboard"));
+const Distributors = lazy(() => import("layouts/distributor"));
+const Brands = lazy(() => import("layouts/brands"));
 const EditBuyer = lazy(() => import("layouts/Buyers/editBuyer"));
+const AddBuyer = lazy(() => import("layouts/Buyers/addBuyer"));
 
 const SuspendedComponent = (Component) => (
   <Suspense>
@@ -71,12 +75,46 @@ export const brandRoutes = [
     isNavbar: true,
   },
   {
+    name: "Logo",
+    key: "logo",
+    route: "/content-organization/logo",
+    component: SuspendedComponent(ContentOrganizationFiles),
+    isPrivate: true,
+    isNavbar: true,
+  },
+  {
+    name: "Product Picture",
+    key: "product-picture",
+    route: "/content-organization/product-picture",
+    component: SuspendedComponent(ContentOrganizationFiles),
+    isPrivate: true,
+    isNavbar: true,
+  },
+  {
+    name: "Other",
+    key: "other",
+    route: "/content-organization/other",
+    component: SuspendedComponent(ContentOrganizationFiles),
+    isPrivate: true,
+    isNavbar: true,
+  },
+  {
     type: "collapse",
     name: "Buyers",
     key: "buyers",
     icon: <Icon fontSize="small">person</Icon>,
     route: "/buyers",
     component: SuspendedComponent(Buyers),
+    isPrivate: true,
+    isNavbar: true,
+  },
+  {
+    type: "collapse",
+    name: "Distributors",
+    key: "distributors",
+    icon: <Icon fontSize="small">table</Icon>,
+    route: "/distributors",
+    component: SuspendedComponent(Distributors),
     isPrivate: true,
     isNavbar: true,
   },
@@ -143,19 +181,35 @@ export const brandRoutes = [
   },
   {
     name: "Edit Product",
-    key: "product/:id",
+    key: "edit-product",
     route: "/product/:id",
-    component: SuspendedComponent(EditProduct),
+    component: SuspendedComponent(ProductForm),
     isPrivate: true,
     isNavbar: true,
   },
   {
     name: "Edit Buyer",
-    key: "editbuyer",
-    route: "/editbuyer/:id",
+    key: "edit-buyer",
+    route: "/buyer/:id",
     component: SuspendedComponent(EditBuyer),
     isPrivate: true,
     isNavbar: true,
+  },
+  {
+    name: "Add Buyer",
+    key: "add-Buyer",
+    route: "/buyer/add",
+    component: SuspendedComponent(AddBuyer),
+    isPrivate: "true",
+    isNavbar: "true",
+  },
+  {
+    name: "Add Product",
+    key: "add-Product",
+    route: "/product/add",
+    component: SuspendedComponent(ProductForm),
+    isPrivate: "true",
+    isNavbar: "true",
   },
   {
     name: "Profile",
@@ -204,6 +258,16 @@ export const distributorRoutes = [
     icon: <Icon fontSize="small">payments</Icon>,
     route: "/payments",
     component: SuspendedComponent(Payments),
+    isPrivate: true,
+    isNavbar: true,
+  },
+  {
+    type: "collapse",
+    name: "Add Brands",
+    key: "brands",
+    icon: <Icon fontSize="small">table</Icon>,
+    route: "/brands",
+    component: SuspendedComponent(Brands),
     isPrivate: true,
     isNavbar: true,
   },
