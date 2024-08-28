@@ -45,7 +45,7 @@ const SignUp = () => {
     confirmPassword: Yup.string()
       .oneOf([Yup.ref("password"), null], "Passwords must match")
       .required("Confirm Password is required"),
-    shopifyAppUrl: Yup.string().url("Invalid URL format").notRequired(),
+    shopifyAppUrl: Yup.string().notRequired(),
   });
 
   const handleSubmit = async (values, { setSubmitting }) => {
