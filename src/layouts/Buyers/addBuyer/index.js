@@ -56,9 +56,7 @@ const AddBuyer = () => {
       }
     } catch (error) {
       if (error.response && error.response.status === 400) {
-        toast.error(`Buyer already exists!`);
-      } else {
-        toast.error("Error Adding Product");
+        toast.error(error?.response?.data?.message);
       }
     } finally {
       setSubmitting(false);
@@ -210,7 +208,7 @@ const AddBuyer = () => {
                     Add Buyer
                   </MDButton>
                   <MDButton
-                    color="primary"
+                    color="error"
                     variant="contained"
                     sx={{ mt: 3, mb: 2 }}
                     onClick={handleCancel}

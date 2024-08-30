@@ -13,7 +13,6 @@ import { toast } from "react-toastify";
 
 const EditBuyer = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
 
   const [buyer, setBuyer] = useState({
     displayName: "",
@@ -69,7 +68,7 @@ const EditBuyer = () => {
         toast.success("Buyer info updated successfully");
       }
     } catch (error) {
-      toast.error("Error updating buyer info");
+      toast.error(error?.response?.data?.message);
     } finally {
       setSubmitting(false);
     }
@@ -82,7 +81,7 @@ const EditBuyer = () => {
         toast.success("Location updated successfully");
       }
     } catch (error) {
-      toast.error("Error updating location");
+      toast.error(error?.response?.data?.message);
     } finally {
       setSubmitting(false);
     }
