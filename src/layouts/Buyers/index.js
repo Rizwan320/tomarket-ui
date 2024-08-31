@@ -66,10 +66,10 @@ const Buyers = () => {
   const [loading, setLoading] = useState(false);
   const [tableColumns, setTableColumns] = useState([
     "id",
-    "logo",
+    // "logo",
     "displayName",
-    "email",
-    "showOnMap",
+    // "email",
+    // "showOnMap",
   ]);
   const [refresh, setRefresh] = useState(false);
   const { columns, rows } = buyersdata(tableColumns, refresh);
@@ -135,11 +135,11 @@ const Buyers = () => {
               alignItems: "space-between",
             }}
           >
-            <MDBox mr={2}>
+            {/* <MDBox mr={2}>
               <MDButton variant="contained" color="success" onClick={handleOpen}>
                 Upload File
               </MDButton>
-            </MDBox>
+            </MDBox> */}
 
             <MDButton
               onClick={() => refetchBuyers()}
@@ -152,7 +152,7 @@ const Buyers = () => {
               Refetch Buyers
             </MDButton>
 
-            <MDButton
+            {/* <MDButton
               onClick={() => addBuyer()}
               type="button"
               color="success"
@@ -161,7 +161,7 @@ const Buyers = () => {
               name="Add Buyer"
             >
               Add Buyer
-            </MDButton>
+            </MDButton> */}
             <DropdownMenu
               tableColumns={tableColumns}
               columns={COLUMNS}

@@ -21,9 +21,9 @@ import { useNavigate } from "react-router-dom";
 const cardData = [
   { title: "Total Weekly Sales", value: "$10,000", trend: "up", previousSale: "6" },
   { title: "Total Monthly Sales", value: "$40,000", trend: "down", previousSale: "10" },
-  { title: "Top Selling Sales rep", value: "Matthew Thompson" },
+  // { title: "Top Selling Sales rep", value: "Matthew Thompson" },
   { title: "Top Buyer", name: "Red Wagon Farm", value: "$3149" },
-  { title: "No of New Buyers", value: "112", trend: "up", previousSale: "7" },
+  { title: "No of Buyers", value: "112", trend: "up", previousSale: "7" },
   { title: "Top Selling Product", name: "Organic Tomatos" },
   { title: "Total Weekly Sales Units", value: "$10,000", trend: "up", previousSale: "6" },
   { title: "Monthly Sales Units", value: "$40,000", trend: "down", previousSale: "10" },
@@ -50,10 +50,8 @@ const Dashboard = () => {
   const [tableColumns, setTableColumns] = useState([
     "Total Weekly Sales",
     "Total Monthly Sales",
-    "Top Selling Sales rep",
     "Top Buyer",
-    "No of New Buyers",
-    "Top Selling Product",
+    "No of Buyers",
   ]);
 
   useEffect(() => {
@@ -192,9 +190,9 @@ const Dashboard = () => {
         </Grid>
         <MDBox mt={4.5}>
           <Grid container spacing={3}>
-            <Grid item xs={12} md={6} lg={8}>
-              {isMap && <MapsVector data={updatedMarker} />}
-              {/* {!isMap && (
+            {/* <Grid item xs={12} md={6} lg={8}>
+              {isMap && <MapsVector data={updatedMarker} />} */}
+            {/* {!isMap && (
                 <MDBox>
                   <MDTypography>Click to login Quickbooks to get Map Data</MDTypography>
                   <MDButton
@@ -210,7 +208,7 @@ const Dashboard = () => {
                   </MDButton>
                 </MDBox>
               )} */}
-              <MDBox mt={3} mb={3}>
+            {/* <MDBox mt={3} mb={3}>
                 <SalesChart
                   chartSeries={[
                     {
@@ -228,7 +226,7 @@ const Dashboard = () => {
             </Grid>
             <Grid alignItems={"left"} item xs={12} md={6} lg={4}>
               <Notifications />
-            </Grid>
+            </Grid> */}
           </Grid>
         </MDBox>
       </MDBox>

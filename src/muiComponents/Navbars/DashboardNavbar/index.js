@@ -130,9 +130,9 @@ const DashboardNavbar = ({ absolute, light, isMini }) => {
         </MDBox>
         {isMini ? null : (
           <MDBox sx={(theme) => navbarRow(theme, { isMini })}>
-            <MDBox pr={1}>
+            {/* <MDBox pr={1}>
               <MDInput label="Search here" />
-            </MDBox>
+            </MDBox> */}
             <MDBox color={light ? "white" : "inherit"}>
               <IconButton
                 sx={navbarIconButton}
@@ -155,7 +155,7 @@ const DashboardNavbar = ({ absolute, light, isMini }) => {
                   {miniSidenav ? "menu_open" : "menu"}
                 </Icon>
               </IconButton>
-              <IconButton
+              {/* <IconButton
                 size="small"
                 disableRipple
                 color="inherit"
@@ -166,7 +166,7 @@ const DashboardNavbar = ({ absolute, light, isMini }) => {
                 onClick={handleOpenMenu}
               >
                 <Icon sx={iconsStyle}>notifications</Icon>
-              </IconButton>
+              </IconButton> */}
               {renderNotificationMenu()}
               {renderAccountMenu()}
             </MDBox>
