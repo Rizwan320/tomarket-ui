@@ -97,9 +97,9 @@ const EditBuyer = () => {
     <Container component="main" maxWidth="xs">
       <Card>
         <CardContent>
-          <MDTypography variant="h6" gutterBottom>
+          {/* <MDTypography variant="h6" gutterBottom>
             Basic Info
-          </MDTypography>
+          </MDTypography> */}
           <Formik
             initialValues={buyer}
             validationSchema={validationSchemaBuyer}
@@ -117,7 +117,7 @@ const EditBuyer = () => {
                       fullWidth
                       label="Display Name"
                       autoComplete="displayName"
-                      autoFocus
+                      // autoFocus
                       variant="outlined"
                       disabled={true}
                     />
@@ -136,6 +136,7 @@ const EditBuyer = () => {
                       label="Email"
                       autoComplete="email"
                       variant="outlined"
+                      disabled={true}
                     />
                     <ErrorMessage
                       name="email"
@@ -144,7 +145,7 @@ const EditBuyer = () => {
                     />
                   </Grid>
                 </Grid>
-                <MDBox display="flex" justifyContent="flex-end" alignItems="flex-end">
+                {/* <MDBox display="flex" justifyContent="flex-end" alignItems="flex-end">
                   <MDButton
                     type="submit"
                     color="success"
@@ -154,7 +155,7 @@ const EditBuyer = () => {
                   >
                     Update
                   </MDButton>
-                </MDBox>
+                </MDBox> */}
               </Form>
             )}
           </Formik>
@@ -164,7 +165,7 @@ const EditBuyer = () => {
       <Card sx={{ mt: 3 }}>
         <CardContent>
           <MDTypography variant="h6" gutterBottom>
-            Update Location
+            {/* Update */}Location
           </MDTypography>
           <Formik
             initialValues={location}
@@ -184,6 +185,7 @@ const EditBuyer = () => {
                       label="City"
                       autoComplete="city"
                       variant="outlined"
+                      disabled={true}
                     />
                     <ErrorMessage
                       name="city"
@@ -200,6 +202,7 @@ const EditBuyer = () => {
                       label="Country"
                       autoComplete="country"
                       variant="outlined"
+                      disabled={true}
                     />
                     <ErrorMessage
                       name="country"
@@ -208,13 +211,14 @@ const EditBuyer = () => {
                     />
                   </Grid>
                   <Grid item xs={12}>
-                    <Field name="line1">
+                    <Field name="line1" disabled={true}>
                       {({ field }) => (
                         <GooglePlacesAutocomplete
                           value={field.value}
                           onChange={field.onChange(field.name)}
                           onPlaceSelected={(place) => handlePlaceSelected(place, setFieldValue)}
                           label="Line 1"
+                          disabled={true}
                         />
                       )}
                     </Field>
@@ -233,6 +237,7 @@ const EditBuyer = () => {
                       label="Country Subdivision Code"
                       autoComplete="countrySubDivisionCode"
                       variant="outlined"
+                      disabled={true}
                     />
                     <ErrorMessage
                       name="countrySubDivisionCode"
@@ -249,6 +254,7 @@ const EditBuyer = () => {
                       label="Postal Code"
                       autoComplete="postalCode"
                       variant="outlined"
+                      disabled={true}
                     />
                     <ErrorMessage
                       name="postalCode"
@@ -257,7 +263,7 @@ const EditBuyer = () => {
                     />
                   </Grid>
                 </Grid>
-
+                {/* 
                 <MDBox display="flex" justifyContent="flex-end" alignItems="flex-end">
                   <MDButton
                     type="submit"
@@ -268,7 +274,7 @@ const EditBuyer = () => {
                   >
                     Update
                   </MDButton>
-                </MDBox>
+                </MDBox> */}
               </Form>
             )}
           </Formik>

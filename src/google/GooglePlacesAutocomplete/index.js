@@ -44,6 +44,7 @@ const GooglePlacesAutocomplete = ({ onPlaceSelected, value, onChange, label }) =
       onChange={onChange}
       sx={{ marginTop: 2 }}
       as={MDInput}
+      disabled={true}
     />
   );
 };
