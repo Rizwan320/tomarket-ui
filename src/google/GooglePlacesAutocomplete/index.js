@@ -4,9 +4,14 @@ import { Field } from "formik";
 import MDInput from "components/MDInput";
 
 const libraries = ["places"];
-// const MAP_KEY = "AIzaSyAC3encvyG1cRV9N9ieotVz8iypkAVU6OI";
 
-const GooglePlacesAutocomplete = ({ onPlaceSelected, value, onChange, label }) => {
+const GooglePlacesAutocomplete = ({
+  onPlaceSelected,
+  value,
+  onChange,
+  label,
+  disabled = false,
+}) => {
   const inputRef = useRef(null);
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAP_API_KEY,
@@ -44,7 +49,7 @@ const GooglePlacesAutocomplete = ({ onPlaceSelected, value, onChange, label }) =
       onChange={onChange}
       sx={{ marginTop: 2 }}
       as={MDInput}
-      disabled={true}
+      disabled={disabled}
     />
   );
 };
