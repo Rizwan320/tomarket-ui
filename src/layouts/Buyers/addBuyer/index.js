@@ -156,6 +156,7 @@ const AddBuyer = () => {
                       onChange={(e) => setFieldValue("line1", e.target.value)}
                       onPlaceSelected={(place) => handlePlaceSelected(place, setFieldValue)}
                       label="Line 1"
+                      disabled={true}
                     />
                     <ErrorMessage
                       name="line1"
