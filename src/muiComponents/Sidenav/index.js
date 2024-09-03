@@ -19,12 +19,12 @@ import { useUser } from "context/userContext";
 import SidenavCollapse from "muiComponents/Sidenav/SidenavCollapse";
 
 import SidenavRoot from "muiComponents/Sidenav/SidenavRoot";
-import sidenavLogoLabel from "muiComponents/Sidenav/styles/sidenav";
 import HrefLink from "./HrefLink";
 
 import { useMaterialUIController, setMiniSidenav, setWhiteSidenav } from "context";
 
 import toMarketLogo from "../../assets/images/tomarket-green-logo.png";
+import { Tooltip } from "@mui/material";
 
 const EXCLUDE_SIDE_BAR_KEYS = ["sign-in", "sign-up"];
 
@@ -65,7 +65,8 @@ const Sidenav = ({ color, brand, CompanyName, routes, ...rest }) => {
   const treeRoute = routes.find((route) => route.key === "profile");
 
   const renderRoutes = routes.map(
-    ({ type, name, icon, title, noCollapse, key, href, route, children }) => {
+    ({ type, name, icon, title, noCollapse, key, href, route, children, disabled }) => {
+      console.log(key);
       if (EXCLUDE_SIDE_BAR_KEYS.includes(key)) return null;
 
       let returnValue;
@@ -73,9 +74,23 @@ const Sidenav = ({ color, brand, CompanyName, routes, ...rest }) => {
         returnValue = href ? (
           <HrefLink key={key} name={name} icon={icon} childRoutes={children} />
         ) : (
-          <NavLink key={key} to={route}>
-            <SidenavCollapse name={name} icon={icon} active={key === collapseName} />
-          </NavLink>
+          <Tooltip title={disabled ? "Coming Soon" : ""} placement="right">
+            <NavLink
+              style={{ textDecoration: "none" }}
+              disabled={disabled}
+              key={key}
+              to={disabled ? "#" : route}
+            >
+              <ListItem disabled={disabled} disableGutters>
+                <SidenavCollapse
+                  disabled={disabled}
+                  name={name}
+                  icon={icon}
+                  active={key === collapseName}
+                />
+              </ListItem>
+            </NavLink>
+          </Tooltip>
         );
       } else if (type === "title") {
         returnValue = (
