@@ -6,7 +6,7 @@ import SignUp from "layouts/authentication/sign-up";
 import PrivacyPolicy from "layouts/PrivacyPolicy";
 import ProductForm from "layouts/products/ProductForm";
 import ContentOrganizationFiles from "layouts/contentOrganization/components/ContentOrganizationFiles";
-import Sales from "layouts/sales";
+//import Sales from "layouts/sales";
 
 const Wcw = lazy(() => import("layouts/wcw"));
 const Users = lazy(() => import("layouts/users"));
@@ -25,6 +25,7 @@ const ContentOrganization = lazy(() => import("layouts/contentOrganization"));
 const DistributorDashboard = lazy(() => import("layouts/distributor-dashboard"));
 const Distributors = lazy(() => import("layouts/distributor"));
 const Brands = lazy(() => import("layouts/brands"));
+const Sales = lazy(() => import("layouts/sales"));
 const EditBuyer = lazy(() => import("layouts/Buyers/editBuyer"));
 const AddBuyer = lazy(() => import("layouts/Buyers/addBuyer"));
 
@@ -283,6 +284,16 @@ export const distributorRoutes = [
     icon: <Icon fontSize="small">table</Icon>,
     route: "/brands",
     component: SuspendedComponent(Brands),
+    isPrivate: true,
+    isNavbar: true,
+  },
+  {
+    type: "collapse",
+    name: "Sales",
+    key: "sales",
+    icon: <Icon fontSize="small">attach_money</Icon>,
+    route: "/sales",
+    component: SuspendedComponent(Sales),
     isPrivate: true,
     isNavbar: true,
   },
