@@ -73,7 +73,7 @@ const Sidenav = ({ color, brand, CompanyName, routes, ...rest }) => {
         returnValue = href ? (
           <HrefLink key={key} name={name} icon={icon} childRoutes={children} />
         ) : (
-          <Tooltip title={disabled ? "Coming Soon" : ""} placement="right">
+          <Tooltip key={key} title={disabled ? "Coming Soon" : ""} placement="right">
             <NavLink
               style={{ textDecoration: "none" }}
               disabled={disabled}
