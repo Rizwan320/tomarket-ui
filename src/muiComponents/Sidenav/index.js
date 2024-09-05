@@ -66,7 +66,6 @@ const Sidenav = ({ color, brand, CompanyName, routes, ...rest }) => {
 
   const renderRoutes = routes.map(
     ({ type, name, icon, title, noCollapse, key, href, route, children, disabled }) => {
-      console.log(key);
       if (EXCLUDE_SIDE_BAR_KEYS.includes(key)) return null;
 
       let returnValue;
