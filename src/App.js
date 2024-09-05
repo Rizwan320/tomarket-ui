@@ -60,6 +60,13 @@ export default function App() {
   // List of paths where Sidenav should be hidden
   const excludedPaths = ["/privacy-policy", "/authentication/sign-in", "/authentication/sign-up"];
 
+  const routes =
+    user?.user?.account?.accountType === "distributor" ? distributorRoutes : brandRoutes;
+
+  const filteredRoutes = routes.filter(
+    (route) => !route.allowedEmail || route.allowedEmail === user?.user?.email
+  );
+
   const shouldRenderSidenav =
     layout === "dashboard" && user.isAuthenticated && !excludedPaths.includes(pathname);
 
@@ -104,10 +111,7 @@ export default function App() {
           color={sidenavColor}
           brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
           CompanyName="ToMarket"
-          routes={
-            user?.user?.account?.accountType === "distributor" ? distributorRoutes : brandRoutes
-          }
-          // routes={brandRoutes}
+          routes={filteredRoutes}
           onMouseEnter={handleOnMouseEnter}
           onMouseLeave={handleOnMouseLeave}
         />
@@ -116,7 +120,6 @@ export default function App() {
         {getRoutes(
           user?.user?.account?.accountType === "distributor" ? distributorRoutes : brandRoutes
         )}
-        {/* {getRoutes(brandRoutes)} */}
         <Route
           path="*"
           element={
