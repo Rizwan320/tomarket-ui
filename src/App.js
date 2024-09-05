@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import ReactGA from "react-ga4";
 import { Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -30,9 +31,18 @@ export default function App() {
   } = controller;
   const [onMouseEnter, setOnMouseEnter] = useState(false);
   const { pathname } = useLocation();
+  const location = useLocation();
   const { user } = useUser();
   const navigate = useNavigate();
   setNavigate(navigate);
+
+  useEffect(() => {
+    ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS_ID); // Replace with your Measurement ID
+  }, []);
+
+  useEffect(() => {
+    ReactGA.send({ hitType: "pageview", page: location.pathname + location.search });
+  }, [location]);
 
   const handleOnMouseEnter = () => {
     if (miniSidenav && !onMouseEnter) {
