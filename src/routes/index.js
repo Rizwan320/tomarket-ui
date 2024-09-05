@@ -180,18 +180,6 @@ export const brandRoutes = [
   },
   {
     type: "collapse",
-    name: "Settings",
-    href: true,
-    key: "settings",
-    icon: <Icon fontSize="small">settings</Icon>,
-    route: "/settings",
-    component: SuspendedComponent(Settings),
-    isPrivate: true,
-    isNavbar: true,
-    disabled: true,
-  },
-  {
-    type: "collapse",
     name: "Sign In",
     key: "sign-in",
     icon: <Icon fontSize="small">login</Icon>,
