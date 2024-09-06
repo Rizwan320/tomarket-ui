@@ -25,6 +25,7 @@ const buyersdata = (tableColumns, refresh) => {
             displayName: row.displayName,
             email: row.email || "",
             showOnMap: row.showOnMap,
+            totalSales: row.totalSales,
           }));
           setTableData(buyer);
         }
@@ -45,6 +46,14 @@ const buyersdata = (tableColumns, refresh) => {
     <MDBox display="flex" alignItems="center" lineHeight={1}>
       <MDTypography variant="caption" fontWeight="medium">
         {name}
+      </MDTypography>
+    </MDBox>
+  );
+
+  const TotalSales = ({ name }) => (
+    <MDBox display="flex" alignItems="center" lineHeight={1}>
+      <MDTypography variant="caption" fontWeight="medium">
+        {name} $
       </MDTypography>
     </MDBox>
   );
@@ -201,7 +210,7 @@ const buyersdata = (tableColumns, refresh) => {
       align: "center",
     },
     displayName: {
-      Header: "Display Name",
+      Header: "Buyer Bussiness Name",
       accessor: "displayName",
       align: "center",
     },
@@ -215,6 +224,11 @@ const buyersdata = (tableColumns, refresh) => {
       accessor: "showOnMap",
       align: "center",
     },
+    totalSales: {
+      Header: "total Sales",
+      accessor: "totalSales",
+      align: "center",
+    },
   };
 
   const filteredColumns = Object.values(allColumns)?.filter((column) =>
@@ -226,6 +240,7 @@ const buyersdata = (tableColumns, refresh) => {
       logo: () => <Logo name={"https://via.placeholder.com/40"} />,
       businessName: () => <Brand name={row?.businessName} />,
       displayName: () => <Brand name={row?.displayName} />,
+      totalSales: () => <TotalSales name={row?.totalSales} />,
       email: () => <Brand name={row?.email} />,
       distributor: () => <Brand name={row?.distributor} />,
       salesRep: () => <Brand name={row?.salesRep} />,
