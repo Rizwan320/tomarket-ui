@@ -75,7 +75,7 @@ const EditBuyer = () => {
       : "Not Available";
 
   return (
-    <Container component="main" maxWidth="lg">
+    <>
       <Card>
         <CardContent>
           <Grid container spacing={2}>
@@ -168,7 +168,7 @@ const EditBuyer = () => {
           </MDButton>
         </CardContent>
       </Card>
-    </Container>
+    </>
   );
 };
 
