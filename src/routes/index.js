@@ -29,6 +29,7 @@ const Sales = lazy(() => import("layouts/sales"));
 const EditBuyer = lazy(() => import("layouts/Buyers/editBuyer"));
 const AddBuyer = lazy(() => import("layouts/Buyers/addBuyer"));
 const UploadBuyers = lazy(() => import("layouts/Buyers/uploadBuyer"));
+const SaleDetail = lazy(() => import("layouts/sales/saleDetails"));
 const SuspendedComponent = (Component) => (
   <Suspense>
     <Component />
@@ -165,7 +166,16 @@ export const brandRoutes = [
     component: SuspendedComponent(Sales),
     isPrivate: true,
     isNavbar: true,
-    disabled: true,
+    disabled: false,
+  },
+  {
+    name: "Sales Detail",
+    key: "sale-detail",
+    icon: <Icon fontSize="small">money</Icon>,
+    route: "/sales/:id",
+    component: SuspendedComponent(SaleDetail),
+    isPrivate: true,
+    isNavbar: true,
   },
   {
     type: "collapse",
