@@ -99,33 +99,31 @@ const EditBuyer = () => {
                   <MDAvatar bgColor="success" size="xl" shadow="md" alt="Buyer Logo" />
                 </MDBox>
                 <MDBox mb={2}>
-                  <MDTypography variant="body2" fontWeight="light">
-                    {buyer.description || "No description available"}
+                  <MDTypography variant="body2" fontWeight="small">
+                    {buyer.description || "No Description Available"}
                   </MDTypography>
                 </MDBox>
-                <MDBox mb={1}>
+                <MDBox mb={2}>
                   <MDTypography variant="h6" mt={3}>
                     Business Type:
                   </MDTypography>
-                  <MDTypography variant="body1" fontWeight="light">
+                  <MDTypography fontWeight="small" variant="body2">
                     {buyer.buisnessType || "Not Available"}
                   </MDTypography>
-                  <MDTypography variant="h6" mt={3}>
-                    Display Name:
-                  </MDTypography>
-                  <MDTypography variant="body1" fontWeight="light">
+                  <MDTypography variant="h6">Display Name:</MDTypography>
+                  <MDTypography variant="body2" fontWeight="light">
                     {buyer.displayName || "Not Available"}
                   </MDTypography>
                   <MDTypography variant="h6">Email:</MDTypography>
-                  <MDTypography variant="body1" fontWeight="light">
+                  <MDTypography variant="body2" fontWeight="light">
                     {buyer.email || "Not Available"}
                   </MDTypography>
                   <MDTypography variant="h6">Location:</MDTypography>
-                  <MDTypography variant="body1" fontWeight="light">
+                  <MDTypography variant="body2" fontWeight="light">
                     {locationDisplay}
                   </MDTypography>
                   <MDTypography variant="h6">Social Links:</MDTypography>
-                  <MDTypography variant="body1" fontWeight="light">
+                  <MDTypography variant="body2" fontWeight="light">
                     {buyer.socialLinks || "Not Available"}
                   </MDTypography>
                 </MDBox>
