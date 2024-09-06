@@ -1,10 +1,11 @@
 import MDTypography from "components/MDTypography";
 
-export const SALES_DATA = [];
+import { SALES_DUMMY_DATA } from "./salesData";
+
 const data = () => {
-  const Amount = ({ amount }) => (
+  const Name = ({ name }) => (
     <MDTypography variant="caption" fontWeight="medium">
-      {amount}
+      {name}
     </MDTypography>
   );
 
@@ -12,16 +13,17 @@ const data = () => {
     columns: [
       { Header: "Product Name", accessor: "productName", align: "left" },
       { Header: "Buyer Name", accessor: "buyerName", align: "left" },
-      { Header: "Quantity", accessor: "quantity", align: "center" },
-      { Header: "Price", accessor: "price", align: "center" },
+      { Header: "Distributor", accessor: "distributor", align: "center" },
+      { Header: "Sales", accessor: "sales", align: "center" },
       { Header: "Invoice Date", accessor: "invoiceDate", align: "center" },
     ],
-    rows: SALES_DATA.map((row) => ({
-      productName: <Amount amount={row.productName} />,
-      buyerName: <Amount amount={row.buyerName} />,
-      quantity: <Amount amount={row.quantity} />,
-      price: <Amount amount={row.price} />,
-      invoiceDate: <Amount amount={row.invoiceDate} />,
+    rows: SALES_DUMMY_DATA.map((row) => ({
+      id: row.id,
+      productName: <Name name={row.productName} />,
+      buyerName: <Name name={row.buyerName} />,
+      distributor: <Name name={row.distributor} />,
+      invoiceDate: <Name name={row.invoiceDate} />,
+      sales: <Name name={row.sales} />,
     })),
   };
 };

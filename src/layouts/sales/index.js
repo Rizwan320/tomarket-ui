@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import Card from "@mui/material/Card";
 import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
@@ -13,6 +14,7 @@ const Sales = () => {
   const { columns, rows } = data();
   const [open, setOpen] = useState(false);
   const [uploadFile, setUploadFile] = useState(null);
+  const navigate = useNavigate();
 
   const handleOpen = (file) => {
     setOpen(true);
@@ -44,6 +46,7 @@ const Sales = () => {
       }
     }
   };
+  const handleRowClick = (data) => navigate(`/sales/${data.id}`);
 
   return (
     <Card>
@@ -68,6 +71,7 @@ const Sales = () => {
           noEndBorder
           entriesPerPage={false}
           showCheckbox={false}
+          onRowClick={handleRowClick}
         />
       </MDBox>
       {open && (
