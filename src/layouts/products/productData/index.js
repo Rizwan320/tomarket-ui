@@ -9,7 +9,7 @@ const productData = (tableColumns) => {
   const [tableData, setTableData] = useState([]);
   const Logo = ({ name }) => (
     <MDBox display="flex" alignItems="left" lineHeight={1}>
-      <MDAvatar src={name} size="sm" />
+      <MDAvatar src={name} alt="profile-image" size="sm" bgColor="light" />
     </MDBox>
   );
 
@@ -34,6 +34,10 @@ const productData = (tableColumns) => {
             sku: row.sku,
             price: row.price,
             unit: row.unit,
+            productPicture: row.productPicture,
+            latestBuyer: row.latestBuyer,
+            totalSoldWeek: row.totalSoldWeek,
+            totalSoldMonth: row.totalSoldMonth,
           }));
           setTableData(product);
         }
@@ -73,6 +77,10 @@ const productData = (tableColumns) => {
       align: "center",
     },
     inventoryAge: { Header: "Inventory Age", accessor: "inventoryAge", align: "center" },
+    productPicture: { Header: "Product Picture", accessor: "productPicture", align: "center" },
+    latestBuyer: { Header: "Latest Buyer", accessor: "latestBuyer", align: "center" },
+    totalSoldWeek: { Header: "Total Sold Week", accessor: "totalSoldWeek", align: "center" },
+    totalSoldMonth: { Header: "Total Sold Month", accessor: "totalSoldMonth", align: "center" },
   };
 
   const filteredColumns = Object.values(allColumns).filter((column) =>
@@ -97,6 +105,10 @@ const productData = (tableColumns) => {
       highestSalesDay: <Name name={row.highestSalesDay} />,
       highestSalesMonth: <Name name={row.highestSalesMonth} />,
       inventoryAge: <Name name={row.inventoryAge} />,
+      latestBuyer: <Name name={row.latestBuyer} />,
+      totalSoldWeek: <Name name={row.totalSoldWeek} />,
+      totalSoldMonth: <Name name={row.totalSoldMonth} />,
+      productPicture: <Logo name={row.productPicture} />,
     };
 
     return componentsMap[column] || null;

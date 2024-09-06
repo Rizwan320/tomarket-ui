@@ -32,6 +32,10 @@ const COLUMNS = [
   { Header: "Highest Sales Day", accessor: "highestSalesDay", align: "center" },
   { Header: "Highest Sales Month", accessor: "highestSalesMonth", align: "center" },
   { Header: "Inventory Age", accessor: "inventoryAge", align: "center" },
+  { Header: "Product Picture", accessor: "productPicture", align: "center" },
+  { Header: "Latest Buyer", accessor: "latestBuyer", align: "center" },
+  { Header: "Total Sold Week", accessor: "totalSoldWeek", align: "center" },
+  { Header: "Total Sold Month", accessor: "totalSoldMonth", align: "center" },
 ];
 
 const ProductTable = () => {
@@ -45,6 +49,10 @@ const ProductTable = () => {
     "description",
     "unit",
     "price",
+    "productPicture",
+    "latestBuyer",
+    "totalSoldWeek",
+    "totalSoldMonth",
   ]);
   const PRODUCT_FILE_HEADERS = [
     {
@@ -66,6 +74,22 @@ const ProductTable = () => {
     {
       id: "price",
       displayName: "Price",
+    },
+    {
+      id: "productPicture",
+      displayName: "Product Picture",
+    },
+    {
+      id: "latestBuyer",
+      displayName: "Latest Buyer",
+    },
+    {
+      id: "totalSoldWeek",
+      displayName: "Total Sold Week",
+    },
+    {
+      id: "totalSoldMonth",
+      displayName: "Total Sold Month",
     },
   ];
   const { columns, rows } = productData(tableColumns);
@@ -117,7 +141,7 @@ const ProductTable = () => {
             alignItems: "center",
           }}
         >
-          <MDBox mr={2}>
+          {/* <MDBox mr={2}>
             <MDButton variant="contained" color="success" onClick={handleOpen}>
               Upload File
             </MDButton>
@@ -127,7 +151,7 @@ const ProductTable = () => {
             <MDButton variant="contained" color="success" onClick={() => handleAddProduct()}>
               Add Product
             </MDButton>
-          </MDBox>
+          </MDBox> */}
 
           <DropdownMenu
             tableColumns={tableColumns}
