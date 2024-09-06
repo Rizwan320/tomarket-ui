@@ -29,6 +29,7 @@ const COLUMNS = [
   { Header: "Weekly Trend", accessor: "weeklyTrend", align: "center" },
   { Header: "Monthly Trend", accessor: "monthlyTrend", align: "center" },
   { Header: "Units Sold Last Week", accessor: "unitsSoldLastWeek", align: "center" },
+  { Header: "Total Sales", accessor: "totalSales", align: "center" },
 ];
 
 const BUYER_FILE_HEADERS = [
@@ -60,6 +61,10 @@ const BUYER_FILE_HEADERS = [
     id: "country",
     displayName: "Country",
   },
+  {
+    id: "totalSales",
+    displayName: "Total Sales",
+  },
 ];
 
 const Buyers = () => {
@@ -68,6 +73,7 @@ const Buyers = () => {
     "id",
     // "logo",
     "displayName",
+    "totalSales",
     // "email",
     // "showOnMap",
   ]);
@@ -148,6 +154,7 @@ const Buyers = () => {
               variant="gradient"
               sx={{ mr: 2 }}
               name="Refetch Buyers"
+              disabled={true}
             >
               Refetch Buyers
             </MDButton>
