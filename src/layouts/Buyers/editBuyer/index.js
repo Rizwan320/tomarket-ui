@@ -15,6 +15,9 @@ const EditBuyer = () => {
   const [buyer, setBuyer] = useState({
     displayName: "",
     email: "",
+    description: "",
+    buisnessType: "",
+    socialLinks: "",
   });
 
   const [location, setLocation] = useState({
@@ -56,17 +59,29 @@ const EditBuyer = () => {
   const handleSaveNote = async () => {};
 
   const columns = [
-    { Header: "Date", accessor: "invoiceDate", align: "left" },
-    { Header: "Product", accessor: "productName", align: "left" },
+    { Header: "Product Ordered", accessor: "productOrdered", align: "left" },
+    { Header: "Distributor", accessor: "distributor", align: "left" },
+    { Header: "Sku", accessor: "sku", align: "left" },
     { Header: "Quantity", accessor: "quantity", align: "center" },
-    { Header: "Distributor", accessor: "buyerName", align: "left" },
+    { Header: "last Ordered", accessor: "lastOrdered", align: "left" },
   ];
 
   const rows = sales.map((sale) => ({
-    invoiceDate: sale.invoiceDate,
-    productName: sale.productName,
+    productOrdered: sale.productName,
+    distributor: sale.buyerName,
+    sku: sale.sku,
     quantity: sale.quantity,
-    buyerName: sale.buyerName,
+    lastOrdered: sale.invoiceDate,
+  }));
+
+  const columnsTotalProducts = [
+    { Header: "Product", accessor: "productName", align: "left" },
+    { Header: "Total", accessor: "totalQuantity", align: "center" },
+  ];
+
+  const rowsTotalProducts = sales.map((sale) => ({
+    productName: sale.productName,
+    totalQuantity: sale.totalQuantity,
   }));
 
   const locationDisplay =
@@ -135,12 +150,28 @@ const EditBuyer = () => {
       <Card sx={{ mt: 4 }}>
         <CardContent>
           <MDTypography variant="h4" gutterBottom>
-            Sales Data
+            History
           </MDTypography>
           <DataTable
             table={{ columns, rows }}
-            showTotalEntries={true}
-            isSorted={true}
+            showTotalEntries={false}
+            isSorted={false}
+            noEndBorder
+            showCheckbox={false}
+            entriesPerPage={false}
+            sx={{ overflowX: "auto" }}
+          />
+        </CardContent>
+      </Card>
+      <Card sx={{ mt: 4 }}>
+        <CardContent>
+          <MDTypography variant="h4" gutterBottom>
+            Products Ordered
+          </MDTypography>
+          <DataTable
+            table={{ columns: columnsTotalProducts, rows: rowsTotalProducts }}
+            showTotalEntries={false}
+            isSorted={false}
             noEndBorder
             showCheckbox={false}
             entriesPerPage={false}
