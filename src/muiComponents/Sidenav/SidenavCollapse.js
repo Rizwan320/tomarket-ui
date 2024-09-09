@@ -19,7 +19,7 @@ function SidenavCollapse({ icon, name, active, ...rest }) {
   const { miniSidenav, whiteSidenav, darkMode, sidenavColor } = controller;
 
   return (
-    <ListItem component="li">
+    <ListItem component="ul">
       <MDBox
         {...rest}
         sx={(theme) =>

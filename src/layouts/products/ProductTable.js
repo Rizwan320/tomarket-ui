@@ -17,12 +17,9 @@ import api from "../../axios";
 import productData from "./productData";
 
 const COLUMNS = [
-  { Header: "Logo", accessor: "logo", align: "left" },
   { Header: "Name", accessor: "name", align: "center" },
   { Header: "SKU", accessor: "sku", align: "center" },
   { Header: "Description", accessor: "description", align: "center" },
-  { Header: "Unit", accessor: "unit", align: "center" },
-  { Header: "Price", accessor: "price", align: "center" },
   { Header: "Unit Sold Last Month", accessor: "unitSoldLastMonth", align: "center" },
   { Header: "Unit Sold Last Week", accessor: "unitSoldLastWeek", align: "center" },
   { Header: "Category", accessor: "category", align: "center" },
@@ -32,7 +29,6 @@ const COLUMNS = [
   { Header: "Highest Sales Day", accessor: "highestSalesDay", align: "center" },
   { Header: "Highest Sales Month", accessor: "highestSalesMonth", align: "center" },
   { Header: "Inventory Age", accessor: "inventoryAge", align: "center" },
-  { Header: "Product Picture", accessor: "productPicture", align: "center" },
   { Header: "Latest Buyer", accessor: "latestBuyer", align: "center" },
   { Header: "Total Sold Week", accessor: "totalSoldWeek", align: "center" },
   { Header: "Total Sold Month", accessor: "totalSoldMonth", align: "center" },
@@ -43,13 +39,9 @@ const ProductTable = () => {
   const [uplaodFile, setUploadFile] = useState();
   const [tableColumns, setTableColumns] = useState([
     "id",
-    "logo",
     "name",
-    "sku ",
+    "sku",
     "description",
-    "unit",
-    "price",
-    "productPicture",
     "latestBuyer",
     "totalSoldWeek",
     "totalSoldMonth",
@@ -66,18 +58,6 @@ const ProductTable = () => {
     {
       id: "sku",
       displayName: "SKU",
-    },
-    {
-      id: "unit",
-      displayName: "Unit",
-    },
-    {
-      id: "price",
-      displayName: "Price",
-    },
-    {
-      id: "productPicture",
-      displayName: "Product Picture",
     },
     {
       id: "latestBuyer",
@@ -153,11 +133,11 @@ const ProductTable = () => {
             </MDButton>
           </MDBox> */}
 
-          <DropdownMenu
+          {/* <DropdownMenu
             tableColumns={tableColumns}
             columns={COLUMNS}
             setTableColumns={setTableColumns}
-          />
+          /> */}
         </MDBox>
       </MDBox>
 
@@ -165,8 +145,7 @@ const ProductTable = () => {
         <DataTable
           table={{ columns, rows }}
           showTotalEntries={true}
-          isSorted={true}
-          noEndBorder
+          noEndBorder={false}
           entriesPerPage={false}
           onRowClick={handleRowClick}
         />
