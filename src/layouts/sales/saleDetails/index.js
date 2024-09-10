@@ -6,8 +6,7 @@ import { SALES_DUMMY_DATA } from "../data/salesData";
 
 const SaleDetail = () => {
   const { id } = useParams();
-  console.log(id);
-  const sale = SALES_DUMMY_DATA.find((sale) => sale.id === parseInt(id));
+  const sale = SALES_DUMMY_DATA?.find((sale) => sale?.id === parseInt(id));
 
   if (!sale) {
     return <MDTypography variant="h6">Sale not found</MDTypography>;
@@ -20,24 +19,30 @@ const SaleDetail = () => {
           Sale Details
         </MDTypography>
         <MDBox mb={2}>
-          <MDTypography variant="h6">Product Name:</MDTypography>
-          <MDTypography variant="body2">{sale.productName}</MDTypography>
+          <MDTypography variant="h6">Product - Quantity</MDTypography>
+          {sale?.products?.map((product, index) => (
+            <MDTypography key={index} variant="body2">
+              {product.productName} - {product.quantity}
+            </MDTypography>
+          ))}
         </MDBox>
         <MDBox mb={2}>
-          <MDTypography variant="h6">Buyer Name:</MDTypography>
-          <MDTypography variant="body2">{sale.buyerName}</MDTypography>
+          <MDTypography variant="h6">Business Name:</MDTypography>
+          <MDTypography variant="body2">{sale?.buisnessName}</MDTypography>
         </MDBox>
         <MDBox mb={2}>
           <MDTypography variant="h6">Distributor:</MDTypography>
-          <MDTypography variant="body2">{sale.distributor}</MDTypography>
+          <MDTypography variant="body2">{sale?.distributor}</MDTypography>
         </MDBox>
         <MDBox mb={2}>
           <MDTypography variant="h6">Invoice Date:</MDTypography>
-          <MDTypography variant="body2">{sale.invoiceDate}</MDTypography>
+          <MDTypography variant="body2">{sale?.invoiceDate}</MDTypography>
         </MDBox>
         <MDBox mb={2}>
-          <MDTypography variant="h6">Sales Amount:</MDTypography>
-          <MDTypography variant="body2">{sale.sales}</MDTypography>
+          <MDTypography variant="h6">Total Quantity:</MDTypography>
+          <MDTypography variant="body2">
+            {sale?.products?.reduce((total, product) => total + product.quantity, 0)}
+          </MDTypography>
         </MDBox>
       </CardContent>
     </Card>

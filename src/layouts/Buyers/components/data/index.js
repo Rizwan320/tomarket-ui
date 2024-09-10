@@ -42,13 +42,13 @@ const buyersdata = (tableColumns, refresh) => {
     fetchBuyers();
   }, [refresh]);
 
-  const Logo = ({ name }) => (
+  const Logo = ({ name = "" }) => (
     <MDBox display="flex" alignItems="left" lineHeight={1}>
       <MDAvatar src={name} size="sm" />
     </MDBox>
   );
 
-  const Brand = ({ name }) => (
+  const Brand = ({ name = "" }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
       <MDTypography variant="caption" fontWeight="medium">
         {name}
@@ -56,7 +56,7 @@ const buyersdata = (tableColumns, refresh) => {
     </MDBox>
   );
 
-  const TotalSales = ({ name }) => (
+  const TotalSales = ({ name = "" }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
       <MDTypography variant="caption" fontWeight="medium">
         {name} $
