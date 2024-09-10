@@ -41,12 +41,15 @@ const SignIn = () => {
       });
       if (res.status === 201) {
         login(res.data);
+        toast.success("Login successful");
         navigate("/dashboard");
-      } else {
-        toast.error("Unauthorized User");
       }
     } catch (error) {
-      toast.error(error.response.data.message);
+      if (error.response && error.response.data && error.response.data.message) {
+        toast.error("Invalid email or password");
+      } else {
+        toast.error(error.message);
+      }
     } finally {
       setSubmitting(false);
     }
