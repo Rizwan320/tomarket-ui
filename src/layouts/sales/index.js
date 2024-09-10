@@ -67,7 +67,6 @@ const Sales = () => {
           table={{ columns, rows }}
           showTotalEntries={true}
           isSorted={true}
-          canSearch={true}
           noEndBorder
           entriesPerPage={false}
           showCheckbox={false}
