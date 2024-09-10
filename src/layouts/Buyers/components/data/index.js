@@ -26,6 +26,12 @@ const buyersdata = (tableColumns, refresh) => {
             email: row.email || "",
             showOnMap: row.showOnMap,
             totalSales: row.totalSales,
+            recentlyOrderedProduct: row.recentlyOrderedProduct,
+            sku: row.sku,
+            quantity: row.quantity,
+            distributorName: row.distributorName,
+            unitsSoldLastWeek: row.unitsSoldLastWeek,
+            unitsSoldLastMonth: row.unitsSoldLastMonth,
           }));
           setTableData(buyer);
         }
@@ -172,7 +178,6 @@ const buyersdata = (tableColumns, refresh) => {
       accessor: "businessName",
       align: "center",
     },
-    distributor: { Header: "Distributor", accessor: "distributor", align: "center" },
     salesRep: { Header: "Sales Rep", accessor: "salesRep", align: "center" },
     restaurantType: {
       Header: "Restaurant Type",
@@ -204,13 +209,8 @@ const buyersdata = (tableColumns, refresh) => {
       accessor: "monthlyTrend",
       align: "center",
     },
-    unitsSoldLastWeek: {
-      Header: "Units Sold Last Week",
-      accessor: "unitsSoldLastWeek",
-      align: "center",
-    },
     displayName: {
-      Header: "Buyer Bussiness Name",
+      Header: "Bussiness Name",
       accessor: "displayName",
       align: "center",
     },
@@ -229,6 +229,28 @@ const buyersdata = (tableColumns, refresh) => {
       accessor: "totalSales",
       align: "center",
     },
+    recentlyOrderedProduct: {
+      Header: "recently Ordered Product",
+      accessor: "recentlyOrderedProduct",
+      align: "center",
+    },
+    sku: { Header: "SKU", accessor: "sku", align: "center" },
+    quantity: { Header: "Quantity", accessor: "quantity", align: "center" },
+    distributorName: {
+      Header: "Distributor Name",
+      accessor: "distributorName",
+      align: "center",
+    },
+    unitsSoldLastWeek: {
+      Header: "Units Sold Last Week",
+      accessor: "unitsSoldLastWeek",
+      align: "center",
+    },
+    unitsSoldLastMonth: {
+      Header: "Units Sold Last Month",
+      accessor: "unitsSoldLastMonth",
+      align: "center",
+    },
   };
 
   const filteredColumns = Object.values(allColumns)?.filter((column) =>
@@ -240,6 +262,12 @@ const buyersdata = (tableColumns, refresh) => {
       logo: () => <Logo name={"https://via.placeholder.com/40"} />,
       businessName: () => <Brand name={row?.businessName} />,
       displayName: () => <Brand name={row?.displayName} />,
+      recentlyOrderedProduct: () => <Brand name={row?.recentlyOrderedProduct} />,
+      sku: () => <Brand name={row?.sku} />,
+      quantity: () => <Brand name={row?.quantity} />,
+      distributorName: () => <Brand name={row?.distributorName} />,
+      unitsSoldLastWeek: () => <Brand name={row?.unitsSoldLastWeek} />,
+      unitsSoldLastMonth: () => <Brand name={row?.unitsSoldLastMonth} />,
       totalSales: () => <TotalSales name={row?.totalSales} />,
       email: () => <Brand name={row?.email} />,
       distributor: () => <Brand name={row?.distributor} />,
@@ -250,7 +278,6 @@ const buyersdata = (tableColumns, refresh) => {
       averageWeeklySales: () => <Brand name={row?.averageWeeklySales} />,
       weeklyTrend: () => <TrendBadge trend={row?.weeklyTrend} />,
       monthlyTrend: () => <TrendBadge trend={row?.monthlyTrend} />,
-      unitsSoldLastWeek: () => <TrendBadge trend={row?.unitsSoldLastWeek} />,
       showOnMap: () => <ToggleSwitch row={row} onChange={updateShowOnMap} />,
     };
     return componentsMap[column] ? componentsMap[column]() : null;
