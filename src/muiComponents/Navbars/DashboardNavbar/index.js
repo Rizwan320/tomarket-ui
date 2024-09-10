@@ -134,7 +134,7 @@ const DashboardNavbar = ({ absolute, light, isMini }) => {
               <MDInput label="Search here" />
             </MDBox> */}
             <MDBox color={light ? "white" : "inherit"}>
-              <IconButton
+              {/* <IconButton
                 sx={navbarIconButton}
                 size="small"
                 disableRipple
@@ -143,7 +143,7 @@ const DashboardNavbar = ({ absolute, light, isMini }) => {
                 onClick={handleAccountMenuOpen}
               >
                 <Icon sx={iconsStyle}>account_circle</Icon>
-              </IconButton>
+              </IconButton> */}
               <IconButton
                 size="small"
                 disableRipple

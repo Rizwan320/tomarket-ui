@@ -6,7 +6,6 @@ import SignUp from "layouts/authentication/sign-up";
 import PrivacyPolicy from "layouts/PrivacyPolicy";
 import ProductForm from "layouts/products/ProductForm";
 import ContentOrganizationFiles from "layouts/contentOrganization/components/ContentOrganizationFiles";
-//import Sales from "layouts/sales";
 
 const Wcw = lazy(() => import("layouts/wcw"));
 const Users = lazy(() => import("layouts/users"));
@@ -174,6 +173,16 @@ export const brandRoutes = [
     icon: <Icon fontSize="small">money</Icon>,
     route: "/sales/:id",
     component: SuspendedComponent(SaleDetail),
+    isPrivate: true,
+    isNavbar: true,
+  },
+  {
+    type: "collapse",
+    name: "Settings",
+    key: "settings",
+    icon: <Icon fontSize="small">settings</Icon>,
+    route: "/settings",
+    component: SuspendedComponent(Settings),
     isPrivate: true,
     isNavbar: true,
   },

@@ -27,7 +27,11 @@ const Billing = () => {
               <MDButton variant="contained" onClick={handleOpen}>
                 Open dialog
               </MDButton>
-              <PaymentDialog open={open} onClose={handleClose} onSubmit={(values) => console.log(values)} />
+              <PaymentDialog
+                open={open}
+                onClose={handleClose}
+                onSubmit={(values) => console.log(values)}
+              />
             </MDBox>
           </Card>
         </Grid>
