@@ -200,6 +200,7 @@ const FileCard = ({ fileUrl, fileId, onDelete }) => {
       </Card>
 
       <ConfirmationDialog
+        text="File"
         isOpen={dialogOpen}
         onClose={handleCancelDelete}
         onConfirm={handleConfirmDelete}

@@ -23,7 +23,7 @@ const modalStyle = {
   position: "relative",
 };
 
-const ConfirmationDialog = ({ isOpen, onClose, onConfirm }) => {
+const ConfirmationDialog = ({ text, isOpen, onClose, onConfirm }) => {
   return (
     <Modal open={isOpen} onClose={onClose}>
       <Card sx={modalStyle}>
@@ -42,7 +42,7 @@ const ConfirmationDialog = ({ isOpen, onClose, onConfirm }) => {
         <CardContent>
           <MDBox sx={{ mb: 5, mt: 3 }}>
             <MDTypography variant="h6" sx={{ fontSize: "20px" }}>
-              Are you sure you want to delete this file?
+              Are you sure you want to delete this {text}?
             </MDTypography>
           </MDBox>
           <MDBox sx={{ display: "flex", justifyContent: "flex-end", mt: 2 }}>
