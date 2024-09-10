@@ -25,7 +25,7 @@ const SignUp = () => {
   const initialValues = {
     accountName: "",
     mailingAddress: "",
-    accountType: "",
+    accountType: "brand",
     userName: "",
     email: "",
     password: "",
@@ -36,7 +36,6 @@ const SignUp = () => {
   const validationSchema = Yup.object({
     accountName: Yup.string().required("Company Name is required"),
     mailingAddress: Yup.string().required("Mailing Address is required"),
-    accountType: Yup.string().required("account Type is required"),
     userName: Yup.string().required("Full Name is required"),
     email: Yup.string().email("Invalid email format").required("User Email is required"),
     password: Yup.string()
@@ -122,25 +121,6 @@ const SignUp = () => {
                       fullWidth
                     />
                     <ErrorMessage name="accountName" component="h6" style={{ color: "red" }} />
-                  </MDBox>
-                  <MDBox ml={1} flex={1}>
-                    <Field name="accountType">
-                      {({ field }) => (
-                        <FormControl fullWidth>
-                          <InputLabel id="accountType-label">Account Type</InputLabel>
-                          <Select
-                            {...field}
-                            labelId="accountType-label"
-                            id="accountType"
-                            variant="standard"
-                          >
-                            <MenuItem value="brand">Brand</MenuItem>
-                            <MenuItem value="distributor">Distributor</MenuItem>
-                          </Select>
-                        </FormControl>
-                      )}
-                    </Field>
-                    <ErrorMessage name="accountType" component="h6" style={{ color: "red" }} />
                   </MDBox>
                 </MDBox>
                 {/* <MDBox mb={2} display="flex" justifyContent="space-between" alignItems="flex-end"> */}
