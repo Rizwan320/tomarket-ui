@@ -97,6 +97,7 @@ const Settings = () => {
         </CardContent>
       </Card>
       <ConfirmationDialog
+        text="Account"
         isOpen={dialogOpen}
         onClose={handleCancelDelete}
         onConfirm={handleConfirmDelete}
