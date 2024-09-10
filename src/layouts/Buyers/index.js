@@ -16,7 +16,7 @@ import UploadFileModal from "layouts/Buyers/components/Modals/UploadFileModal";
 
 const COLUMNS = [
   { Header: "Logo", accessor: "logo", align: "left" },
-  { Header: "Display Name", accessor: "displayName", align: "center" },
+  { Header: "Buyer Bussiness Name", accessor: "displayName", align: "center" },
   { Header: "Email", accessor: "email", align: "center" },
   { Header: "Show on Map", accessor: "showOnMap", align: "center" },
   { Header: "Business Name", accessor: "businessName", align: "center" },
@@ -28,14 +28,19 @@ const COLUMNS = [
   { Header: "Average Weekly Sales", accessor: "averageWeeklySales", align: "center" },
   { Header: "Weekly Trend", accessor: "weeklyTrend", align: "center" },
   { Header: "Monthly Trend", accessor: "monthlyTrend", align: "center" },
-  { Header: "Units Sold Last Week", accessor: "unitsSoldLastWeek", align: "center" },
   { Header: "Total Sales", accessor: "totalSales", align: "center" },
+  { Header: "Recently Ordered Product", accessor: "recentlyOrderedProduct", align: "center" },
+  { Header: "SKU", accessor: "sku", align: "center" },
+  { Header: "Quantity", accessor: "quantity", align: "center" },
+  { Header: "Distributor Name", accessor: "distributorName", align: "center" },
+  { Header: "Units Sold Last Week", accessor: "unitsSoldLastWeek", align: "center" },
+  { Header: "Units Sold Last Month", accessor: "unitsSoldLastMonth", align: "center" },
 ];
 
 const BUYER_FILE_HEADERS = [
   {
     id: "displayName",
-    displayName: "DisplayName",
+    displayName: "Bussiness Name",
   },
   {
     id: "email",
@@ -65,6 +70,30 @@ const BUYER_FILE_HEADERS = [
     id: "totalSales",
     displayName: "Total Sales",
   },
+  {
+    id: "recentlyOrderedProduct",
+    displayName: "recently ordered Product",
+  },
+  {
+    id: "sku",
+    displayName: "SKU",
+  },
+  {
+    id: "quantity",
+    displayName: "Quantity",
+  },
+  {
+    id: "distributorName",
+    displayName: "Distributor Name",
+  },
+  {
+    id: "unitsSoldLastWeek",
+    displayName: "Units Sold Last Week",
+  },
+  {
+    id: "unitsSoldLastMonth",
+    displayName: "Units Sold Last Month",
+  },
 ];
 
 const Buyers = () => {
@@ -73,6 +102,12 @@ const Buyers = () => {
     "id",
     // "logo",
     "displayName",
+    "recentlyOrderedProduct",
+    "sku",
+    "quantity",
+    "distributorName",
+    "unitsSoldLastWeek",
+    "unitsSoldLastMonth",
     "totalSales",
     // "email",
     // "showOnMap",
@@ -110,20 +145,6 @@ const Buyers = () => {
     }
   };
 
-  const refetchBuyers = async () => {
-    try {
-      setLoading(true);
-      const res = await api.get("buyers/refetch-buyer");
-      if (res.data) {
-        setRefresh(!refresh);
-      }
-    } catch (error) {
-      toast.error(error?.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
     <>
       {loading && <Loader />}
@@ -147,18 +168,6 @@ const Buyers = () => {
               </MDButton>
             </MDBox> */}
 
-            <MDButton
-              onClick={() => refetchBuyers()}
-              type="button"
-              color="success"
-              variant="gradient"
-              sx={{ mr: 2 }}
-              name="Refetch Buyers"
-              disabled={true}
-            >
-              Refetch Buyers
-            </MDButton>
-
             {/* <MDButton
               onClick={() => addBuyer()}
               type="button"
@@ -169,11 +178,6 @@ const Buyers = () => {
             >
               Add Buyer
             </MDButton> */}
-            <DropdownMenu
-              tableColumns={tableColumns}
-              columns={COLUMNS}
-              setTableColumns={setTableColumns}
-            />
           </MDBox>
         </MDBox>
         <MDBox>
