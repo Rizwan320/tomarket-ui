@@ -52,7 +52,7 @@ const SignUp = () => {
       setLoading(true);
       const response = await api.post("/auth/register", values);
       if (response.status === 201) {
-        toast.success("User Register Successfully");
+        toast.success("User Registered Successfully");
         setTimeout(() => {
           navigate("/authentication/sign-in");
         }, 1000);
@@ -60,7 +60,11 @@ const SignUp = () => {
         toast.error("Failed to Register");
       }
     } catch (error) {
-      console.log(error);
+      if (error?.response?.data?.message) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error(error.message);
+      }
     } finally {
       setLoading(false);
       setSubmitting(false);

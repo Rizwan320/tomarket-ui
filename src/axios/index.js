@@ -12,12 +12,16 @@ const api = axios.create({
 let isRefreshing = false;
 let failedQueue = [];
 
-const refreshToken = async () => {
-  const refreshToken = localStorage.getItem("refreshToken");
-  if (!refreshToken) {
-    throw new Error("No refresh token available");
+const refreshToken = async (error) => {
+  try {
+    const refreshToken = localStorage.getItem("refreshToken");
+    if (!refreshToken) {
+      throw new Error(error);
+    }
+    return api.post("auth/refresh", { refresh: refreshToken });
+  } catch (error) {
+    throw error;
   }
-  return api.post("auth/refresh", { refresh: refreshToken });
 };
 
 api.interceptors.request.use(
@@ -116,7 +120,7 @@ api.interceptors.response.use(
         isRefreshing = true;
 
         try {
-          const res = await refreshToken();
+          const res = await refreshToken(error?.response?.data?.message);
           const newToken = res?.data?.access_token;
 
           if (newToken) {
