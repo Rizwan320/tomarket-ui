@@ -12,8 +12,11 @@ import { useNavigate } from "react-router-dom";
 const Settings = () => {
   const [selectedOption, setSelectedOption] = useState("daily");
   const [dialogOpen, setDialogOpen] = useState(false);
-  const { logout } = useUser();
+  const { logout, user } = useUser();
   const navigate = useNavigate();
+
+  const address = user?.user?.mailingAddress || "";
+
   const handleCheckboxChange = (option) => () => {
     setSelectedOption(option);
   };
@@ -42,6 +45,14 @@ const Settings = () => {
 
   return (
     <>
+      <Card sx={{ mt: 4 }}>
+        <CardContent>
+          <MDTypography variant="h4" gutterBottom>
+            Address
+          </MDTypography>
+          <MDTypography variant="body1">{address || "No address provided"}</MDTypography>
+        </CardContent>
+      </Card>
       <Card sx={{ mt: 4 }}>
         <CardContent>
           <MDTypography variant="h4" gutterBottom>
