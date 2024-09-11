@@ -3,9 +3,9 @@ import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import Card from "@mui/material/Card";
-import { InputLabel, FormControl } from "@mui/material";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
+import { IconButton, InputAdornment } from "@mui/material";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import MDBox from "components/MDBox";
 import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
@@ -21,6 +21,8 @@ import Loader from "components/Loader";
 const SignUp = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [hidePassword, setHidePassword] = useState(true);
+  const [hideConfirmPassword, setHideConfirmPassword] = useState(true);
 
   const initialValues = {
     accountName: "",
@@ -74,6 +76,8 @@ const SignUp = () => {
   const handlePlaceSelected = (place, setFieldValue) => {
     setFieldValue("mailingAddress", place.formatted_address);
   };
+  const handleTogglePasswordVisibility = () => setHidePassword(!hidePassword);
+  const handleToggleConfirmPasswordVisibility = () => setHideConfirmPassword(!hideConfirmPassword);
 
   return (
     <BasicLayout image={bgImage} formType="signup">
@@ -166,9 +170,18 @@ const SignUp = () => {
                     <Field
                       name="password"
                       as={MDInput}
-                      type="password"
+                      type={hidePassword ? "password" : "text"}
                       label="Password"
                       fullWidth
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton onClick={handleTogglePasswordVisibility} edge="end">
+                              {hidePassword ? <VisibilityOff /> : <Visibility />}
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      }}
                     />
                     <ErrorMessage name="password" component="h6" style={{ color: "red" }} />
                   </MDBox>
@@ -176,9 +189,18 @@ const SignUp = () => {
                     <Field
                       name="confirmPassword"
                       as={MDInput}
-                      type="password"
+                      type={hideConfirmPassword ? "password" : "text"}
                       label="Confirm Password"
                       fullWidth
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton onClick={handleToggleConfirmPasswordVisibility} edge="end">
+                              {hideConfirmPassword ? <VisibilityOff /> : <Visibility />}
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      }}
                     />
                     <ErrorMessage name="confirmPassword" component="h6" style={{ color: "red" }} />
                   </MDBox>
