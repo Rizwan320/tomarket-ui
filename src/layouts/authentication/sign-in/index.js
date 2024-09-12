@@ -3,11 +3,12 @@ import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-import { Box, Link } from "@mui/material";
+import { Box, Link, IconButton, InputAdornment } from "@mui/material";
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import Switch from "@mui/material/Switch";
-// import GoogleIcon from "@mui/icons-material/Google";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { toast } from "react-toastify";
 
 import MDBox from "components/MDBox";
@@ -24,14 +25,13 @@ import api from "../../../axios";
 
 const SignIn = () => {
   const [rememberMe, setRememberMe] = useState(false);
+  const [hidePassword, setHidePassword] = useState(true);
   const { login } = useUser();
   const navigate = useNavigate();
 
-  const handleSetRememberMe = () => setRememberMe(!rememberMe);
-
   // const handleSignInWithGoogle = () => {};
-
-  const handleForgotPassword = (e) => e.preventDefault();
+  const handleSetRememberMe = () => setRememberMe(!rememberMe);
+  const handleTogglePasswordVisibility = () => setHidePassword(!hidePassword);
 
   const handleSignIn = async (values, { setSubmitting }) => {
     try {
@@ -41,12 +41,11 @@ const SignIn = () => {
       });
       if (res.status === 201) {
         login(res.data);
-        toast.success("Login successful");
         navigate("/dashboard");
       }
     } catch (error) {
-      if (error.response && error.response.data && error.response.data.message) {
-        toast.error("Invalid email or password");
+      if (error?.response?.data?.message) {
+        toast.error(error.response.data.message);
       } else {
         toast.error(error.message);
       }
@@ -117,10 +116,19 @@ const SignIn = () => {
                   <Field
                     name="password"
                     as={MDInput}
-                    type="password"
+                    type={hidePassword ? "password" : "text"}
                     label="Password"
                     fullWidth
                     required
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton onClick={handleTogglePasswordVisibility} edge="end">
+                            {hidePassword ? <VisibilityOff /> : <Visibility />}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
                   />
                   <ErrorMessage name="password" component="h6" style={{ color: "red" }} />
                 </MDBox>
@@ -145,7 +153,7 @@ const SignIn = () => {
                       to="/forgot-password"
                       component="button"
                       underline="always"
-                      onClick={handleForgotPassword}
+                      onClick={(e) => e.preventDefault()}
                       sx={{
                         textDecoration: "underline",
                         cursor: "pointer",
