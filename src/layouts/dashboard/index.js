@@ -189,10 +189,10 @@ const Dashboard = () => {
           )}
         </Grid>
         <MDBox mt={4.5}>
-          <Grid container spacing={3}>
-            {/* <Grid item xs={12} md={6} lg={8}>
+          {/* <Grid container spacing={3}> */}
+          {/* <Grid item xs={12} md={6} lg={8}>
               {isMap && <MapsVector data={updatedMarker} />} */}
-            {/* {!isMap && (
+          {/* {!isMap && (
                 <MDBox>
                   <MDTypography>Click to login Quickbooks to get Map Data</MDTypography>
                   <MDButton
@@ -208,7 +208,7 @@ const Dashboard = () => {
                   </MDButton>
                 </MDBox>
               )} */}
-            {/* <MDBox mt={3} mb={3}>
+          {/* <MDBox mt={3} mb={3}>
                 <SalesChart
                   chartSeries={[
                     {
@@ -223,11 +223,13 @@ const Dashboard = () => {
                   sx={{ height: "100%" }}
                 />
               </MDBox>
-            </Grid>
-            <Grid alignItems={"left"} item xs={12} md={6} lg={4}>
+            </Grid>*/}
+          <Grid container justifyContent="flex-end">
+            <Grid item xs={12} md={6} lg={4}>
               <Notifications />
-            </Grid> */}
+            </Grid>
           </Grid>
+          {/* </Grid> */}
         </MDBox>
       </MDBox>
     </>
