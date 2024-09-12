@@ -9,12 +9,24 @@ import UploadFileModal from "layouts/Buyers/components/Modals/UploadFileModal";
 import data from "./data";
 import { toast } from "react-toastify";
 import api from "../../axios";
+import { useUser } from "context/userContext";
 
+const AccountType = Object.freeze({
+  BRAND: "brand",
+  DISTRIBUTOR: "distributor",
+});
 const Sales = () => {
   const { columns, rows } = data();
   const [open, setOpen] = useState(false);
   const [uploadFile, setUploadFile] = useState(null);
   const navigate = useNavigate();
+  const {
+    user: {
+      user: {
+        account: { accountType },
+      },
+    },
+  } = useUser();
 
   const handleOpen = (file) => {
     setOpen(true);
@@ -56,11 +68,13 @@ const Sales = () => {
             Sales
           </MDTypography>
         </MDBox>
-        <MDBox>
-          <MDButton variant="contained" color="success" onClick={handleOpen}>
-            Upload File
-          </MDButton>
-        </MDBox>
+        {accountType === AccountType.DISTRIBUTOR && (
+          <MDBox>
+            <MDButton variant="contained" color="success" onClick={handleOpen}>
+              Upload File
+            </MDButton>
+          </MDBox>
+        )}
       </MDBox>
       <MDBox>
         <DataTable
