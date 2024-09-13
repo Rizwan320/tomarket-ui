@@ -7,7 +7,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Sidenav from "muiComponents/Sidenav";
 import DashboardLayout from "muiComponents/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "muiComponents/Navbars/DashboardNavbar";
-import { brandRoutes, distributorRoutes } from "routes";
+import { brandRoutes, distributorRoutes, superAdminRoutes } from "routes";
 import { useMaterialUIController, setMiniSidenav } from "context";
 import { useUser } from "context/userContext";
 import PrivateRoute from "routes/privateRoutes";
@@ -33,6 +33,8 @@ export default function App() {
   const { pathname } = useLocation();
   const location = useLocation();
   const { user } = useUser();
+  const isSuperAdmin = user?.user?.isSuperAdmin ?? false;
+  const accountType = user?.user?.account?.accountType ?? "";
   const navigate = useNavigate();
   setNavigate(navigate);
 
@@ -70,12 +72,11 @@ export default function App() {
   // List of paths where Sidenav should be hidden
   const excludedPaths = ["/privacy-policy", "/authentication/sign-in", "/authentication/sign-up"];
 
-  const routes =
-    user?.user?.account?.accountType === "distributor" ? distributorRoutes : brandRoutes;
-
-  const filteredRoutes = routes.filter(
-    (route) => !route.allowedEmail || route.allowedEmail === user?.user?.email
-  );
+  const routes = isSuperAdmin
+    ? superAdminRoutes
+    : accountType === "distributor"
+    ? distributorRoutes
+    : brandRoutes;
 
   const shouldRenderSidenav =
     layout === "dashboard" && user.isAuthenticated && !excludedPaths.includes(pathname);
@@ -121,15 +122,13 @@ export default function App() {
           color={sidenavColor}
           brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
           CompanyName="ToMarket"
-          routes={filteredRoutes}
+          routes={routes}
           onMouseEnter={handleOnMouseEnter}
           onMouseLeave={handleOnMouseLeave}
         />
       )}
       <Routes>
-        {getRoutes(
-          user?.user?.account?.accountType === "distributor" ? distributorRoutes : brandRoutes
-        )}
+        {getRoutes(routes)}
         <Route
           path="*"
           element={
