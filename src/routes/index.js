@@ -29,6 +29,7 @@ const EditBuyer = lazy(() => import("layouts/Buyers/editBuyer"));
 const AddBuyer = lazy(() => import("layouts/Buyers/addBuyer"));
 const UploadBuyers = lazy(() => import("layouts/Buyers/uploadBuyer"));
 const SaleDetail = lazy(() => import("layouts/sales/saleDetails"));
+const SuperAdminDashboard = lazy(() => import("layouts/superadmin-dashboard"));
 const SuspendedComponent = (Component) => (
   <Suspense>
     <Component />
@@ -185,17 +186,6 @@ export const brandRoutes = [
     component: SuspendedComponent(Settings),
     isPrivate: true,
     isNavbar: true,
-  },
-  {
-    type: "collapse",
-    name: "Upload Buyers",
-    key: "upload-buyers",
-    icon: <Icon fontSize="small">upload</Icon>,
-    route: "/upload-buyers",
-    component: SuspendedComponent(UploadBuyers),
-    isPrivate: true,
-    isNavbar: true,
-    allowedEmail: "demo1@gmail.com",
   },
   {
     type: "collapse",
@@ -404,5 +394,47 @@ export const distributorRoutes = [
     isPrivate: false,
     isNavbar: true,
     component: SuspendedComponent(StripeForm),
+  },
+];
+export const superAdminRoutes = [
+  {
+    type: "collapse",
+    name: "Admin Dashboard",
+    key: "dashboard",
+    icon: <Icon fontSize="small">table</Icon>,
+    route: "/dashboard",
+    component: SuspendedComponent(SuperAdminDashboard),
+    isPrivate: true,
+    isNavbar: true,
+  },
+  {
+    type: "collapse",
+    name: "Upload Buyers",
+    key: "upload-buyers",
+    icon: <Icon fontSize="small">upload</Icon>,
+    route: "/upload-buyers",
+    component: SuspendedComponent(UploadBuyers),
+    isPrivate: true,
+    isNavbar: true,
+  },
+  {
+    type: "collapse",
+    name: "Sign In",
+    key: "sign-in",
+    icon: <Icon fontSize="small">login</Icon>,
+    route: "/authentication/sign-in",
+    component: <SignIn />,
+    isPrivate: false,
+    isNavbar: false,
+  },
+  {
+    type: "collapse",
+    name: "Sign Up",
+    key: "sign-up",
+    icon: <Icon fontSize="small">assignment</Icon>,
+    route: "/authentication/sign-up",
+    component: <SignUp />,
+    isPrivate: false,
+    isNavbar: false,
   },
 ];
