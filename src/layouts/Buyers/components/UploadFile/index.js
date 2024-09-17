@@ -7,7 +7,7 @@ import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
 import MDInput from "components/MDInput";
 
-const UploadFile = ({ open, onClose }) => {
+const UploadFile = ({ open, onClose, submitButton = false, handleSubmit }) => {
   const [uploadedFiles, setUploadedFiles] = useState();
 
   const onDrop = useCallback((acceptedFiles) => {
@@ -46,6 +46,13 @@ const UploadFile = ({ open, onClose }) => {
               Browse Files
             </MDButton>
           </MDBox>
+          {submitButton && (
+            <MDBox display="flex" justifyContent="center" mt={3} mb={6}>
+              <MDButton onClick={handleSubmit} variant="contained" color="success">
+                Submit
+              </MDButton>
+            </MDBox>
+          )}
         </Grid>
       </Grid>
     </Container>
