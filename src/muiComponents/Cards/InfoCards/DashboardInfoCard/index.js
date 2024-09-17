@@ -47,6 +47,9 @@ const DashBoardInfoCard = ({ title, value, trend: arrow, name, previousSale }) =
             {value}
           </MDTypography>
         )}
+        <MDTypography fontWeight="light" fontSize="12px">
+          Past 90 days
+        </MDTypography>
         {arrow && (
           <MDBox
             display="flex"

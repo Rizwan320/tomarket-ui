@@ -3,8 +3,16 @@ import { styled } from "@mui/material/styles";
 
 export default styled(Typography)(({ theme, ownerState }) => {
   const { palette, typography, functions } = theme;
-  const { color, textTransform, verticalAlign, fontWeight, opacity, textGradient, darkMode } =
-    ownerState;
+  const {
+    color,
+    textTransform,
+    verticalAlign,
+    fontWeight,
+    opacity,
+    textGradient,
+    darkMode,
+    fontSize,
+  } = ownerState;
 
   const { gradients, transparent, white } = palette;
   const { fontWeightLight, fontWeightRegular, fontWeightMedium, fontWeightBold } = typography;
@@ -42,6 +50,7 @@ export default styled(Typography)(({ theme, ownerState }) => {
     textDecoration: "none",
     color: colorValue,
     fontWeight: fontWeights[fontWeight] && fontWeights[fontWeight],
+    fontSize: fontSize, // Apply fontSize here like 12 px etc further we can modified like fontWeight
     ...(textGradient && gradientStyles()),
   };
 });
