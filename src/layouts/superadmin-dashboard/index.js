@@ -5,6 +5,7 @@ import MDTypography from "components/MDTypography";
 import DataTable from "muiComponents/Tables/DataTable";
 import api from "../../axios";
 import { toast } from "react-toastify";
+import { tableAccountData } from "./data";
 
 const SuperAdminDashboard = () => {
   const [accountData, setAccountData] = useState({ columns: [], rows: [] });
@@ -14,7 +15,7 @@ const SuperAdminDashboard = () => {
       try {
         const response = await api.get("/accounts");
         const accounts = response?.data;
-        setAccountData(tableAccountData(accounts));
+        setAccountData(tableAccountData(accounts, handleImpersonate));
       } catch (error) {
         toast.error(error.response?.data?.message || error?.message);
       }
@@ -23,27 +24,7 @@ const SuperAdminDashboard = () => {
     fetchAccounts();
   }, []);
 
-  const tableAccountData = (accounts) => {
-    return {
-      columns: [
-        { Header: "Account Name", accessor: "accountName", align: "left" },
-        { Header: "Account Type", accessor: "accountType", align: "center" },
-      ],
-      rows: accounts.map((account) => ({
-        id: account.id,
-        accountName: (
-          <MDTypography variant="caption" fontWeight="medium">
-            {account.accountName}
-          </MDTypography>
-        ),
-        accountType: (
-          <MDTypography variant="caption" fontWeight="medium">
-            {account.accountType}
-          </MDTypography>
-        ),
-      })),
-    };
-  };
+  const handleImpersonate = (accountId) => {};
 
   return (
     <Card>
@@ -58,10 +39,9 @@ const SuperAdminDashboard = () => {
         <DataTable
           table={accountData}
           showTotalEntries={true}
-          isSorted={true}
+          isSorted={false}
           noEndBorder
           entriesPerPage={false}
-          showCheckbox={false}
         />
       </MDBox>
     </Card>
