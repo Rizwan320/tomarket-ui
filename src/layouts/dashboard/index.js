@@ -47,12 +47,12 @@ const Dashboard = () => {
   const [showVerifyPaymentAlert, setVerifyShowPaymentAlert] = useState(false);
   const [isMap, setIsMap] = useState(false);
   const [updatedMarker, setUpdatedMarker] = useState([]);
-  const [tableColumns, setTableColumns] = useState([
-    "Total Weekly Sales",
-    "Total Monthly Sales",
-    "Top Buyer",
-    "No of Buyers",
-  ]);
+  const [tableColumns, setTableColumns] = useState(["Total Sales", "Top Buyer", "No of Buyers"]);
+  const [sales, setSales] = useState({
+    totalSales: 0,
+    noOfBuyers: 0,
+    topBuyer: "",
+  });
 
   useEffect(() => {
     setShowPaymentAlert(
@@ -75,6 +75,7 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
+    fetchSales();
     fetchBuyers();
   }, []);
 
@@ -114,6 +115,20 @@ const Dashboard = () => {
   //   }
   // };
 
+  const fetchSales = async () => {
+    try {
+      const res = await api.get("sales/records");
+      const { totalSales, topBuyer, numberOfBuyers } = res.data;
+      setSales({
+        totalSales: totalSales,
+        topBuyer: topBuyer,
+        noOfBuyers: numberOfBuyers,
+      });
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+
   const fetchBuyers = async () => {
     try {
       const res = await api.get("buyers");
@@ -138,6 +153,24 @@ const Dashboard = () => {
       console.log(error.message);
     }
   };
+
+  const dashCardData = [
+    {
+      title: "Total Sales",
+      value: `$${sales.totalSales}`,
+      // trend: sales.weeklySales > 0 ? "up" : "down",
+    },
+    {
+      title: "Top Buyer",
+      // name: sales.topBuyer || "No top buyer",
+      value: `${sales.topBuyer}`, // Assuming the value for the top buyer should also display sales
+    },
+    {
+      title: "No of Buyers",
+      value: sales.noOfBuyers,
+      // trend: sales.noOfBuyers > 0 ? "up" : "down",
+    },
+  ];
 
   return (
     <>
@@ -179,7 +212,7 @@ const Dashboard = () => {
           />
         </MDBox>
         <Grid container spacing={3}>
-          {cardData?.map(
+          {dashCardData?.map(
             (data, index) =>
               tableColumns.includes(data.title) && (
                 <Grid item xs={12} sm={6} md={6} lg={4} key={index} style={{ display: "flex" }}>
