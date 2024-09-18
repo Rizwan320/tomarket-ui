@@ -6,25 +6,36 @@ import DataTable from "muiComponents/Tables/DataTable";
 import api from "../../axios";
 import { toast } from "react-toastify";
 import { tableAccountData } from "./data";
+import { useUser } from "context/userContext";
 
 const SuperAdminDashboard = () => {
   const [accountData, setAccountData] = useState({ columns: [], rows: [] });
+  const { AdminData } = useUser();
 
   useEffect(() => {
-    const fetchAccounts = async () => {
-      try {
-        const response = await api.get("/accounts");
-        const accounts = response?.data;
-        setAccountData(tableAccountData(accounts, handleImpersonate));
-      } catch (error) {
-        toast.error(error.response?.data?.message || error?.message);
-      }
-    };
-
     fetchAccounts();
   }, []);
 
-  const handleImpersonate = (accountId) => {};
+  const fetchAccounts = async () => {
+    try {
+      const response = await api.get("/accounts");
+      const accounts = response?.data;
+      setAccountData(tableAccountData(accounts, handleImpersonate));
+    } catch (error) {
+      toast.error(error.response?.data?.message || error?.message);
+    }
+  };
+
+  const handleImpersonate = async (id) => {
+    try {
+      const response = await api.get("/admin/user", {
+        params: { id },
+      });
+      AdminData(response?.data);
+    } catch (error) {
+      toast.error(error?.response?.data?.message || error?.message);
+    }
+  };
 
   return (
     <Card>
