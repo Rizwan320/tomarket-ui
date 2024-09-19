@@ -31,6 +31,8 @@ const UploadBuyers = lazy(() => import("layouts/Buyers/uploadBuyer"));
 const SaleDetail = lazy(() => import("layouts/sales/saleDetails"));
 const SuperAdminDashboard = lazy(() => import("layouts/superadmin-dashboard"));
 const UploadProducts = lazy(() => import("layouts/products/uploadProduct"));
+const AddUser = lazy(() => import("layouts/addUser"));
+
 const SuspendedComponent = (Component) => (
   <Suspense>
     <Component />
@@ -425,6 +427,16 @@ export const superAdminRoutes = [
     icon: <Icon fontSize="small">upload</Icon>,
     route: "/upload-product",
     component: SuspendedComponent(UploadProducts),
+    isPrivate: true,
+    isNavbar: true,
+  },
+  {
+    type: "collapse",
+    name: "Add User",
+    key: "add-user",
+    icon: <Icon fontSize="small">person</Icon>,
+    route: "/add-user",
+    component: SuspendedComponent(AddUser),
     isPrivate: true,
     isNavbar: true,
   },
