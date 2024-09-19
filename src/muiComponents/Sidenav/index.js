@@ -4,7 +4,6 @@ import { useLocation, NavLink, useNavigate } from "react-router-dom";
 
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
-import Link from "@mui/material/Link";
 import Icon from "@mui/material/Icon";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -13,6 +12,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import Box from "@mui/material/Box";
 
 import MDBox from "components/MDBox";
+import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
 import { useUser } from "context/userContext";
 
@@ -33,7 +33,7 @@ const Sidenav = ({ color, brand, CompanyName, routes, ...rest }) => {
   const { miniSidenav, transparentSidenav, whiteSidenav, darkMode, sidenavColor } = controller;
   const location = useLocation();
   const navigate = useNavigate();
-  const { logout } = useUser();
+  const { user, logout, stopImpersonate } = useUser();
   const collapseName = location.pathname.replace("/", "");
 
   let textColor = "dark";
@@ -61,6 +61,8 @@ const Sidenav = ({ color, brand, CompanyName, routes, ...rest }) => {
     logout();
     navigate("/authentication/sign-in");
   };
+
+  const handleStopImpersonating = () => stopImpersonate();
 
   const treeRoute = routes.find((route) => route.key === "profile");
 
@@ -156,7 +158,20 @@ const Sidenav = ({ color, brand, CompanyName, routes, ...rest }) => {
         </MDBox>
       </MDBox>
       <Divider light={false} />
+
       <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
+        <MDBox textAlign="center">
+          {!user?.user?.isSuperAdmin && user.isAdmin && (
+            <MDButton
+              color="success"
+              variant="outlined"
+              sx={{ mt: 2, mb: 1, mr: 2, ml: 2, p: 2, width: "-webkit-fill-available;" }}
+              onClick={handleStopImpersonating}
+            >
+              Stop Impersonating
+            </MDButton>
+          )}
+        </MDBox>
         <List sx={{ flexGrow: 1, overflow: "auto" }}>{renderRoutes}</List>
         <ListItem onClick={handleLogout} disablePadding sx={{ mt: "auto" }}>
           <ListItemButton>
