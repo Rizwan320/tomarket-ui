@@ -122,7 +122,7 @@ const UploadBuyers = () => {
       <Card>
         <MDBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
           <MDBox>
-            <MDTypography variant="h6" gutterBottom>
+            <MDTypography variant="h5" gutterBottom>
               Buyers
             </MDTypography>
           </MDBox>

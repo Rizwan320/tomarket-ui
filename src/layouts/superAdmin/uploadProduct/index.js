@@ -41,7 +41,7 @@ const UploadProduct = () => {
       {loading && <Loader />}
       <Card>
         <MDBox p={3}>
-          <MDTypography variant="h6" gutterBottom>
+          <MDTypography variant="h5" gutterBottom>
             Products
           </MDTypography>
         </MDBox>

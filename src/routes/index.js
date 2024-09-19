@@ -27,11 +27,16 @@ const Brands = lazy(() => import("layouts/brands"));
 const Sales = lazy(() => import("layouts/sales"));
 const EditBuyer = lazy(() => import("layouts/Buyers/editBuyer"));
 const AddBuyer = lazy(() => import("layouts/Buyers/addBuyer"));
-const UploadBuyers = lazy(() => import("layouts/Buyers/uploadBuyer"));
+const UploadBuyers = lazy(() => import("layouts/superAdmin/uploadBuyer"));
 const SaleDetail = lazy(() => import("layouts/sales/saleDetails"));
-const SuperAdminDashboard = lazy(() => import("layouts/superadmin-dashboard"));
-const UploadProducts = lazy(() => import("layouts/products/uploadProduct"));
-const AddUser = lazy(() => import("layouts/addUser"));
+const SuperAdminDashboard = lazy(() => import("layouts/superAdmin/dashboard"));
+const SuperAdminBrands = lazy(() => import("layouts/superAdmin/brands"));
+const SuperAdminDistributors = lazy(() => import("layouts/superAdmin/distributors"));
+const SuperAdminProducts = lazy(() => import("layouts/superAdmin/products"));
+const SuperAdminSettings = lazy(() => import("layouts/superAdmin/settings"));
+const SuperAdminConnections = lazy(() => import("layouts/superAdmin/connections"));
+const UploadProducts = lazy(() => import("layouts/superAdmin/uploadProduct"));
+const AddUser = lazy(() => import("layouts/superAdmin/addUser"));
 
 const SuspendedComponent = (Component) => (
   <Suspense>
@@ -407,6 +412,56 @@ export const superAdminRoutes = [
     icon: <Icon fontSize="small">table</Icon>,
     route: "/dashboard",
     component: SuspendedComponent(SuperAdminDashboard),
+    isPrivate: true,
+    isNavbar: true,
+  },
+  {
+    type: "collapse",
+    name: "Distributors",
+    key: "admin-distributors",
+    icon: <Icon fontSize="small">people</Icon>,
+    route: "/admin-distributors",
+    component: SuspendedComponent(SuperAdminDistributors),
+    isPrivate: true,
+    isNavbar: true,
+  },
+  {
+    type: "collapse",
+    name: "Brands",
+    key: "admin-brands",
+    icon: <Icon fontSize="small">groups</Icon>,
+    route: "/admin-brands",
+    component: SuspendedComponent(SuperAdminBrands),
+    isPrivate: true,
+    isNavbar: true,
+  },
+  {
+    type: "collapse",
+    name: "Products",
+    key: "admin-products",
+    icon: <Icon fontSize="small">storefront</Icon>,
+    route: "/admin-products",
+    component: SuspendedComponent(SuperAdminProducts),
+    isPrivate: true,
+    isNavbar: true,
+  },
+  {
+    type: "collapse",
+    name: "Settings",
+    key: "admin-settings",
+    icon: <Icon fontSize="small">settings</Icon>,
+    route: "/admin-settings",
+    component: SuspendedComponent(SuperAdminSettings),
+    isPrivate: true,
+    isNavbar: true,
+  },
+  {
+    type: "collapse",
+    name: "Connections",
+    key: "admin-connections",
+    icon: <Icon fontSize="small">link</Icon>,
+    route: "/admin-connections",
+    component: SuspendedComponent(SuperAdminConnections),
     isPrivate: true,
     isNavbar: true,
   },
