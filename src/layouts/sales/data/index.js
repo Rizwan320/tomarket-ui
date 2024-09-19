@@ -1,7 +1,7 @@
 import MDTypography from "components/MDTypography";
+import Dropdown from "../../../components/Dropdown";
 
 import { SALES_DUMMY_DATA } from "./salesData";
-import ProductDropdown from "../components/Dropdown";
 
 const data = () => {
   const Name = ({ name = "" }) => (
@@ -21,14 +21,25 @@ const data = () => {
       { Header: "Quantity", accessor: "quantity", align: "center" },
       { Header: "Invoice Date", accessor: "invoiceDate", align: "center" },
     ],
-    rows: SALES_DUMMY_DATA?.map((row) => ({
-      id: row.id,
-      products: <ProductDropdown products={row?.products} />,
-      buisnessName: <Name name={row?.buisnessName} />,
-      distributor: <Name name={row.distributor} />,
-      quantity: <Name name={calculateTotalQuantity(row?.products)} />, // Show total quantity
-      invoiceDate: <Name name={row?.invoiceDate} />,
-    })),
+    rows: SALES_DUMMY_DATA?.map((row) => {
+      return {
+        id: row?.id,
+        products: (
+          <Dropdown
+            options={row?.products?.map((product) => ({
+              id: product?.productName,
+              productName: product?.productName,
+            }))}
+            onChange={(value) => console.log(value)}
+            placeholder="Select Product"
+          />
+        ),
+        buisnessName: <Name name={row?.buisnessName} />,
+        distributor: <Name name={row.distributor} />,
+        quantity: <Name name={calculateTotalQuantity(row?.products)} />,
+        invoiceDate: <Name name={row?.invoiceDate} />,
+      };
+    }),
   };
 };
 

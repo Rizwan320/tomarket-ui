@@ -1,40 +1,41 @@
 import { useState } from "react";
-import MDTypography from "components/MDTypography";
+
 import { MenuItem, Select } from "@mui/material";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
-const ProductDropdown = ({ products, onDropdownChange }) => {
-  const [selectedProduct, setSelectedProduct] = useState(products[0]?.productName || "");
+import MDTypography from "components/MDTypography";
+
+const Dropdown = ({ options, onChange, placeholder }) => {
+  const [selectedOption, setSelectedOption] = useState(options[0]?.id || "");
 
   const handleChange = (event) => {
-    setSelectedProduct(event.target.value);
-  };
-
-  const handleClick = (event) => {
-    event.stopPropagation();
+    setSelectedOption(event.target.value);
+    if (onChange) {
+      onChange(event.target.value);
+    }
   };
 
   return (
     <Select
-      value={selectedProduct}
+      value={selectedOption}
       onChange={handleChange}
       fullWidth
       displayEmpty
       IconComponent={ArrowDropDownIcon}
-      variant="standard"
+      variant="filled"
       disableUnderline
       renderValue={(selected) => (
         <MDTypography variant="caption" fontWeight="medium">
-          {selected || "Select Product"}
+          {options?.find((option) => option?.id === selected)?.productName || placeholder}
           <ArrowDropDownIcon style={{ verticalAlign: "middle", marginLeft: 8 }} />
         </MDTypography>
       )}
-      onClick={handleClick}
+      onClick={(e) => e.stopPropagation()}
     >
-      {products.map((product, index) => (
-        <MenuItem key={index} value={product.productName}>
+      {options?.map((option) => (
+        <MenuItem key={option?.id} value={option?.id}>
           <MDTypography variant="caption" fontWeight="medium">
-            {product.productName}
+            {option?.productName}
           </MDTypography>
         </MenuItem>
       ))}
@@ -42,4 +43,4 @@ const ProductDropdown = ({ products, onDropdownChange }) => {
   );
 };
 
-export default ProductDropdown;
+export default Dropdown;
