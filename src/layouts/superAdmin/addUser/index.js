@@ -10,7 +10,7 @@ import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
 
-import api from "../../axios";
+import api from "../../../axios";
 
 const validationSchema = Yup.object({
   userName: Yup.string().required("Name is required"),
@@ -43,7 +43,7 @@ const AddUser = () => {
   return (
     <Card>
       <MDBox mt={4} px={2}>
-        <MDTypography variant="h4" component="h1" mb={3}>
+        <MDTypography variant="h5" component="h1" mb={3}>
           Add New User
         </MDTypography>
 
