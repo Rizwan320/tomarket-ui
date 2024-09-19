@@ -138,7 +138,6 @@ const SignIn = () => {
                     variant="button"
                     fontWeight="regular"
                     color="text"
-                    onClick={handleSetRememberMe}
                     sx={{ cursor: "pointer", userSelect: "none", ml: -6 }}
                   >
                     &nbsp;&nbsp;Remember me
