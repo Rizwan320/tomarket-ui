@@ -4,17 +4,19 @@ import { toast } from "react-toastify";
 import Card from "@mui/material/Card";
 
 import MDBox from "components/MDBox";
-import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
 import DataTable from "muiComponents/Tables/DataTable";
 
-import api from "../../../axios";
 import { tableAccountData } from "./data";
 import { useUser } from "context/userContext";
+
+import api from "../../../axios";
+import AddBrandAndDistributor from "../addBrandAndDistributor";
 
 const SuperAdminDistributors = () => {
   const [distributorData, setDistributorData] = useState({ columns: [], rows: [] });
   const { AdminData } = useUser();
+
   useEffect(() => {
     fetchDistributors();
   }, []);
@@ -55,9 +57,9 @@ const SuperAdminDistributors = () => {
           }}
         >
           <MDBox mr={2}>
-            <MDButton variant="contained" color="success">
-              Add Distributor
-            </MDButton>
+            <MDBox mr={2}>
+              <AddBrandAndDistributor accountType="distributor" />
+            </MDBox>
           </MDBox>
         </MDBox>
       </MDBox>

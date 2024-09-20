@@ -1,22 +1,25 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 // import { Link } from "react-router-dom";
 import Grid from "@mui/material/Grid";
-import { toast } from "react-toastify";
 import { ListItemText } from "@mui/material";
+
 import MDBox from "components/MDBox";
-import SalesChart from "muiComponents/Charts/ApexChart";
-import MapsVector from "muiComponents/Maps";
+// import SalesChart from "muiComponents/Charts/ApexChart";
+// import MapsVector from "muiComponents/Maps";
 import Notifications from "layouts/notifications";
 import DashBoardInfoCard from "muiComponents/Cards/InfoCards/DashboardInfoCard";
 import DropdownMenu from "muiComponents/MultiSelectDropdown";
-// import MDTypography from "components/MDTypography";
-// import MDButton from "components/MDButton";
-import api from "../../axios";
 import PaymentDialog from "layouts/billing/components/PaymentDialog";
-import { useUser } from "context/userContext";
 import AddPaymnetAlert from "./components/AddPaymnetAlert";
 import VerifyPaymnetAlert from "./components/VerifyPaymentAlert";
-import { useNavigate } from "react-router-dom";
+// import MDTypography from "components/MDTypography";
+// import MDButton from "components/MDButton";
+import { useUser } from "context/userContext";
+
+import api from "../../axios";
+import ChangePasswordModal from "../Modals/ChangePasswordModal.js";
 
 const cardData = [
   { title: "Total Weekly Sales", value: "$10,000", trend: "up", previousSale: "6" },
@@ -264,6 +267,7 @@ const Dashboard = () => {
           </Grid>
           {/* </Grid> */}
         </MDBox>
+        <ChangePasswordModal />
       </MDBox>
     </>
   );
