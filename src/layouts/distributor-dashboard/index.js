@@ -3,6 +3,8 @@ import { Grid } from "@mui/material";
 import MDBox from "components/MDBox";
 import Brands from "layouts/dashboard/components/Brands";
 
+import ChangePasswordModal from "../Modals/ChangePasswordModal.js";
+
 const DistributorDashboard = () => (
   <MDBox py={3}>
     <Grid container spacing={3}>
@@ -10,6 +12,7 @@ const DistributorDashboard = () => (
         <Brands />
       </Grid>
     </Grid>
+    <ChangePasswordModal />
   </MDBox>
 );
 

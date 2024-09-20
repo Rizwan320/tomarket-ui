@@ -4,13 +4,14 @@ import { toast } from "react-toastify";
 import Card from "@mui/material/Card";
 
 import MDBox from "components/MDBox";
-import MDButton from "components/MDButton";
 import DataTable from "muiComponents/Tables/DataTable";
 import MDTypography from "components/MDTypography";
 
-import api from "../../../axios";
-import { tableAccountData } from "./data";
 import { useUser } from "context/userContext";
+import { tableAccountData } from "./data";
+
+import api from "../../../axios";
+import AddBrandAndDistributor from "../addBrandAndDistributor";
 
 const SuperAdminBrands = () => {
   const [brandData, setBrandData] = useState({ columns: [], rows: [] });
@@ -56,9 +57,7 @@ const SuperAdminBrands = () => {
           }}
         >
           <MDBox mr={2}>
-            <MDButton variant="contained" color="success">
-              Add Brand
-            </MDButton>
+            <AddBrandAndDistributor accountType="brand" />
           </MDBox>
         </MDBox>
       </MDBox>
