@@ -49,7 +49,7 @@ const ChangePasswordModal = () => {
     }
   };
 
-  const handleX = (_, reason) => {
+  const handleCloseModal = (_, reason) => {
     if (reason === "backdropClick") {
       return;
     }
@@ -59,7 +59,7 @@ const ChangePasswordModal = () => {
   return (
     <Modal
       open={open}
-      onClose={handleX}
+      onClose={handleCloseModal}
       aria-labelledby="add-password-modal-title"
       aria-describedby="add-password-modal-description"
       disablebackdropclick="true"
