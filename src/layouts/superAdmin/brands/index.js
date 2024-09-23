@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-
+import { useNavigate } from "react-router-dom";
 import Card from "@mui/material/Card";
 
 import MDBox from "components/MDBox";
@@ -16,6 +16,7 @@ import AddBrandAndDistributor from "../addBrandAndDistributor";
 const SuperAdminBrands = () => {
   const [brandData, setBrandData] = useState({ columns: [], rows: [] });
   const { AdminData } = useUser();
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchBrands();
@@ -41,6 +42,8 @@ const SuperAdminBrands = () => {
       toast.error(error?.response?.data?.message || error?.message);
     }
   };
+
+  const handleRowClick = (row) => navigate(`/brands/${row?.id}/users`);
 
   return (
     <Card>
@@ -68,6 +71,7 @@ const SuperAdminBrands = () => {
           isSorted={false}
           noEndBorder
           entriesPerPage={false}
+          onRowClick={handleRowClick}
         />
       </MDBox>
     </Card>

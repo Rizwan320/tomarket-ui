@@ -38,6 +38,8 @@ const SuperAdminConnections = lazy(() => import("layouts/superAdmin/connections"
 const UploadProducts = lazy(() => import("layouts/superAdmin/uploadProduct"));
 const AddUser = lazy(() => import("layouts/superAdmin/addUser"));
 const UploadSales = lazy(() => import("layouts/sales/uploadSales"));
+const BrandDetails = lazy(() => import("layouts/superAdmin/brands/brandDetails"));
+const DistributorDetails = lazy(() => import("layouts/superAdmin/distributors/distributorDetails"));
 
 const SuspendedComponent = (Component) => (
   <Suspense>
@@ -419,29 +421,45 @@ export const superAdminRoutes = [
   {
     type: "collapse",
     name: "Distributors",
-    key: "admin-distributors",
+    key: "distributors",
     icon: <Icon fontSize="small">people</Icon>,
-    route: "/admin-distributors",
+    route: "/distributors",
     component: SuspendedComponent(SuperAdminDistributors),
+    isPrivate: true,
+    isNavbar: true,
+  },
+  {
+    name: "Distributor Details",
+    key: "admin-distributor-details",
+    route: "/distributors/:id/users",
+    component: SuspendedComponent(DistributorDetails),
     isPrivate: true,
     isNavbar: true,
   },
   {
     type: "collapse",
     name: "Brands",
-    key: "admin-brands",
+    key: "brands",
     icon: <Icon fontSize="small">groups</Icon>,
-    route: "/admin-brands",
+    route: "/brands",
     component: SuspendedComponent(SuperAdminBrands),
+    isPrivate: true,
+    isNavbar: true,
+  },
+  {
+    name: "Brands Details",
+    key: "admin-brands-details",
+    route: "/brands/:id/users",
+    component: SuspendedComponent(BrandDetails),
     isPrivate: true,
     isNavbar: true,
   },
   {
     type: "collapse",
     name: "Products",
-    key: "admin-products",
+    key: "products",
     icon: <Icon fontSize="small">storefront</Icon>,
-    route: "/admin-products",
+    route: "/products",
     component: SuspendedComponent(SuperAdminProducts),
     isPrivate: true,
     isNavbar: true,
@@ -449,9 +467,9 @@ export const superAdminRoutes = [
   {
     type: "collapse",
     name: "Settings",
-    key: "admin-settings",
+    key: "settings",
     icon: <Icon fontSize="small">settings</Icon>,
-    route: "/admin-settings",
+    route: "/settings",
     component: SuspendedComponent(SuperAdminSettings),
     isPrivate: true,
     isNavbar: true,
@@ -459,9 +477,9 @@ export const superAdminRoutes = [
   {
     type: "collapse",
     name: "Connections",
-    key: "admin-connections",
+    key: "connections",
     icon: <Icon fontSize="small">link</Icon>,
-    route: "/admin-connections",
+    route: "/connections",
     component: SuspendedComponent(SuperAdminConnections),
     isPrivate: true,
     isNavbar: true,
