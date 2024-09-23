@@ -11,6 +11,7 @@ import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
 
 import api from "../../../axios";
+import { useUser } from "context/userContext";
 
 const validationSchema = Yup.object({
   userName: Yup.string().required("Name is required"),
@@ -19,10 +20,11 @@ const validationSchema = Yup.object({
 
 const AddUser = () => {
   const navigate = useNavigate();
+  const { user } = useUser();
 
   const handleSubmit = async (values) => {
     try {
-      const res = await api.post("/users", {
+      const res = await api.post(`/users/add-user/${user?.user?.id}`, {
         email: values.userEmail,
         userName: values.userName,
         passwordChanged: false,

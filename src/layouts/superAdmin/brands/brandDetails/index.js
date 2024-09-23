@@ -10,6 +10,7 @@ import DataTable from "muiComponents/Tables/DataTable";
 import api from "../../../../axios";
 import { useUser } from "context/userContext";
 import { generateUsersDetailTable } from "layouts/users/data";
+import AddUserModal from "../../addUser/addUserModal";
 
 const BrandDetails = () => {
   const { id } = useParams();
@@ -44,10 +45,11 @@ const BrandDetails = () => {
 
   return (
     <Card>
-      <MDBox p={3}>
+      <MDBox p={3} display="flex" justifyContent="space-between">
         <MDTypography variant="h5" gutterBottom>
           {brandName?.name}
         </MDTypography>
+        <AddUserModal user={brandName?.account?.users[0]} />
       </MDBox>
       <MDBox>
         <DataTable
