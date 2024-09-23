@@ -51,7 +51,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm start",
-    "prettier": "npx prettier --write ."
+    "prettier": "npx prettier --write .",
+    "start:dev": "react-scripts start"
   },
   "eslintConfig": {
     "extends": [
