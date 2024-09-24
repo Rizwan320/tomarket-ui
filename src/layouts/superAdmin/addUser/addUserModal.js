@@ -19,13 +19,13 @@ const validationSchema = Yup.object({
   userEmail: Yup.string().email("Invalid email format").required("Email is required"),
 });
 
-const AddUserModal = ({ user }) => {
+const AddUserModal = ({ account }) => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (values) => {
     try {
-      const res = await api.post(`/users/add-user/${user?.id}`, {
+      await api.post(`/users/add-user/${account?.id}`, {
         email: values.userEmail,
         userName: values.userName,
         passwordChanged: false,
@@ -34,14 +34,11 @@ const AddUserModal = ({ user }) => {
       });
       toast.success("User added successfully");
     } catch (error) {
-      if (error?.response?.data?.message) {
-        toast.error(error.response.data.message);
-      } else {
-        toast.error(error.message);
-      }
+      toast.error(error?.response?.data?.message || error?.message);
+    } finally {
+      navigate("/dashboard");
+      handleClose();
     }
-    navigate("/dashboard");
-    handleClose();
   };
 
   const handleOpen = () => setOpen(true);

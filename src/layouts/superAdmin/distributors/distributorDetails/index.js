@@ -51,7 +51,7 @@ const DistributorDetails = () => {
         <MDTypography variant="h5" gutterBottom>
           {distributorName?.name}
         </MDTypography>
-        <AddUserModal user={distributorName?.account?.users[0]} />
+        <AddUserModal account={distributorName?.account} />
       </MDBox>
       <MDBox>
         <DataTable

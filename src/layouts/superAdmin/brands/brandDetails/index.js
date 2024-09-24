@@ -49,7 +49,7 @@ const BrandDetails = () => {
         <MDTypography variant="h5" gutterBottom>
           {brandName?.name}
         </MDTypography>
-        <AddUserModal user={brandName?.account?.users[0]} />
+        <AddUserModal account={brandName?.account} />
       </MDBox>
       <MDBox>
         <DataTable
