@@ -19,13 +19,13 @@ const validationSchema = Yup.object({
   userEmail: Yup.string().email("Invalid email format").required("Email is required"),
 });
 
-const AddUserModal = ({ user }) => {
+const AddUserModal = ({ account }) => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (values) => {
     try {
-      const res = await api.post(`/users/add-user/${user?.id}`, {
+      const res = await api.post(`/users/add-user/${account?.id}`, {
         email: values.userEmail,
         userName: values.userName,
         passwordChanged: false,

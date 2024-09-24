@@ -20,11 +20,17 @@ const validationSchema = Yup.object({
 
 const AddUser = () => {
   const navigate = useNavigate();
-  const { user } = useUser();
+  const {
+    user: {
+      user: {
+        account: { id },
+      },
+    },
+  } = useUser();
 
   const handleSubmit = async (values) => {
     try {
-      const res = await api.post(`/users/add-user/${user?.user?.id}`, {
+      await api.post(`/users/add-user/${id}`, {
         email: values.userEmail,
         userName: values.userName,
         passwordChanged: false,
@@ -33,13 +39,10 @@ const AddUser = () => {
       });
       toast.success("User added successfully");
     } catch (error) {
-      if (error?.response?.data?.message) {
-        toast.error(error.response.data.message);
-      } else {
-        toast.error(error.message);
-      }
+      toast.error(error?.response?.data?.message || error?.message);
+    } finally {
+      navigate("/dashboard");
     }
-    navigate("/dashboard");
   };
 
   return (
