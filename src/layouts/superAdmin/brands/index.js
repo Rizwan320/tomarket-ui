@@ -24,9 +24,8 @@ const SuperAdminBrands = () => {
 
   const fetchBrands = async () => {
     try {
-      const response = await api.get("accounts/brands");
-      const accounts = response?.data;
-      setBrandData(tableAccountData(accounts, handleImpersonate));
+      const response = await api.get("admin/brand");
+      setBrandData(tableAccountData(response?.data, handleImpersonate));
     } catch (error) {
       toast.error(error?.response?.data?.message || error?.message);
     }
