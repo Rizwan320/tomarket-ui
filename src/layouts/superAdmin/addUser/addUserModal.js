@@ -25,7 +25,7 @@ const AddUserModal = ({ account }) => {
 
   const handleSubmit = async (values) => {
     try {
-      const res = await api.post(`/users/add-user/${account?.id}`, {
+      await api.post(`/users/add-user/${account?.id}`, {
         email: values.userEmail,
         userName: values.userName,
         passwordChanged: false,
@@ -34,14 +34,11 @@ const AddUserModal = ({ account }) => {
       });
       toast.success("User added successfully");
     } catch (error) {
-      if (error?.response?.data?.message) {
-        toast.error(error.response.data.message);
-      } else {
-        toast.error(error.message);
-      }
+      toast.error(error?.response?.data?.message || error?.message);
+    } finally {
+      navigate("/dashboard");
+      handleClose();
     }
-    navigate("/dashboard");
-    handleClose();
   };
 
   const handleOpen = () => setOpen(true);
