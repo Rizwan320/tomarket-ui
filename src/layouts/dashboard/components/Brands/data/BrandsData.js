@@ -1,13 +1,15 @@
-import FreshBreeze from "assets/images/fresh_breeze.png";
-import GreenLeaf from "assets/images/green_leaf_snack.png";
-import NutriFit from "assets/images/nutri_fit.png";
-import SparkleFresh from "assets/images/sparkel.png";
-import CozyHome from "assets/images/cozy_home.png";
-import EarthShampoo from "assets/images/shampoo.png";
-import CleanWave from "assets/images/clean_wave.png";
-import Cereal from "assets/images/cereal.png";
-import EnergyDrink from "assets/images/energy_drink.png";
-import PureGlow from "assets/images/glow_skin.png";
+import {
+  nutriFit as NutriFit,
+  sparkel as SparkleFresh,
+  shampoo as EarthShampoo,
+  greenLeafSnack as GreenLeaf,
+  glowSkin as PureGlow,
+  energyDrink as EnergyDrink,
+  freshBreeze as FreshBreeze,
+  cozyHome as CozyHome,
+  cleanWave as CleanWave,
+  cereal as Cereal,
+} from "assets/assets";
 
 export const BADGE_COLOR = {
   red: "error",

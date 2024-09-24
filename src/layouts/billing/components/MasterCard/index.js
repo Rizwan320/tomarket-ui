@@ -5,12 +5,7 @@ import { IconButton } from "@mui/material";
 
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
-
-// Images
-import pattern from "assets/images/illustrations/pattern-tree.svg";
-import masterCardLogo from "assets/images/logos/mastercard.png";
-import visaCardLogo from "assets/images/logos/visa.png";
-import creditCardLogo from "assets/images/logos/card.png";
+import { masterCard, card, patternTree, visaCard } from "assets/assets";
 
 const getCardType = (firstFourDigits) => {
   if (/^4/.test(firstFourDigits)) {
@@ -26,9 +21,9 @@ const getCardType = (firstFourDigits) => {
 };
 
 const CardType = {
-  MasterCard: masterCardLogo,
-  Visa: visaCardLogo,
-  default: creditCardLogo,
+  MasterCard: masterCard,
+  Visa: visaCard,
+  default: card,
 };
 
 function MasterCard({ color, number, holder, expires, cvv, cardType, onEdit }) {
@@ -57,7 +52,7 @@ function MasterCard({ color, number, holder, expires, cvv, cardType, onEdit }) {
         height="100%"
         opacity={0.2}
         sx={{
-          backgroundImage: `url(${pattern})`,
+          backgroundImage: `url(${patternTree})`,
           backgroundSize: "cover",
         }}
       />

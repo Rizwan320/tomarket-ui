@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -6,17 +7,17 @@ import Card from "@mui/material/Card";
 import { IconButton, InputAdornment } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+
 import MDBox from "components/MDBox";
+import Loader from "components/Loader";
 import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
 import BasicLayout from "../components/BasicLayout";
 import GooglePlacesAutocomplete from "google/GooglePlacesAutocomplete";
-import bgImage from "assets/images/login-bg.jpg";
-import tmLogo from "assets/images/toMarket-logo.png";
+
 import api from "../../../axios";
-import { toast } from "react-toastify";
-import Loader from "components/Loader";
+import { backgroundImage, tomarketLogo } from "assets/assets";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -80,7 +81,7 @@ const SignUp = () => {
   const handleToggleConfirmPasswordVisibility = () => setHideConfirmPassword(!hideConfirmPassword);
 
   return (
-    <BasicLayout image={bgImage} formType="signup">
+    <BasicLayout image={backgroundImage} formType="signup">
       {loading && <Loader />}
       <Card sx={{ width: "600px" }}>
         <MDBox
@@ -107,7 +108,7 @@ const SignUp = () => {
               ml: "auto",
               mr: "auto",
             }}
-            src={tmLogo}
+            src={tomarketLogo}
             alt="Logo"
           />
         </MDBox>
