@@ -1,30 +1,26 @@
 import { useEffect } from "react";
-
 import { useLocation, NavLink, useNavigate } from "react-router-dom";
 
+import Box from "@mui/material/Box";
+import Icon from "@mui/material/Icon";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
-import Icon from "@mui/material/Icon";
 import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
 import LogoutIcon from "@mui/icons-material/Logout";
-import Box from "@mui/material/Box";
+import { Tooltip } from "@mui/material";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemButton from "@mui/material/ListItemButton";
 
 import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
-import { useUser } from "context/userContext";
-
 import SidenavCollapse from "muiComponents/Sidenav/SidenavCollapse";
-
 import SidenavRoot from "muiComponents/Sidenav/SidenavRoot";
 import HrefLink from "./HrefLink";
 
+import { useUser } from "context/userContext";
 import { useMaterialUIController, setMiniSidenav, setWhiteSidenav } from "context";
-
-import toMarketLogo from "../../assets/images/tomarket-green-logo.png";
-import { Tooltip } from "@mui/material";
+import { tomarketGreenLogo } from "assets/assets";
 
 const EXCLUDE_SIDE_BAR_KEYS = ["sign-in", "sign-up"];
 
@@ -63,8 +59,6 @@ const Sidenav = ({ color, brand, CompanyName, routes, ...rest }) => {
   };
 
   const handleStopImpersonating = () => stopImpersonate();
-
-  const treeRoute = routes.find((route) => route.key === "profile");
 
   const renderRoutes = routes.map(
     ({ type, name, icon, title, noCollapse, key, href, route, children, disabled }) => {
@@ -146,7 +140,7 @@ const Sidenav = ({ color, brand, CompanyName, routes, ...rest }) => {
           </MDTypography>
         </MDBox>
         <MDBox component={NavLink} to="/" display="flex" alignItems="center">
-          {brand && <MDBox component="img" src={toMarketLogo} alt="Brand" width="10rem" />}
+          {brand && <MDBox component="img" src={tomarketGreenLogo} alt="Brand" width="10rem" />}
           {/* <MDBox
             width={!CompanyName && "100%"}
             sx={(theme) => sidenavLogoLabel(theme, { miniSidenav })}

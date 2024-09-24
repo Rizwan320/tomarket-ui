@@ -19,9 +19,8 @@ import MDTypography from "components/MDTypography";
 import { useUser } from "context/userContext";
 import BasicLayout from "layouts/authentication/components/BasicLayout";
 
-import bgImage from "assets/images/login-bg.jpg";
-import tmLogo from "assets/images/toMarket-logo.png";
 import api from "../../../axios";
+import { backgroundImage, tomarketLogo } from "assets/assets";
 
 const SignIn = () => {
   const [rememberMe, setRememberMe] = useState(false);
@@ -29,7 +28,6 @@ const SignIn = () => {
   const { login } = useUser();
   const navigate = useNavigate();
 
-  // const handleSignInWithGoogle = () => {};
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
   const handleTogglePasswordVisibility = () => setHidePassword(!hidePassword);
 
@@ -55,7 +53,7 @@ const SignIn = () => {
   };
 
   return (
-    <BasicLayout image={bgImage} formType="signin">
+    <BasicLayout image={backgroundImage} formType="signin">
       <Card>
         <MDBox
           variant="gradient"
@@ -82,7 +80,7 @@ const SignIn = () => {
                 ml: "auto",
                 mr: "auto",
               }}
-              src={tmLogo}
+              src={tomarketLogo}
               alt="Logo"
             />
           </Grid>

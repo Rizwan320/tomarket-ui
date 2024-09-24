@@ -1,22 +1,22 @@
 import { useState, useEffect } from "react";
 import ReactGA from "react-ga4";
 import { Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
+
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 
 import Sidenav from "muiComponents/Sidenav";
 import DashboardLayout from "muiComponents/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "muiComponents/Navbars/DashboardNavbar";
+
+import { setNavigate } from "./axios/navigate";
 import { brandRoutes, distributorRoutes, superAdminRoutes } from "routes";
 import { useMaterialUIController, setMiniSidenav } from "context";
 import { useUser } from "context/userContext";
 import PrivateRoute from "routes/privateRoutes";
 
 import theme from "assets/theme";
-import brandWhite from "assets/images/logo-ct.png";
-import brandDark from "assets/images/logo-ct-dark.png";
-
-import { setNavigate } from "./axios/navigate";
+import { logoCt as brandWhite, logoCtDark as brandDark } from "assets/assets";
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -39,7 +39,7 @@ export default function App() {
   setNavigate(navigate);
 
   useEffect(() => {
-    ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS_ID); // Replace with your Measurement ID
+    ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS_ID);
   }, []);
 
   useEffect(() => {
