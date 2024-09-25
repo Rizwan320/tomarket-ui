@@ -267,7 +267,7 @@ const Dashboard = () => {
           </Grid>
           {/* </Grid> */}
         </MDBox>
-        <ChangePasswordModal />
+        {!user?.isImpersonating && <ChangePasswordModal />}
       </MDBox>
     </>
   );

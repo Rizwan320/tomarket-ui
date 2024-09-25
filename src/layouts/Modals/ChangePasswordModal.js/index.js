@@ -30,7 +30,7 @@ const ChangePasswordModal = () => {
 
   const handleClose = () => setOpen(false);
 
-  const togglePasswordVisibility = () => setShowPassword(showPassword);
+  const togglePasswordVisibility = () => setShowPassword(!showPassword);
 
   const toggleConfirmPasswordVisibility = () => setShowConfirmPassword(!showConfirmPassword);
 
