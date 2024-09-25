@@ -14,7 +14,7 @@ import AddUserModal from "../../addUser/addUserModal";
 
 const BrandDetails = () => {
   const { id } = useParams();
-  const { AdminData } = useUser();
+  const { adminData } = useUser();
   const [brandName, setBrandName] = useState(null);
   const [brandData, setBrandData] = useState({ columns: [], rows: [] });
 
@@ -37,7 +37,7 @@ const BrandDetails = () => {
       const response = await api.get("/admin/user", {
         params: { id },
       });
-      AdminData(response?.data);
+      adminData(response?.data);
     } catch (error) {
       toast.error(error?.response?.data?.message || error?.message);
     }

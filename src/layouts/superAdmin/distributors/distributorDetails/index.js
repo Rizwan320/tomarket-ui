@@ -14,7 +14,7 @@ import AddUserModal from "../../addUser/addUserModal";
 
 const DistributorDetails = () => {
   const { id } = useParams();
-  const { AdminData } = useUser();
+  const { adminData } = useUser();
   const [distributorName, setDistributorName] = useState(null);
   const [distributorData, setDistributorData] = useState({ columns: [], rows: [] });
 
@@ -39,7 +39,7 @@ const DistributorDetails = () => {
       const response = await api.get("/admin/user", {
         params: { id },
       });
-      AdminData(response?.data);
+      adminData(response?.data);
     } catch (error) {
       toast.error(error?.response?.data?.message || error?.message);
     }

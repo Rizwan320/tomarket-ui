@@ -15,7 +15,7 @@ import AddBrandAndDistributor from "../addBrandAndDistributor";
 
 const SuperAdminBrands = () => {
   const [brandData, setBrandData] = useState({ columns: [], rows: [] });
-  const { AdminData } = useUser();
+  const { adminData } = useUser();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -36,7 +36,7 @@ const SuperAdminBrands = () => {
       const response = await api.get("/admin/user", {
         params: { id },
       });
-      AdminData(response?.data);
+      adminData(response?.data);
     } catch (error) {
       toast.error(error?.response?.data?.message || error?.message);
     }
