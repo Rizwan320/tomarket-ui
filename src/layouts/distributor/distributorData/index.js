@@ -1,10 +1,12 @@
-import MDBox from "components/MDBox";
-import MDAvatar from "components/MDAvatar";
-import MDTypography from "components/MDTypography";
-import MDButton from "components/MDButton";
 import { useState } from "react";
-import api from "../../../axios";
 import { Chip } from "@mui/material";
+
+import MDBox from "components/MDBox";
+import MDButton from "components/MDButton";
+import MDTypography from "components/MDTypography";
+
+import api from "../../../axios";
+import { useUser } from "context/userContext";
 
 const COLUMNS = {
   name: {
@@ -24,7 +26,7 @@ const distributorsData = (tableData) => {
 
   const Brand = ({ name }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
-      <MDTypography component="h4" fontWeight="medium">
+      <MDTypography variant="caption" fontWeight="medium">
         {name}
       </MDTypography>
     </MDBox>
@@ -33,24 +35,36 @@ const distributorsData = (tableData) => {
   const Connect = ({ id }) => {
     const [loading, setLoading] = useState(false);
     const [state, setState] = useState(false);
+    const [chipState, setChipState] = useState("");
+    const { user } = useUser();
 
     const handleOnClick = async () => {
       try {
         setLoading(true);
-        const response = await api.post("connections/request-by-brand", { distributorId: id });
-        if (response.data) {
-          setState(true);
-        }
+
+        const endpoint = user?.isImpersonating
+          ? "connections/request-by-admin"
+          : "connections/request-by-brand";
+
+        const requestData = user?.isImpersonating
+          ? { brandId: user?.user?.id, distributorId: id, accountType: "brand" }
+          : { distributorId: id };
+
+        const response = await api.post(endpoint, requestData);
+
+        setChipState(response?.data?.state.includes("confirmed") ? "Confirmed" : "Pending");
       } catch (error) {
-        console.log(error.message);
+        console.error("Error making request:", error.message);
       } finally {
+        setState(true);
         setLoading(false);
       }
     };
+
     return (
       <MDBox>
         {state ? (
-          <Chip label="Pending" variant="outlined" />
+          <Chip label={chipState} variant="outlined" />
         ) : (
           <MDButton onClick={handleOnClick} variant="contained" color="success" disabled={loading}>
             Request to connect
@@ -70,6 +84,7 @@ const distributorsData = (tableData) => {
 
     return componentsMap[column] ? componentsMap[column]() : null;
   };
+
   return {
     columns: filteredColumns,
     rows: tableData?.map((row) => {

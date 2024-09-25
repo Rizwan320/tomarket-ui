@@ -42,7 +42,6 @@ const Brands = () => {
       try {
         setLoading(true);
         const response = await api.get(`connections/distributor?state=${state}`);
-        console.log(response);
         if (response.data) {
           setConnectionRequestsTableData(
             response.data.map((item) => ({ id: item.id, name: item.brand.name, state: item.state }))
