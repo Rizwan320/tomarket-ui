@@ -1,10 +1,12 @@
-import MDBox from "components/MDBox";
-import MDAvatar from "components/MDAvatar";
-import MDTypography from "components/MDTypography";
-import MDButton from "components/MDButton";
 import { useState } from "react";
-import api from "../../../axios";
 import { Chip } from "@mui/material";
+
+import MDBox from "components/MDBox";
+import MDButton from "components/MDButton";
+import MDTypography from "components/MDTypography";
+
+import { useUser } from "context/userContext";
+import api from "../../../axios";
 
 const COLUMNS = {
   name: {
@@ -24,7 +26,7 @@ const brandsData = (tableData) => {
 
   const Brand = ({ name }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
-      <MDTypography component="h4" fontWeight="medium">
+      <MDTypography variant="caption" fontWeight="medium">
         {name}
       </MDTypography>
     </MDBox>
@@ -33,24 +35,38 @@ const brandsData = (tableData) => {
   const Connect = ({ id }) => {
     const [loading, setLoading] = useState(false);
     const [state, setState] = useState(false);
+    const [chipState, setChipState] = useState("");
+    const { user } = useUser();
 
     const handleOnClick = async () => {
       try {
         setLoading(true);
-        const response = await api.post("connections/request-by-distributor", { brandId: id });
+
+        const endpoint = user?.isImpersonating
+          ? "connections/request-by-admin"
+          : "connections/request-by-distributor";
+
+        const requestData = user?.isImpersonating
+          ? { brandId: id, distributorId: user?.user?.id, accountType: "distributor" }
+          : { brandId: id };
+
+        const response = await api.post(endpoint, requestData);
+
         if (response.data) {
-          setState(true);
+          setChipState(user?.isImpersonating ? "Confirmed" : "Pending");
         }
       } catch (error) {
-        console.log(error.message);
+        console.error("Error making request:", error.message);
       } finally {
+        setState(true);
         setLoading(false);
       }
     };
+
     return (
       <MDBox>
         {state ? (
-          <Chip label="Pending" variant="outlined" />
+          <Chip label={chipState} variant="outlined" />
         ) : (
           <MDButton onClick={handleOnClick} variant="contained" color="success" disabled={loading}>
             Request to connect
