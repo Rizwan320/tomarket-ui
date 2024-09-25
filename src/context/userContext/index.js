@@ -7,10 +7,9 @@ const initialState = {
   user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null,
   accessToken: localStorage.getItem("accessToken") || null,
   refreshToken: localStorage.getItem("refreshToken") || null,
-  admin: localStorage.getItem("admin") || null,
-  isAdmin: false,
+  admin: JSON.parse(localStorage.getItem("admin")) || null,
+  isImpersonating: !!localStorage.getItem("admin"),
 };
-
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(initialState);
 
@@ -23,9 +22,12 @@ export const UserProvider = ({ children }) => {
         refreshToken,
         isAuthenticated: true,
         user: user,
-        isAdmin: user?.isSuperAdmin ? true : false,
+        isImpersonating: user?.isSuperAdmin ? true : false,
       };
     });
+    if (user?.isSuperAdmin) {
+      localStorage.setItem("admin", JSON.stringify(user));
+    }
     localStorage.setItem("accessToken", access_token);
     localStorage.setItem("refreshToken", refreshToken);
     localStorage.setItem("user", JSON.stringify(user));
@@ -40,18 +42,18 @@ export const UserProvider = ({ children }) => {
     localStorage.clear();
   };
 
-  const updateUser = (userData, isAdmin = false) => {
+  const updateUser = (userData, isImpersonating = user?.isSuperAdmin) => {
     setUser((pre) => {
       return {
         ...pre,
-        isAdmin,
+        isImpersonating,
         user: userData,
       };
     });
     localStorage.setItem("user", JSON.stringify(userData));
   };
 
-  const AdminData = (data) => {
+  const adminData = (data) => {
     localStorage.setItem("accessToken", data?.access_token);
     localStorage.setItem("refreshToken", data?.refreshToken);
     const userValue = localStorage.getItem("user");
@@ -68,7 +70,7 @@ export const UserProvider = ({ children }) => {
   };
 
   return (
-    <UserContext.Provider value={{ user, login, logout, updateUser, AdminData, stopImpersonate }}>
+    <UserContext.Provider value={{ user, login, logout, updateUser, adminData, stopImpersonate }}>
       {children}
     </UserContext.Provider>
   );

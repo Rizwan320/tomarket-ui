@@ -155,7 +155,7 @@ const Sidenav = ({ color, brand, CompanyName, routes, ...rest }) => {
 
       <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
         <MDBox textAlign="center">
-          {!user?.user?.isSuperAdmin && user.isAdmin && (
+          {!user?.user?.isSuperAdmin && user?.isImpersonating && (
             <MDButton
               color="success"
               variant="outlined"
