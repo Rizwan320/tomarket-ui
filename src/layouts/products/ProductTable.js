@@ -10,7 +10,7 @@ import DataTable from "muiComponents/Tables/DataTable";
 import api from "../../axios";
 
 import { tableProductData } from "./data";
-import UploadFileModal from "layouts/buyers/components/Modals/UploadFileModal";
+import UploadFileModal from "layouts/Buyers/components/Modals/UploadFileModal";
 
 const ProductTable = () => {
   const [open, setOpen] = useState(false);

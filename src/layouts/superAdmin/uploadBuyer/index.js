@@ -7,11 +7,11 @@ import MDTypography from "components/MDTypography";
 
 import DataTable from "muiComponents/Tables/DataTable";
 import DropdownMenu from "muiComponents/MultiSelectDropdown";
-import buyersdata from "layouts/buyers/components/data";
+import buyersdata from "layouts/Buyers/components/data";
 import MDButton from "components/MDButton";
 import api from "../../../axios";
 import Loader from "components/Loader";
-import UploadFileModal from "layouts/buyers/components/Modals/UploadFileModal";
+import UploadFileModal from "layouts/Buyers/components/Modals/UploadFileModal";
 
 const COLUMNS = [
   { Header: "Logo", accessor: "logo", align: "left" },

@@ -9,7 +9,7 @@ import ContentOrganizationFiles from "layouts/contentOrganization/components/Con
 
 const Wcw = lazy(() => import("layouts/wcw"));
 const Users = lazy(() => import("layouts/users"));
-const Buyers = lazy(() => import("layouts/buyers"));
+const Buyers = lazy(() => import("layouts/Buyers"));
 const Plugins = lazy(() => import("layouts/plugins"));
 const Profile = lazy(() => import("layouts/profile"));
 const Settings = lazy(() => import("layouts/settings"));
@@ -25,8 +25,8 @@ const DistributorDashboard = lazy(() => import("layouts/distributor-dashboard"))
 const Distributors = lazy(() => import("layouts/distributor"));
 const Brands = lazy(() => import("layouts/brands"));
 const Sales = lazy(() => import("layouts/sales"));
-const EditBuyer = lazy(() => import("layouts/buyers/editBuyer"));
-const AddBuyer = lazy(() => import("layouts/buyers/addBuyer"));
+const EditBuyer = lazy(() => import("layouts/Buyers/editBuyer"));
+const AddBuyer = lazy(() => import("layouts/Buyers/addBuyer"));
 const UploadBuyers = lazy(() => import("layouts/superAdmin/uploadBuyer"));
 const SaleDetail = lazy(() => import("layouts/sales/saleDetails"));
 const SuperAdminDashboard = lazy(() => import("layouts/superAdmin/dashboard"));

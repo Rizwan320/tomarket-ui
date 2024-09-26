@@ -1,4 +1,4 @@
-import Buyers from "layouts/buyers";
+import Buyers from "layouts/Buyers";
 
 const AdminBuyers = () => <Buyers />;
 
