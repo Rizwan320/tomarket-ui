@@ -1,51 +1,26 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 
 import Card from "@mui/material/Card";
 
 import MDBox from "components/MDBox";
-import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
-
 import DataTable from "muiComponents/Tables/DataTable";
-import DropdownMenu from "muiComponents/MultiSelectDropdown";
-
-import UploadFileModal from "layouts/Buyers/components/Modals/UploadFileModal";
 
 import api from "../../axios";
-import productData from "./productData";
 
-const COLUMNS = [
-  { Header: "Name", accessor: "name", align: "center" },
-  { Header: "SKU", accessor: "sku", align: "center" },
-  { Header: "Description", accessor: "description", align: "center" },
-  { Header: "Unit Sold Last Month", accessor: "unitSoldLastMonth", align: "center" },
-  { Header: "Unit Sold Last Week", accessor: "unitSoldLastWeek", align: "center" },
-  { Header: "Category", accessor: "category", align: "center" },
-  { Header: "Largest Buyer", accessor: "largestBuyer", align: "center" },
-  { Header: "Best Sales Rep", accessor: "bestSalesRep", align: "center" },
-  { Header: "Best Market", accessor: "bestMarket", align: "center" },
-  { Header: "Highest Sales Day", accessor: "highestSalesDay", align: "center" },
-  { Header: "Highest Sales Month", accessor: "highestSalesMonth", align: "center" },
-  { Header: "Inventory Age", accessor: "inventoryAge", align: "center" },
-  { Header: "Latest Buyer", accessor: "latestBuyer", align: "center" },
-  { Header: "Total Sold Week", accessor: "totalSoldWeek", align: "center" },
-  { Header: "Total Sold Month", accessor: "totalSoldMonth", align: "center" },
-];
+import { tableProductData } from "./data";
+import UploadFileModal from "layouts/buyers/components/Modals/UploadFileModal";
 
 const ProductTable = () => {
   const [open, setOpen] = useState(false);
   const [uplaodFile, setUploadFile] = useState();
-  const [tableColumns, setTableColumns] = useState([
-    "id",
-    "name",
-    "sku",
-    "description",
-    "latestBuyer",
-    "totalSoldWeek",
-    "totalSoldMonth",
-  ]);
+  const [productData, setProductData] = useState({ columns: [], rows: [] });
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
   const PRODUCT_FILE_HEADERS = [
     {
       id: "name",
@@ -72,8 +47,16 @@ const ProductTable = () => {
       displayName: "Total Sold Month",
     },
   ];
-  const { columns, rows } = productData(tableColumns);
-  const navigate = useNavigate();
+
+  const fetchProducts = async () => {
+    try {
+      const response = await api.get("products");
+      const products = response?.data;
+      setProductData(tableProductData(products));
+    } catch (error) {
+      toast.error(error?.response?.data?.message || error?.message);
+    }
+  };
 
   const handleRowClick = (row) => {
     navigate(`/product/${row?.id}`);
@@ -110,18 +93,18 @@ const ProductTable = () => {
 
   return (
     <Card>
-      <MDBox sx={{ display: "flex", justifyContent: "space-between" }} p={3}>
-        <MDTypography variant="h6" gutterBottom>
-          Product Table
+      <MDBox p={3}>
+        <MDTypography variant="h5" gutterBottom>
+          Products
         </MDTypography>
-        <MDBox
+        {/* <MDBox
           sx={{
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
           }}
         >
-          {/* <MDBox mr={2}>
+          <MDBox mr={2}>
             <MDButton variant="contained" color="success" onClick={handleOpen}>
               Upload File
             </MDButton>
@@ -131,26 +114,25 @@ const ProductTable = () => {
             <MDButton variant="contained" color="success" onClick={() => handleAddProduct()}>
               Add Product
             </MDButton>
-          </MDBox> */}
+          </MDBox>
 
-          {/* <DropdownMenu
+          <DropdownMenu
             tableColumns={tableColumns}
             columns={COLUMNS}
             setTableColumns={setTableColumns}
-          /> */}
-        </MDBox>
+          />
+        </MDBox> */}
       </MDBox>
-
       <MDBox>
         <DataTable
-          table={{ columns, rows }}
+          table={productData}
           showTotalEntries={true}
-          noEndBorder={false}
+          isSorted={false}
+          noEndBorder
           entriesPerPage={false}
-          onRowClick={handleRowClick}
         />
       </MDBox>
-      {open && (
+      {/* {open && (
         <UploadFileModal
           open={open}
           fileName="TM-product-upload-template"
@@ -160,7 +142,7 @@ const ProductTable = () => {
           columns={PRODUCT_FILE_HEADERS}
           heading="Download Product Template From Here"
         />
-      )}
+      )} */}
     </Card>
   );
 };

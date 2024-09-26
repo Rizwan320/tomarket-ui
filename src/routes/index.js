@@ -9,7 +9,7 @@ import ContentOrganizationFiles from "layouts/contentOrganization/components/Con
 
 const Wcw = lazy(() => import("layouts/wcw"));
 const Users = lazy(() => import("layouts/users"));
-const Buyers = lazy(() => import("layouts/Buyers"));
+const Buyers = lazy(() => import("layouts/buyers"));
 const Plugins = lazy(() => import("layouts/plugins"));
 const Profile = lazy(() => import("layouts/profile"));
 const Settings = lazy(() => import("layouts/settings"));
@@ -25,8 +25,8 @@ const DistributorDashboard = lazy(() => import("layouts/distributor-dashboard"))
 const Distributors = lazy(() => import("layouts/distributor"));
 const Brands = lazy(() => import("layouts/brands"));
 const Sales = lazy(() => import("layouts/sales"));
-const EditBuyer = lazy(() => import("layouts/Buyers/editBuyer"));
-const AddBuyer = lazy(() => import("layouts/Buyers/addBuyer"));
+const EditBuyer = lazy(() => import("layouts/buyers/editBuyer"));
+const AddBuyer = lazy(() => import("layouts/buyers/addBuyer"));
 const UploadBuyers = lazy(() => import("layouts/superAdmin/uploadBuyer"));
 const SaleDetail = lazy(() => import("layouts/sales/saleDetails"));
 const SuperAdminDashboard = lazy(() => import("layouts/superAdmin/dashboard"));
@@ -451,6 +451,16 @@ export const superAdminRoutes = [
     key: "admin-brands-details",
     route: "/brands/:id/users",
     component: SuspendedComponent(BrandDetails),
+    isPrivate: true,
+    isNavbar: true,
+  },
+  {
+    type: "collapse",
+    name: "Buyers",
+    key: "buyers",
+    icon: <Icon fontSize="small">person</Icon>,
+    route: "/buyers",
+    component: SuspendedComponent(Buyers),
     isPrivate: true,
     isNavbar: true,
   },
