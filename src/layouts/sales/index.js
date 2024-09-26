@@ -5,7 +5,7 @@ import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
 import DataTable from "muiComponents/Tables/DataTable";
-import UploadFileModal from "layouts/Buyers/components/Modals/UploadFileModal";
+import UploadFileModal from "layouts/buyers/components/Modals/UploadFileModal";
 import data from "./data";
 import { toast } from "react-toastify";
 import api from "../../axios";

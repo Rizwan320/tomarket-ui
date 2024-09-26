@@ -6,7 +6,7 @@ import api from "../../../axios";
 import Loader from "components/Loader";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
-import UploadFile from "layouts/Buyers/components/UploadFile";
+import UploadFile from "layouts/buyers/components/UploadFile";
 
 const UploadProduct = () => {
   const [loading, setLoading] = useState(false);

@@ -6,7 +6,7 @@ import Card from "@mui/material/Card";
 import Loader from "components/Loader";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
-import UploadFile from "layouts/Buyers/components/UploadFile";
+import UploadFile from "layouts/buyers/components/UploadFile";
 import Dropdown from "../../../components/Dropdown";
 
 import api from "../../../axios";
