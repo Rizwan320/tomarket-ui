@@ -15,7 +15,7 @@ import AddBrandAndDistributor from "../addBrandAndDistributor";
 
 const SuperAdminBrands = () => {
   const [brandData, setBrandData] = useState({ columns: [], rows: [] });
-  const { adminData } = useUser();
+  const { impersonate } = useUser();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -33,16 +33,16 @@ const SuperAdminBrands = () => {
 
   const handleImpersonate = async (id) => {
     try {
-      const response = await api.get("/admin/user", {
+      const response = await api.get("admin/user", {
         params: { id },
       });
-      adminData(response?.data);
+      impersonate(response?.data);
     } catch (error) {
       toast.error(error?.response?.data?.message || error?.message);
     }
   };
 
-  const handleRowClick = (row) => navigate(`/brands/${row?.id}/users`);
+  const handleRowClick = (row) => navigate(`/brands/${row?.id}/details`);
 
   return (
     <Card>

@@ -1,7 +1,7 @@
 import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
 
-export const generateUsersDetailTable = (accounts, handleImpersonate) => {
+export const usersDetailTable = (users, handleImpersonate) => {
   const Name = ({ name = "" }) => (
     <MDTypography variant="caption" fontWeight="medium">
       {name}
@@ -26,11 +26,11 @@ export const generateUsersDetailTable = (accounts, handleImpersonate) => {
       { Header: "Email", accessor: "email", align: "center" },
       { Header: "", accessor: "actions", align: "center" },
     ],
-    rows: accounts?.map((account) => ({
-      id: account?.id,
-      userName: <Name name={account?.userName} />,
-      email: <Name name={account?.email} />,
-      actions: <Impersonate id={account?.id} />,
+    rows: users?.map((user) => ({
+      id: user?.id,
+      userName: <Name name={user?.userName} />,
+      email: <Name name={user?.email} />,
+      actions: <Impersonate id={user?.id} />,
     })),
   };
 };

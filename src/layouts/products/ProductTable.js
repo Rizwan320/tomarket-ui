@@ -12,14 +12,14 @@ import api from "../../axios";
 import { tableProductData } from "./data";
 import UploadFileModal from "layouts/Buyers/components/Modals/UploadFileModal";
 
-const ProductTable = () => {
+const ProductTable = ({ products }) => {
   const [open, setOpen] = useState(false);
   const [uplaodFile, setUploadFile] = useState();
   const [productData, setProductData] = useState({ columns: [], rows: [] });
 
   useEffect(() => {
-    fetchProducts();
-  }, []);
+    products ? setProductData(tableProductData(products)) : fetchProducts();
+  }, [products]);
 
   const PRODUCT_FILE_HEADERS = [
     {

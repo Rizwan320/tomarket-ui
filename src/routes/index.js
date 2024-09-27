@@ -449,7 +449,7 @@ export const superAdminRoutes = [
   {
     name: "Brands Details",
     key: "admin-brands-details",
-    route: "/brands/:id/users",
+    route: "/brands/:id/details",
     component: SuspendedComponent(BrandDetails),
     isPrivate: true,
     isNavbar: true,
