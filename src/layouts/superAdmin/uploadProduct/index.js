@@ -24,7 +24,7 @@ const UploadProduct = () => {
       const response = await api.get("/distributors");
       setDistributors(response?.data);
     } catch (error) {
-      toast.error(error.response?.data?.message);
+      toast.error(error?.response?.data?.message || error?.message);
     }
   };
 
