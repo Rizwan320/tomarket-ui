@@ -137,8 +137,8 @@ const Dashboard = () => {
       const res = await api.get("buyers");
       if (res?.data?.status === 401 || res?.status === 401) {
         setIsMap(false);
-      } else if (res?.data?.data) {
-        const filteredData = res?.data?.data?.filter((buyer) => {
+      } else if (res?.data) {
+        const filteredData = res?.data?.filter((buyer) => {
           return (
             buyer?.showOnMap &&
             buyer?.location?.lat !== "INVALID" &&

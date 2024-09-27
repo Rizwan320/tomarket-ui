@@ -19,8 +19,8 @@ const buyersdata = (tableColumns, refresh) => {
     const fetchBuyers = async () => {
       try {
         const response = await api.get("buyers");
-        if (response.data.data) {
-          const buyer = response?.data?.data?.map((row) => ({
+        if (response?.data) {
+          const buyer = response?.data?.map((row) => ({
             ...row,
             displayName: row.displayName,
             email: row.email || "",
