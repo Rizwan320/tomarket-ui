@@ -25,9 +25,6 @@ const UploadSales = () => {
     try {
       const response = await api.get("/distributors");
       setDistributors(response?.data);
-      if (response?.data?.length > 0) {
-        setSelectedDistributor(response?.data[0]);
-      }
     } catch (error) {
       toast.error(error.message);
     }
@@ -48,7 +45,6 @@ const UploadSales = () => {
     const formData = new FormData();
     formData.append("file", file);
     formData.append("distributorId", selectedDistributor.id);
-    console.log("Submitting with Distributor ID:", selectedDistributor.id);
 
     try {
       setLoading(true);
