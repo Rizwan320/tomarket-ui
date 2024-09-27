@@ -16,7 +16,7 @@ import AddBrandAndDistributor from "../addBrandAndDistributor";
 
 const SuperAdminDistributors = () => {
   const [distributorData, setDistributorData] = useState({ columns: [], rows: [] });
-  const { adminData } = useUser();
+  const { impersonate } = useUser();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -38,7 +38,7 @@ const SuperAdminDistributors = () => {
       const response = await api.get("/admin/user", {
         params: { id },
       });
-      adminData(response?.data);
+      impersonate(response?.data);
     } catch (error) {
       toast.error(error?.response?.data?.message || error?.message);
     }

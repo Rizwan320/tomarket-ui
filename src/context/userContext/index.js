@@ -42,35 +42,56 @@ export const UserProvider = ({ children }) => {
     localStorage.clear();
   };
 
-  const updateUser = (userData, isImpersonating = user?.isSuperAdmin) => {
+  const updateUser = (
+    userData,
+    isImpersonating = user?.isSuperAdmin,
+    access_token = user?.accessToken,
+    refreshToken = user?.refreshToken
+  ) => {
     setUser((pre) => {
       return {
         ...pre,
         isImpersonating,
         user: userData,
+        accessToken: access_token,
+        refreshToken: refreshToken,
       };
     });
-    localStorage.setItem("user", JSON.stringify(userData));
   };
 
-  const adminData = (data) => {
+  const impersonate = (data) => {
+    const adminAccessToken = localStorage.getItem("accessToken");
+    const adminRefreshToken = localStorage.getItem("refreshToken");
     localStorage.setItem("accessToken", data?.access_token);
     localStorage.setItem("refreshToken", data?.refreshToken);
     const userValue = localStorage.getItem("user");
     const parsedUserValue = userValue ? JSON.parse(userValue) : null;
-    localStorage.setItem("admin", JSON.stringify(parsedUserValue));
+    const object = {
+      access_token: adminAccessToken,
+      refreshToken: adminRefreshToken,
+      user: parsedUserValue,
+    };
+    localStorage.setItem("admin", JSON.stringify(object));
+    localStorage.setItem("user", JSON.stringify(data));
     updateUser(data, true);
   };
 
   const stopImpersonate = () => {
     const admin = localStorage.getItem("admin");
     const parsedAdminValue = admin ? JSON.parse(admin) : null;
-    localStorage.setItem("user", JSON.stringify(parsedAdminValue));
-    updateUser(parsedAdminValue);
+    localStorage.setItem("accessToken", parsedAdminValue?.access_token);
+    localStorage.setItem("refreshToken", parsedAdminValue?.refreshToken);
+    localStorage.setItem("user", JSON.stringify(parsedAdminValue?.user));
+    updateUser(
+      parsedAdminValue.user,
+      false,
+      parsedAdminValue.access_token,
+      parsedAdminValue.refreshToken
+    );
   };
 
   return (
-    <UserContext.Provider value={{ user, login, logout, updateUser, adminData, stopImpersonate }}>
+    <UserContext.Provider value={{ user, login, logout, updateUser, impersonate, stopImpersonate }}>
       {children}
     </UserContext.Provider>
   );

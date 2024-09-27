@@ -5,16 +5,16 @@ import { Card } from "@mui/material";
 
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
-import DataTable from "muiComponents/Tables/DataTable";
 
 import api from "../../../../axios";
 import { useUser } from "context/userContext";
-import { generateUsersDetailTable } from "layouts/users/data";
+import { usersDetailTable } from "layouts/superAdmin/components/usersDetailTable";
+import UserCard from "layouts/superAdmin/components/userCard";
 import AddUserModal from "../../addUser/addUserModal";
 
 const DistributorDetails = () => {
   const { id } = useParams();
-  const { adminData } = useUser();
+  const { impersonate } = useUser();
   const [distributorName, setDistributorName] = useState(null);
   const [distributorData, setDistributorData] = useState({ columns: [], rows: [] });
 
@@ -26,9 +26,7 @@ const DistributorDetails = () => {
     try {
       const response = await api.get(`/distributors/${id}/users`);
       setDistributorName(response?.data);
-      setDistributorData(
-        generateUsersDetailTable(response?.data?.account?.users, handleImpersonate)
-      );
+      setDistributorData(usersDetailTable(response?.data?.account?.users, handleImpersonate));
     } catch (error) {
       toast.error(error?.response?.data?.message || error?.message);
     }
@@ -39,30 +37,26 @@ const DistributorDetails = () => {
       const response = await api.get("/admin/user", {
         params: { id },
       });
-      adminData(response?.data);
+      impersonate(response?.data);
     } catch (error) {
       toast.error(error?.response?.data?.message || error?.message);
     }
   };
 
   return (
-    <Card>
-      <MDBox p={3} display="flex" justifyContent="space-between">
-        <MDTypography variant="h5" gutterBottom>
-          {distributorName?.name}
-        </MDTypography>
-        <AddUserModal account={distributorName?.account} />
+    <>
+      <Card>
+        <MDBox p={3} display="flex" justifyContent="space-between">
+          <MDTypography variant="h5" gutterBottom>
+            {distributorName?.name}
+          </MDTypography>
+          <AddUserModal account={distributorName?.account} />
+        </MDBox>
+      </Card>
+      <MDBox marginTop={3}>
+        <UserCard userData={distributorData} />
       </MDBox>
-      <MDBox>
-        <DataTable
-          table={distributorData}
-          showTotalEntries={true}
-          isSorted={false}
-          noEndBorder
-          entriesPerPage={false}
-        />
-      </MDBox>
-    </Card>
+    </>
   );
 };
 
