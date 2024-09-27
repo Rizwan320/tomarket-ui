@@ -24,7 +24,7 @@ const UploadProduct = () => {
       const response = await api.get("/distributors");
       setDistributors(response?.data);
     } catch (error) {
-      toast.error(error.message);
+      toast.error(error.response?.data?.message);
     }
   };
 
@@ -53,10 +53,9 @@ const UploadProduct = () => {
           "Content-Type": "multipart/form-data",
         },
       });
-      toast.success(response.data.message);
+      toast.success(response?.data?.message);
     } catch (error) {
-      const errorMessage = error?.response?.data?.message;
-      toast.error(errorMessage);
+      toast.error(error?.response?.data?.message || error?.message);
     } finally {
       setLoading(false);
     }
