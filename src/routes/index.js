@@ -307,6 +307,7 @@ export const distributorRoutes = [
     component: SuspendedComponent(Payments),
     isPrivate: true,
     isNavbar: true,
+    disabled: true,
   },
   {
     type: "collapse",
@@ -317,6 +318,7 @@ export const distributorRoutes = [
     component: SuspendedComponent(Brands),
     isPrivate: true,
     isNavbar: true,
+    disabled: true,
   },
   {
     type: "collapse",
@@ -327,6 +329,7 @@ export const distributorRoutes = [
     component: SuspendedComponent(Sales),
     isPrivate: true,
     isNavbar: true,
+    disabled: true,
   },
   {
     type: "collapse",
@@ -349,13 +352,13 @@ export const distributorRoutes = [
   {
     type: "collapse",
     name: "Settings",
-    href: true,
     key: "settings",
     icon: <Icon fontSize="small">settings</Icon>,
     route: "/settings",
     component: SuspendedComponent(Settings),
     isPrivate: true,
     isNavbar: true,
+    disabled: true,
     children: [
       {
         name: "Users",
