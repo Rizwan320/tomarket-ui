@@ -14,7 +14,14 @@ const mapPlugin = ["WIX Store", "Shopify Store", "WordPress Store", "Squarespace
 const erpPlugins = ["Quickbooks Login", "XERO Login"];
 
 const Plugins = () => {
-  const { user } = useUser();
+  const {
+    user: {
+      user: {
+        account: { accountType },
+      },
+    },
+  } = useUser();
+
   const handleClicked = (e, name) => {
     e.preventDefault();
     if (name === "Shopify Store") {
@@ -30,11 +37,9 @@ const Plugins = () => {
       if (tokenResponse) {
         toast.success("Quickbooiks Login Successfull");
 
-        if (user?.user?.account?.accountType === "distributor") {
-          await api.post("distributors/quickbooks");
-        } else {
-          await api.post("buyers/quickbooks");
-        }
+        accountType === "distributor"
+          ? await api.post("distributors/quickbooks")
+          : await api.post("buyers/quickbooks");
       }
     } catch (error) {
       console.log(error.message);
