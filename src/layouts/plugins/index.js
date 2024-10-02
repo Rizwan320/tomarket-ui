@@ -8,11 +8,20 @@ import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
 
 import api from "../../axios";
+import { useUser } from "context/userContext";
 
 const mapPlugin = ["WIX Store", "Shopify Store", "WordPress Store", "Squarespace Store"];
 const erpPlugins = ["Quickbooks Login", "XERO Login"];
 
 const Plugins = () => {
+  const {
+    user: {
+      user: {
+        account: { accountType },
+      },
+    },
+  } = useUser();
+
   const handleClicked = (e, name) => {
     e.preventDefault();
     if (name === "Shopify Store") {
@@ -27,7 +36,10 @@ const Plugins = () => {
       const tokenResponse = await api.patch("quickbooks/save-quickbooks-token", { payload });
       if (tokenResponse) {
         toast.success("Quickbooiks Login Successfull");
-        await api.post("buyers/quickbooks");
+
+        accountType === "distributor"
+          ? await api.post("distributors/quickbooks")
+          : await api.post("buyers/quickbooks");
       }
     } catch (error) {
       console.log(error.message);
