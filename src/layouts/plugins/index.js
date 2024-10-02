@@ -76,6 +76,7 @@ const Plugins = () => {
                 color="success"
                 variant="contained"
                 startIcon={<WixIcon />}
+                disabled={erp === "XERO Login"}
               >
                 {erp}
               </MDButton>
@@ -95,6 +96,7 @@ const Plugins = () => {
                 onClick={(e) => handleClicked(e, map)}
                 color="success"
                 variant="contained"
+                disabled={true}
                 startIcon={<WixIcon />}
               >
                 {map}
