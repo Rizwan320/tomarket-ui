@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 // import { Link } from "react-router-dom";
 import Grid from "@mui/material/Grid";
+import Card from "@mui/material/Card";
 import { ListItemText } from "@mui/material";
 
 import MDBox from "components/MDBox";
@@ -17,6 +18,7 @@ import VerifyPaymnetAlert from "./components/VerifyPaymentAlert";
 // import MDTypography from "components/MDTypography";
 // import MDButton from "components/MDButton";
 import { useUser } from "context/userContext";
+import Maps from "../../google/Map";
 
 import api from "../../axios";
 import ChangePasswordModal from "../Modals/ChangePasswordModal.js";
@@ -40,15 +42,12 @@ const cardData = [
   { title: "Groups", name: "Red Wagon Farm", value: "$3149" },
 ];
 
-const salesVolumeData = [3000, 2000, 1700, 1000, 30, 900, 999, 670, 490, 450];
-
 const Dashboard = () => {
   const navigate = useNavigate();
   const { updateUser, user } = useUser();
   const [open, setOpen] = useState(false);
   const [showPaymentAlert, setShowPaymentAlert] = useState(false);
   const [showVerifyPaymentAlert, setVerifyShowPaymentAlert] = useState(false);
-  const [isMap, setIsMap] = useState(false);
   const [updatedMarker, setUpdatedMarker] = useState([]);
   const [tableColumns, setTableColumns] = useState(["Total Sales", "Top Buyer", "No of Buyers"]);
   const [sales, setSales] = useState({
@@ -70,16 +69,16 @@ const Dashboard = () => {
   const handleOnSubmit = async (values) => {
     try {
       const { data: response } = await api.post("payment", values);
-      toast.success(response.message);
-      updateUser(response.data);
+      toast.success(response?.message);
+      updateUser(response?.data);
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data?.message || error?.message);
     }
   };
 
   useEffect(() => {
     fetchSales();
-    fetchBuyers();
+    fetchbuyerslocation();
   }, []);
 
   // const sendQuickbooksToken = async (payload) => {
@@ -128,32 +127,16 @@ const Dashboard = () => {
         noOfBuyers: numberOfBuyers,
       });
     } catch (error) {
-      console.error(error.message);
+      toast.error(error?.response?.data?.message || error?.message);
     }
   };
 
-  const fetchBuyers = async () => {
+  const fetchbuyerslocation = async () => {
     try {
-      const res = await api.get("buyers");
-      if (res?.data?.status === 401 || res?.status === 401) {
-        setIsMap(false);
-      } else if (res?.data) {
-        const filteredData = res?.data?.filter((buyer) => {
-          return (
-            buyer?.showOnMap &&
-            buyer?.location?.lat !== "INVALID" &&
-            buyer?.location?.long !== "INVALID"
-          );
-        });
-        const updatedData = filteredData?.map((element) => ({
-          ...element,
-          salesVolume: 1001 || salesVolumeData[Math.floor(Math.random() * salesVolumeData.length)],
-        }));
-        setUpdatedMarker(updatedData);
-        setIsMap(true);
-      }
+      const res = await api.get("buyers/locations");
+      setUpdatedMarker(res?.data);
     } catch (error) {
-      console.log(error.message);
+      toast.error(error?.response?.data?.message || error?.message);
     }
   };
 
@@ -187,7 +170,7 @@ const Dashboard = () => {
             title={
               <ListItemText
                 sx={{ textAlign: "center" }}
-                primary="Please add payment details to start a free trail."
+                primary="Please add payment details to start a free trial."
                 secondary="Free for 1 month, then $25 + charges per month after."
               />
             }
@@ -200,14 +183,7 @@ const Dashboard = () => {
         showVerifyPaymentAlert && <VerifyPaymnetAlert onClick={() => navigate("/profile")} />
       )}
       <MDBox py={3}>
-        <MDBox
-          sx={{
-            display: "flex",
-            justifyContent: "flex-end",
-            marginRight: "16px",
-            marginBottom: "16px",
-          }}
-        >
+        <MDBox sx={{ display: "flex", justifyContent: "flex-end", marginBottom: "16px" }}>
           <DropdownMenu
             tableColumns={tableColumns}
             columns={cardData}
@@ -217,55 +193,26 @@ const Dashboard = () => {
         <Grid container spacing={3}>
           {dashCardData?.map(
             (data, index) =>
-              tableColumns.includes(data.title) && (
-                <Grid item xs={12} sm={6} md={6} lg={4} key={index} style={{ display: "flex" }}>
+              tableColumns.includes(data?.title) && (
+                <Grid item xs={12} sm={6} md={4} key={index}>
                   <DashBoardInfoCard {...data} />
                 </Grid>
               )
           )}
         </Grid>
         <MDBox mt={4.5}>
-          {/* <Grid container spacing={3}> */}
-          {/* <Grid item xs={12} md={6} lg={8}>
-              {isMap && <MapsVector data={updatedMarker} />} */}
-          {/* {!isMap && (
-                <MDBox>
-                  <MDTypography>Click to login Quickbooks to get Map Data</MDTypography>
-                  <MDButton
-                    onClick={() => {
-                      handleQuickbooksLogin();
-                    }}
-                    type="button"
-                    color="success"
-                    variant="gradient"
-                    sx={{ mt: 3, mb: 2, mx: 2 }}
-                  >
-                    Quickbooks Login
-                  </MDButton>
+          <Grid container spacing={3}>
+            <Grid item xs={12} md={8}>
+              <Card>
+                <MDBox p={2}>
+                  <Maps data={updatedMarker} />
                 </MDBox>
-              )} */}
-          {/* <MDBox mt={3} mb={3}>
-                <SalesChart
-                  chartSeries={[
-                    {
-                      name: "This year",
-                      data: [18, 16, 5, 8, 3, 14, 14, 16, 17, 19, 18, 20],
-                    },
-                    {
-                      name: "Last year",
-                      data: [12, 11, 4, 6, 2, 9, 9, 10, 11, 12, 13, 13],
-                    },
-                  ]}
-                  sx={{ height: "100%" }}
-                />
-              </MDBox>
-            </Grid>*/}
-          <Grid container justifyContent="flex-end">
-            <Grid item xs={12} md={6} lg={4}>
+              </Card>
+            </Grid>
+            <Grid item xs={12} md={4}>
               <Notifications />
             </Grid>
           </Grid>
-          {/* </Grid> */}
         </MDBox>
         {!user?.isImpersonating && <ChangePasswordModal />}
       </MDBox>
