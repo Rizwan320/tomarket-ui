@@ -19,7 +19,7 @@ const Payments = lazy(() => import("layouts/payments"));
 const Dashboard = lazy(() => import("layouts/dashboard"));
 const StripeForm = lazy(() => import("stripe"));
 const BrandDetail = lazy(() => import("layouts/brandDetail"));
-const PaymentDetails = lazy(() => import("layouts/payments/components/paymentDetails"));
+//const PaymentDetails = lazy(() => import("layouts/payments/components/paymentDetails"));
 const ContentOrganization = lazy(() => import("layouts/contentOrganization"));
 const DistributorDashboard = lazy(() => import("layouts/distributor-dashboard"));
 const Distributors = lazy(() => import("layouts/distributor"));
@@ -40,6 +40,7 @@ const AddUser = lazy(() => import("layouts/superAdmin/addUser"));
 const UploadSales = lazy(() => import("layouts/sales/uploadSales"));
 const BrandDetails = lazy(() => import("layouts/superAdmin/brands/brandDetails"));
 const DistributorDetails = lazy(() => import("layouts/superAdmin/distributors/distributorDetails"));
+const PaymentDetails = lazy(() => import("layouts/billing/components/PaymentDetails"));
 
 const SuspendedComponent = (Component) => (
   <Suspense>
@@ -144,6 +145,16 @@ export const brandRoutes = [
     isPrivate: true,
     isNavbar: true,
     disabled: true,
+  },
+  {
+    type: "collapse",
+    name: "Payments",
+    key: "payments",
+    icon: <Icon fontSize="small">payments</Icon>,
+    route: "/payments",
+    component: SuspendedComponent(PaymentDetails),
+    isPrivate: true,
+    isNavbar: true,
   },
   // {
   //   type: "collapse",
@@ -341,14 +352,14 @@ export const distributorRoutes = [
     isPrivate: true,
     isNavbar: true,
   },
-  {
-    name: "Payment Details",
-    key: "Payment-Details",
-    route: "/payment-detail/:id",
-    component: SuspendedComponent(PaymentDetails),
-    isPrivate: true,
-    isNavbar: true,
-  },
+  // {
+  //   name: "Payment Details",
+  //   key: "Payment-Details",
+  //   route: "/payment-detail/:id",
+  //   component: SuspendedComponent(PaymentDetails),
+  //   isPrivate: true,
+  //   isNavbar: true,
+  // },
   {
     type: "collapse",
     name: "Settings",

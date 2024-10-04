@@ -162,10 +162,7 @@ const Dashboard = () => {
     <>
       {showPaymentAlert ? (
         <>
-          <AddPaymnetAlert
-            onClick={() => setOpen(true)}
-            trialStartDate={user?.user?.trialStartDate}
-          />
+          <AddPaymnetAlert onClick={() => setOpen(true)} />
           <PaymentDialog
             title={
               <ListItemText
