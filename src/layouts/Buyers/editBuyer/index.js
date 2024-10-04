@@ -1,16 +1,30 @@
 import { useState, useEffect } from "react";
+import { Formik, Field, Form, ErrorMessage } from "formik";
 import { useParams } from "react-router-dom";
-import { Card, CardContent, Container, Grid, TextField } from "@mui/material";
+import * as Yup from "yup";
+import { toast } from "react-toastify";
+
+import { Card, CardContent, Grid, TextField } from "@mui/material";
+
+import MDBox from "components/MDBox";
+import MDAvatar from "components/MDAvatar";
+import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
 import DataTable from "muiComponents/Tables/DataTable";
+import GooglePlacesAutocomplete from "google/GooglePlacesAutocomplete";
+
 import api from "../../../axios";
-import { toast } from "react-toastify";
-import MDButton from "components/MDButton";
-import MDAvatar from "components/MDAvatar";
-import MDBox from "components/MDBox";
+import { useUser } from "context/userContext";
 
 const EditBuyer = () => {
   const { id } = useParams();
+  const {
+    user: { isImpersonating },
+  } = useUser();
+
+  const validationSchema = Yup.object({
+    mailingAddress: Yup.string().required("Mailing Address is required"),
+  });
 
   const [buyer, setBuyer] = useState({
     displayName: "",
@@ -18,41 +32,39 @@ const EditBuyer = () => {
     description: "",
     buisnessType: "",
     socialLinks: "",
-  });
-
-  const [location, setLocation] = useState({
-    city: "",
-    country: "",
-    line1: "",
+    location: {
+      city: "",
+      country: "",
+      line1: "",
+    },
   });
 
   const [sales, setSales] = useState([]);
   const [note, setNote] = useState("");
+  const [isAdding, setIsAdding] = useState(false);
 
   useEffect(() => {
-    const fetchBuyer = async () => {
-      try {
-        const response = await api.get(`/buyers/${id}`);
-        const { displayName, email, location, sales } = response?.data?.data;
-        setBuyer({
-          displayName: displayName || "",
-          email: email || "",
-        });
-        if (location) {
-          const { city, country, line1 } = location;
-          setLocation({
-            city: city || "",
-            country: country || "",
-            line1: line1 || "",
-          });
-        }
-        setSales(sales || []);
-      } catch (error) {
-        toast.error(error?.response?.data?.message);
-      }
-    };
     fetchBuyer();
   }, [id]);
+
+  const fetchBuyer = async () => {
+    try {
+      const response = await api.get(`/buyers/${id}`);
+      const { displayName, email, location, sales } = response?.data;
+      setBuyer({
+        displayName: displayName || "",
+        email: email || "",
+        location: {
+          city: location?.city || "",
+          country: location?.country || "",
+          line1: location?.line1 || "",
+        },
+      });
+      setSales(sales || []);
+    } catch (error) {
+      toast.error(error?.response?.data?.message || error?.message);
+    }
+  };
 
   const handleNoteChange = (e) => setNote(e.target.value);
 
@@ -84,10 +96,53 @@ const EditBuyer = () => {
     totalQuantity: sale.totalQuantity,
   }));
 
-  const locationDisplay =
-    location.line1 || location.city || location.country
-      ? `${location.line1 || ""}, ${location.city || ""}, ${location.country || ""}`
-      : "Not Available";
+  const handlePlaceSelected = (place, setFieldValue) => {
+    setFieldValue("mailingAddress", place.formatted_address);
+  };
+
+  function getLocationObject(mailingAddress) {
+    const addressParts = mailingAddress.split(",");
+    const line1 = addressParts[0] ? addressParts[0].trim() : "";
+    const city = addressParts.length >= 3 ? addressParts[addressParts.length - 3].trim() : "";
+    const countrySubDivisionCode =
+      addressParts.length >= 2 ? addressParts[addressParts.length - 2].split(" ")[0].trim() : "";
+    const postalCode =
+      addressParts.length >= 2
+        ? addressParts[addressParts.length - 2].match(/\d+/)
+          ? addressParts[addressParts.length - 2].match(/\d+/)[0]
+          : ""
+        : "";
+    const country = addressParts.length >= 1 ? addressParts[addressParts.length - 1].trim() : "";
+
+    return {
+      line1,
+      city,
+      countrySubDivisionCode,
+      postalCode,
+      country,
+    };
+  }
+  const handleSaveLocation = async (values, { setSubmitting }) => {
+    try {
+      const locationData = getLocationObject(values.mailingAddress);
+      await api.patch(`locations/buyers/${id}`, locationData);
+      fetchBuyer();
+    } catch (error) {
+      toast.error(error?.response?.data?.message || error?.message);
+    } finally {
+      setSubmitting(false);
+      setIsAdding(false);
+    }
+  };
+
+  const addingLocation = () => setIsAdding(true);
+
+  const initialValues = {
+    mailingAddress:
+      `${buyer.location.line1 || ""} ${buyer.location.city || ""} ${
+        buyer.location.country || ""
+      }`.trim() || "",
+  };
 
   return (
     <>
@@ -135,7 +190,15 @@ const EditBuyer = () => {
                   </MDTypography>
                   <MDTypography variant="h6">Location:</MDTypography>
                   <MDTypography variant="body2" fontWeight="light">
-                    {locationDisplay}
+                    {buyer.location.line1 || buyer.location.city || buyer.location.country ? (
+                      <>
+                        {buyer?.location?.line1 && `${buyer.location.line1}, `}
+                        {buyer?.location?.city && `${buyer.location.city}, `}
+                        {buyer?.location?.country}
+                      </>
+                    ) : (
+                      "Not Available"
+                    )}
                   </MDTypography>
                   <MDTypography variant="h6">Social Links:</MDTypography>
                   <MDTypography variant="body2" fontWeight="light">
@@ -143,6 +206,65 @@ const EditBuyer = () => {
                   </MDTypography>
                 </MDBox>
               </MDBox>
+              {isImpersonating && location && (
+                <MDBox>
+                  <MDBox>
+                    <MDButton variant="gradient" color="success" onClick={addingLocation}>
+                      {buyer.location.city ? "Update Location" : "Add Location"}
+                    </MDButton>
+                  </MDBox>
+                  <MDBox>
+                    {isAdding && (
+                      <Formik
+                        initialValues={initialValues || ""}
+                        validationSchema={validationSchema}
+                        onSubmit={handleSaveLocation}
+                      >
+                        {({ isSubmitting, setFieldValue }) => (
+                          <Form>
+                            <MDBox mb={2}>
+                              <Field name="mailingAddress">
+                                {({ field, form }) => (
+                                  <GooglePlacesAutocomplete
+                                    value={field.value}
+                                    onChange={field.onChange(field.name)}
+                                    onPlaceSelected={(place) =>
+                                      handlePlaceSelected(place, form.setFieldValue)
+                                    }
+                                    label="Address"
+                                  />
+                                )}
+                              </Field>
+                              <ErrorMessage
+                                name="mailingAddress"
+                                component="h6"
+                                style={{ color: "red" }}
+                              />
+                            </MDBox>
+                            <MDBox
+                              mt={4}
+                              mb={1}
+                              display="flex"
+                              flexDirection="column"
+                              justifyContent="center"
+                              alignItems="flex-end"
+                            >
+                              <MDButton
+                                type="submit"
+                                variant="gradient"
+                                color="success"
+                                disabled={isSubmitting}
+                              >
+                                Save
+                              </MDButton>
+                            </MDBox>
+                          </Form>
+                        )}
+                      </Formik>
+                    )}
+                  </MDBox>
+                </MDBox>
+              )}
             </Grid>
           </Grid>
         </CardContent>

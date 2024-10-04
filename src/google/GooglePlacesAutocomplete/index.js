@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useMemo } from "react";
 import { useLoadScript } from "@react-google-maps/api";
 import { Field } from "formik";
 import MDInput from "components/MDInput";
@@ -22,19 +22,25 @@ const GooglePlacesAutocomplete = ({
     },
   });
 
+  const autocompleteOptions = useMemo(
+    () => ({
+      types: ["address"],
+    }),
+    []
+  );
+
   useEffect(() => {
     if (isLoaded && inputRef.current) {
-      const options = {
-        types: ["address"],
-      };
-
-      const autocomplete = new window.google.maps.places.Autocomplete(inputRef.current, options);
+      const autocomplete = new window.google.maps.places.Autocomplete(
+        inputRef.current,
+        autocompleteOptions
+      );
       autocomplete.addListener("place_changed", () => {
         const place = autocomplete.getPlace();
         onPlaceSelected(place);
       });
     }
-  }, [isLoaded, onPlaceSelected]);
+  }, [isLoaded, onPlaceSelected, autocompleteOptions]);
 
   if (loadError) return <div>Error loading maps</div>;
   if (!isLoaded) return <div>Loading...</div>;

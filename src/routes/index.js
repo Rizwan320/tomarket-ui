@@ -557,4 +557,12 @@ export const superAdminRoutes = [
     isPrivate: false,
     isNavbar: false,
   },
+  {
+    name: "Edit Buyer",
+    key: "edit-buyer",
+    route: "/buyer/:id",
+    component: SuspendedComponent(EditBuyer),
+    isPrivate: true,
+    isNavbar: true,
+  },
 ];

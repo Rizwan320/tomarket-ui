@@ -30,10 +30,41 @@ const COLUMNS = [
   { Header: "Units Sold Last Week", accessor: "unitsSoldLastWeek", align: "center" },
 ];
 
+// const BUYER_FILE_HEADERS = [
+//   {
+//     id: "displayName",
+//     displayName: "DisplayName",
+//   },
+//   {
+//     id: "email",
+//     displayName: "Email",
+//   },
+//   {
+//     id: "city",
+//     displayName: "City",
+//   },
+//   {
+//     id: "line1",
+//     displayName: "Address",
+//   },
+//   {
+//     id: "postalCode",
+//     displayName: "PostalCode",
+//   },
+//   {
+//     id: "countrySubDivisionCode",
+//     displayName: "CountrySubDivisionCode",
+//   },
+//   {
+//     id: "country",
+//     displayName: "Country",
+//   },
+// ];
+
 const BUYER_FILE_HEADERS = [
   {
     id: "displayName",
-    displayName: "DisplayName",
+    displayName: "Bussiness Name",
   },
   {
     id: "email",
@@ -58,6 +89,34 @@ const BUYER_FILE_HEADERS = [
   {
     id: "country",
     displayName: "Country",
+  },
+  {
+    id: "totalSales",
+    displayName: "Total Sales",
+  },
+  {
+    id: "recentlyOrderedProduct",
+    displayName: "recently ordered Product",
+  },
+  {
+    id: "sku",
+    displayName: "SKU",
+  },
+  {
+    id: "quantity",
+    displayName: "Quantity",
+  },
+  {
+    id: "distributorName",
+    displayName: "Distributor Name",
+  },
+  {
+    id: "unitsSoldLastWeek",
+    displayName: "Units Sold Last Week",
+  },
+  {
+    id: "unitsSoldLastMonth",
+    displayName: "Units Sold Last Month",
   },
 ];
 
@@ -102,19 +161,19 @@ const UploadBuyers = () => {
     }
   };
 
-  const refetchBuyers = async () => {
-    try {
-      setLoading(true);
-      const res = await api.get("buyers/refetch-buyer");
-      if (res.data) {
-        setRefresh(!refresh);
-      }
-    } catch (error) {
-      toast.error(error?.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+  // const refetchBuyers = async () => {
+  //   try {
+  //     setLoading(true);
+  //     const res = await api.get("buyers/refetch-buyer");
+  //     if (res.data) {
+  //       setRefresh(!refresh);
+  //     }
+  //   } catch (error) {
+  //     toast.error(error?.message);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   return (
     <>
