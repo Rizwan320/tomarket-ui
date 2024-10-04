@@ -11,27 +11,32 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import api from "../../../../axios";
 import { toast } from "react-toastify";
+import { useUser } from "context/userContext";
 
 const buyersdata = (tableColumns, refresh) => {
   const [tableData, setTableData] = useState([]);
+  const {
+    user: { isImpersonating },
+  } = useUser();
 
   useEffect(() => {
     const fetchBuyers = async () => {
       try {
-        const response = await api.get("buyers");
+        const url = isImpersonating ? "admin/buyers" : "buyers";
+        const response = await api.get(url);
         if (response?.data) {
           const buyer = response?.data?.map((row) => ({
             ...row,
-            displayName: row.displayName,
-            email: row.email || "",
-            showOnMap: row.showOnMap,
-            totalSales: row.totalSales,
-            recentlyOrderedProduct: row.recentlyOrderedProduct,
-            sku: row.sku,
-            quantity: row.quantity,
-            distributorName: row.distributorName,
-            unitsSoldLastWeek: row.unitsSoldLastWeek,
-            unitsSoldLastMonth: row.unitsSoldLastMonth,
+            displayName: row?.displayName,
+            email: row?.email || "",
+            showOnMap: row?.showOnMap,
+            totalSales: row?.totalSales,
+            recentlyOrderedProduct: row?.recentOrderedProduct?.productName,
+            sku: row?.recentOrderedProduct?.productSKU,
+            quantity: row?.recentOrderedProduct?.productQuantity,
+            distributorName: row?.distributor[0]?.name,
+            unitsSoldLastWeek: row?.unitsSoldLastWeek,
+            unitsSoldLastMonth: row?.unitsSoldLastMonth,
           }));
           setTableData(buyer);
         }
